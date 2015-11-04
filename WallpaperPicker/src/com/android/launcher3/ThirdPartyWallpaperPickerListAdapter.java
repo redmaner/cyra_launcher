@@ -36,6 +36,8 @@ import com.android.launcher3.util.Thunk;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.cyredra.launcher.R;
+
 public class ThirdPartyWallpaperPickerListAdapter extends BaseAdapter implements ListAdapter {
     private final LayoutInflater mInflater;
     private final PackageManager mPackageManager;

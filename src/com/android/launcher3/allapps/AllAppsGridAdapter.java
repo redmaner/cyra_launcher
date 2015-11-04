@@ -31,13 +31,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.BubbleTextView;
-import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.Thunk;
 
 import java.util.HashMap;
 import java.util.List;
 
+import eu.cyredra.launcher.R;
 
 /**
  * The grid view adapter of all the apps.

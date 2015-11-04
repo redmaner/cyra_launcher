@@ -36,6 +36,8 @@ import com.android.launcher3.widget.WidgetsContainerView;
 
 import java.util.HashMap;
 
+import eu.cyredra.launcher.R;
+
 /**
  * TODO: figure out what kind of tests we can write for this
  *

@@ -28,6 +28,8 @@ import android.widget.RemoteViews;
 
 import com.android.launcher3.DragLayer.TouchCompleteListener;
 
+import eu.cyredra.launcher.R;
+
 /**
  * {@inheritDoc}
  */

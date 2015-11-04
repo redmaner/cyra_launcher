@@ -44,6 +44,8 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.ArrayList;
 
+import eu.cyredra.launcher.R;
+
 /**
  * A ViewGroup that coordinates dragging across its descendants
  */

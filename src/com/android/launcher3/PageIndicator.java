@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import eu.cyredra.launcher.R;
+
 public class PageIndicator extends LinearLayout {
     @SuppressWarnings("unused")
     private static final String TAG = "PageIndicator";

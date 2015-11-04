@@ -31,6 +31,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import eu.cyredra.launcher.R;
+
 public class PendingAppWidgetHostView extends LauncherAppWidgetHostView implements OnClickListener {
 
     private static Theme sPreloaderTheme;

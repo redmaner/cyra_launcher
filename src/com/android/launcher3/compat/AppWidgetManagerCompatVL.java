@@ -39,10 +39,11 @@ import android.widget.Toast;
 
 import com.android.launcher3.IconCache;
 import com.android.launcher3.LauncherAppWidgetProviderInfo;
-import com.android.launcher3.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.cyredra.launcher.R;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class AppWidgetManagerCompatVL extends AppWidgetManagerCompat {

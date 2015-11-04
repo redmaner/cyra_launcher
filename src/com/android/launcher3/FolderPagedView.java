@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import eu.cyredra.launcher.R;
+
 public class FolderPagedView extends PagedView {
 
     private static final String TAG = "FolderPagedView";

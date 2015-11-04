@@ -57,6 +57,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
 
+import eu.cyredra.launcher.R;
+
 /**
  * Cache of application icons.  Icons can be made from any thread.
  */

@@ -22,6 +22,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import eu.cyredra.launcher.R;
+
 /**
  * A base container view, which supports resizing.
  */

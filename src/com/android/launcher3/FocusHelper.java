@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import com.android.launcher3.util.FocusLogic;
 import com.android.launcher3.util.Thunk;
 
+import eu.cyredra.launcher.R;
+
 /**
  * A keyboard listener we set on all the workspace icons.
  */

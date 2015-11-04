@@ -2,6 +2,8 @@ package com.android.launcher3;
 
 import android.appwidget.AppWidgetProviderInfo;
 
+import eu.cyredra.launcher.R;
+
 public class DummyWidget implements CustomAppWidget {
     @Override
     public String getLabel() {

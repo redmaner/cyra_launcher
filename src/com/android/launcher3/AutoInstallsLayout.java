@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import eu.cyredra.launcher.R;
+
 /**
  * Layout parsing code for auto installs layout
  */

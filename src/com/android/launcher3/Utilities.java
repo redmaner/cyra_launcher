@@ -64,6 +64,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import eu.cyredra.launcher.R;
+
 /**
  * Various utilities shared amongst the Launcher's classes.
  */

@@ -53,6 +53,8 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.ArrayList;
 
+import eu.cyredra.launcher.R;
+
 /**
  * An abstraction of the original Workspace which supports browsing through a
  * sequential list of "pages"

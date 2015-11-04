@@ -47,6 +47,8 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.ArrayList;
 
+import eu.cyredra.launcher.R;
+
 /**
  * An icon that can appear on in the workspace representing an {@link UserFolder}.
  */

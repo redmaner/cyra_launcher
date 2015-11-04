@@ -22,6 +22,8 @@ import android.util.AttributeSet;
 
 import com.android.launcher3.compat.UserHandleCompat;
 
+import eu.cyredra.launcher.R;
+
 public class InfoDropTarget extends ButtonDropTarget {
 
     public InfoDropTarget(Context context, AttributeSet attrs) {

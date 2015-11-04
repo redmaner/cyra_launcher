@@ -30,6 +30,8 @@ import com.android.launcher3.util.Thunk;
 
 import java.lang.ref.WeakReference;
 
+import eu.cyredra.launcher.R;
+
 public class LauncherAppState {
 
     private final AppFilter mAppFilter;

@@ -23,9 +23,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 import com.android.launcher3.BaseRecyclerView;
-import com.android.launcher3.R;
 import com.android.launcher3.model.PackageItemInfo;
 import com.android.launcher3.model.WidgetsModel;
+
+import eu.cyredra.launcher.R;
 
 /**
  * The widgets recycler view.
