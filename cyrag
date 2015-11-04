@@ -22,6 +22,7 @@ esac
 
 # VARS
 up=$PWD
+FOLDER_NAME=$(basename $up)
 cyra_dir=$up/.cyrag
 cyra_cfg=$up/build.cyrag
 BUILD_DATE=$(date +"%a %d %B %Y %H:%M %Z")
@@ -66,14 +67,14 @@ android {
    sourceSets {
         main {
             manifest.srcFile '$MANIFEST_DIR'
-            java.srcDirs = ['$JAVA_DIR', 'WallpaperPicker/src']
+            java.srcDirs = ['src', 'Cyredra/src', 'WallpaperPicker/src']
 
             resources.srcDirs = ['$RESOURCES_DIR']
             aidl.srcDirs = ['$AIDL_DIR']
 
             renderscript.srcDirs = ['$RENDERSCRIPT_DIR']
 
-            res.srcDirs = ['$RES_DIR', 'WallpaperPicker/res']
+            res.srcDirs = ['res', 'Cyredra/res', 'WallpaperPicker/res']
             assets.srcDirs = ['$ASSESTS_DIR']
 
             }
@@ -159,10 +160,10 @@ fi
 }
 
 install_apk () {
-if [ -e $up/build/outputs/apk/cyra_launcher-release.apk ]; then
-	adb install -r $up/build/outputs/apk/cyra_launcher-release.apk
-elif [ -e $up/build/outputs/apk/cyra_launcher-debug.apk ]; then
-	adb install -r $up/build/outputs/apk/cyra_launcher-debug.apk
+if [ -e $up/build/outputs/apk/$FOLDER_NAME-release.apk ]; then
+	adb install -r $up/build/outputs/apk/$FOLDER_NAME-release.apk
+elif [ -e $up/build/outputs/apk/$FOLDER_NAME-debug.apk ]; then
+	adb install -r $up/build/outputs/apk/$FOLDER_NAME-debug.apk
 else
 	echo "No builds found: run build first"
 	exit
@@ -173,6 +174,9 @@ git_commit () {
 git add src
 git add res
 git add AndroidManifest.xml
+git add Cyredra
+git add WallpaperPicker
+git add cyrag cyra_launcher.conf
 git commit
 NEW_VERSION_CODE=$(expr $VERSION_CODE + 1);
 cat $cyra_cfg > $cyra_dir/build.cyrag.new

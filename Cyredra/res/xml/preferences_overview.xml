@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:launcher="http://schemas.android.com/apk/res-auto/eu.cyredra.launcher">
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_overview_tiles"
+            android:key="pref_key_overview_tiles">
+
+			<CheckBoxPreference
+				android:key="pref_key_overviewTileWallpaper"
+				android:title="@string/pref_overview_tile_wallpaper"
+				android:defaultValue="true"/>
+
+			<CheckBoxPreference
+				android:key="pref_key_overviewTileWidgets"
+				android:title="@string/pref_overview_tile_widgets"
+				android:defaultValue="true"/>
+
+			<CheckBoxPreference
+				android:key="pref_key_overviewTileApps"
+				android:title="@string/pref_overview_tile_apps"
+				android:defaultValue="false"/>
+
+			<CheckBoxPreference
+				android:key="pref_key_overviewTileSettings"
+				android:title="@string/pref_overview_tile_settings"
+				android:defaultValue="false"/>
+
+   		</PreferenceCategory>
+
+</PreferenceScreen>

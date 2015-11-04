@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:launcher="http://schemas.android.com/apk/res-auto/eu.cyredra.launcher">
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_gestures"
+            android:key="pref_key_gestures_settings">
+
+            <ListPreference
+            	android:key="pref_key_gestureDown"
+            	android:title="@string/pref_gesture_down"
+            	android:dialogTitle="@string/pref_gesture_down"
+            	android:summary="@string/pref_gesture_down_summary"
+            	android:entries="@array/pref_gesture_entries"
+            	android:entryValues="@array/pref_gesture_values"
+				android:defaultValue="GES_NOTIFICATIONS"/>
+
+            <ListPreference
+            	android:key="pref_key_gestureUp"
+            	android:title="@string/pref_gesture_up"
+            	android:dialogTitle="@string/pref_gesture_up"
+            	android:summary="@string/pref_gesture_up_summary"
+            	android:entries="@array/pref_gesture_entries"
+            	android:entryValues="@array/pref_gesture_values"
+				android:defaultValue="GES_LOCKSCREEN"/>
+
+            <ListPreference
+            	android:key="pref_key_gestureLongpress"
+            	android:title="@string/pref_gesture_longpress"
+            	android:dialogTitle="@string/pref_gesture_longpress"
+            	android:summary="@string/pref_gesture_longpress_summary"
+            	android:entries="@array/pref_gesture_entries"
+            	android:entryValues="@array/pref_gesture_values"
+				android:defaultValue="GES_OVERVIEW"/>
+
+   		</PreferenceCategory>
+
+</PreferenceScreen>

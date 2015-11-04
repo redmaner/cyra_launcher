@@ -154,10 +154,15 @@
         </activity>
 
         <activity
-            android:name="com.android.launcher3.SettingsActivity"
-            android:label="@string/settings_button_text"
-            android:autoRemoveFromRecents="true"
-            android:process=":settings_process">
+            android:name="eu.cyredra.launcher.LauncherPreferencesActivity"
+            android:theme="@style/Theme.Settings"
+        	android:label="@string/pref_application_name"
+            android:autoRemoveFromRecents="true">>
+  			<intent-filter>
+    			<action android:name="eu.cyredra.launcher.SETTINGS" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+  			</intent-filter>
         </activity>
 
         <!-- Debugging tools -->

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:launcher="http://schemas.android.com/apk/res-auto/eu.cyredra.launcher">
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_workspace_gridsize"
+            android:key="pref_key_workspace_gridsize">
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_workspaceRows"
+				android:title="@string/pref_workspace_rows"
+				launcher:summary="@string/pref_workspace_rows_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+ 				launcher:minimum="3"
+				launcher:maximum="12" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_workspaceCols"
+				android:title="@string/pref_workspace_cols"
+				launcher:summary="@string/pref_workspace_cols_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="3"
+				launcher:maximum="12" />
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_workspace_icons"
+            android:key="pref_key_workspace_icons">
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_workspaceIconSize"
+				android:title="@string/pref_icons_size_workspace"
+				android:defaultValue="95"
+				launcher:summary="@string/pref_icons_size_workspace_summary"
+				launcher:symbol="%"
+				launcher:negative="0"
+				launcher:minimum="50"
+				launcher:maximum="150" />
+
+			<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+				android:key="pref_key_workspaceLabelColor"
+				android:title="@string/pref_workspace_label_color"
+				android:summary="@string/pref_workspace_label_color_summary"
+				android:defaultValue="@color/quantum_panel_text_color_dark"
+				alphaSlider="true"/>
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_workspace_dock"
+            android:key="pref_key_workspace_dock">
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_hotseatIconSize"
+				android:title="@string/pref_icons_size_hotseat"
+				android:defaultValue="95"
+				launcher:summary="@string/pref_icons_size_hotseat_summary"
+				launcher:symbol="%"
+				launcher:negative="0"
+				launcher:minimum="50"
+				launcher:maximum="150" />
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_workspace_scrolling"
+            android:key="pref_key_workspace_workspace_scrolling">
+
+			<SwitchPreference
+				android:key="pref_key_workspaceWallpaperScroll"
+				android:title="@string/pref_workspace_wallpaper_scroll"
+				android:summary="@string/pref_workspace_wallpaper_scroll_summary"	
+				android:defaultValue="false"/>
+
+			<SwitchPreference
+				android:key="pref_key_workspaceInfiniteScroll"
+				android:title="@string/pref_workspace_infinite_scroll"
+				android:summary="@string/pref_workspace_infinite_scroll_summary"	
+				android:defaultValue="false"/>
+
+   		</PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* Copyright 2015, Cyredra project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<resources>
+
+    <!-- General -->
+	<string name="cyra_application_name">Cyra Launcher</string>
+
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on Color to apply</string>   
+
+	<!-- Preference screens -->
+	<string name="pref_screen_workspace">Workspace</string>
+	<string name="pref_screen_overview">Overview</string>
+    <string name="pref_screen_drawer">App drawer</string>
+	<string name="pref_screen_icons">Icons</string>
+	<string name="pref_screen_gestures">Gestures</string>
+    <string name="pref_screen_general">General</string>
+    <string name="pref_screen_animation_custom">Customize animations</string>
+    <string name="pref_screen_build_info">Launcher info</string>
+
+	<!-- Preference categories --> 
+    <string name="pref_category_workspace_gridsize">Gridsize</string>
+    <string name="pref_category_workspace_icons">Icons</string>
+    <string name="pref_category_workspace_dock">Dock</string>
+    <string name="pref_category_workspace_scrolling">Scrolling</string>
+    <string name="pref_category_overview_tiles">Tiles</string>
+	<string name="pref_category_icons_appearance">Appearance</string>
+    <string name="pref_category_drawer">App drawer</string>
+    <string name="pref_category_drawer_style">Style</string>
+    <string name="pref_category_drawer_icons">Icons</string>
+    <string name="pref_category_drawer_gridsize">Gridsize</string>
+	<string name="pref_category_iconpack">Icon pack</string>
+	<string name="pref_category_appearance">Appearance</string>
+	<string name="pref_category_iconmask">Icon colormask</string>
+	<string name="pref_category_icon_presets">Icon presets</string>
+	<string name="pref_category_gestures">Gestures</string>
+	<string name="pref_category_about">About launcher</string>
+	<string name="pref_category_general_animation">Animations</string>
+    <string name="pref_category_animation_workspace">Workspace</string>
+    <string name="pref_category_animation_drawer">App drawer</string>
+
+    <!-- Preferences workspace -->
+    <string name="pref_workspace_rows">Rows</string>
+    <string name="pref_workspace_rows_summary">Current rows: %s</string>
+    <string name="pref_workspace_cols">Columns</string>
+    <string name="pref_workspace_cols_summary">Current columns: %s</string>
+	<string name="pref_workspace_label_color">Icon label color</string>
+	<string name="pref_workspace_label_color_summary">Set custom icon label color</string>
+	<string name="pref_workspace_wallpaper_scroll">Scroll wallpaper</string>
+	<string name="pref_workspace_wallpaper_scroll_summary">Scroll wallpaper when switching screens.</string>
+	<string name="pref_workspace_infinite_scroll">Infinite scrolling</string>
+	<string name="pref_workspace_infinite_scroll_summary">Enables infinte scrolling, also for the appdrawer.</string>
+
+	<!-- Preferences overview -->
+	<string name="pref_overview_tile_wallpaper">Wallpaper tile</string>
+	<string name="pref_overview_tile_widgets">Widgets tile</string>
+	<string name="pref_overview_tile_apps">Apps tile</string>
+	<string name="pref_overview_tile_settings">System settings tile</string>
+
+    <!-- Preferences app drawer -->
+    <string name="pref_drawer_allapps">App drawer</string>	
+    <string name="pref_drawer_allapps_summary">If the app drawer is disabled all the applications will be placed on workspace</string>	
+    <string name="pref_drawer_style">App drawer style</string>
+    <string name="pref_drawer_style_summary">Change the app drawer style\nCurrent style: %s</string>
+	<string name="pref_drawer_label_color">Label color</string>
+	<string name="pref_drawer_label_color_summary">Set custom label color</string>
+    <string name="pref_drawer_rows">Rows</string>
+    <string name="pref_drawer_rows_summary">Current rows: %s</string>
+    <string name="pref_drawer_cols">Columns</string>
+    <string name="pref_drawer_cols_summary">Current columns: %s</string>
+
+	<!-- Preferences iconsizes -->
+	<string name="pref_icons_size_workspace">Workspace icon size</string>
+	<string name="pref_icons_size_workspace_summary">Current workspace icon size: %s</string>
+	<string name="pref_icons_size_hotseat">Dock icon size</string>
+	<string name="pref_icons_size_hotseat_summary">Current dock icon size: %s</string>
+	<string name="pref_icons_size_allapps">App drawer icon size</string>
+	<string name="pref_icons_size_allapps_summary">Current app drawer icon size: %s</string>
+
+	<!-- Preferences icons -->
+	<string name="pref_icons_brightness">Brightness</string>
+	<string name="pref_icons_brightness_summary">Change the brightness of icons \nCurrent brightness: %s</string>	
+	<string name="pref_icons_saturation">Saturation</string>
+	<string name="pref_icons_saturation_summary">Change the saturation of icons \nCurrent saturation: %s</string>	
+	<string name="pref_icons_contrast">Contrast</string>
+	<string name="pref_icons_contrast_summary">Change the contrast of icons \nCurrent contrast: %s</string>
+	<string name="pref_icons_hue">Hue</string>
+	<string name="pref_icons_hue_summary">Change the hue of icons \nCurrent hue: %s</string>	
+	<string name="pref_icons_alpha">Alpha</string>
+	<string name="pref_icons_alpha_summary">Change the alpha of icons \nCurrent alpha: %s</string>	
+
+	<string name="pref_icons_mask">Use icon mask</string>
+	<string name="pref_icons_mask_summary">Displays a color mask over the icons</string>
+	<string name="pref_icons_mask_color">Icon mask color</string>
+	<string name="pref_icons_mask_color_summary">Set icon mask color</string>
+	<string name="pref_icons_mask_random">Random colors</string>
+	<string name="pref_icons_mask_random_summary">Use random generated colors (rainbow)</string>
+	<string name="pref_icons_preset">Presets</string>
+	<string name="pref_icons_preset_summary">These are pre selected icon settings which you can use as a base for your own icon settings</string>
+
+	<!--Icon pack-->
+    <string name="dialog_pick_iconpack_title">Select icon pack</string>
+    <string name="default_iconpack_title">Default icons</string>
+    <string name="icon_packs_title">Icon packs</string>
+    <string name="no_iconpacks_summary">No supported icon packs installed</string>
+    <string name="pref_icon_pack_title">Select icon pack</string>
+
+	<!-- Preferences gestures -->
+	<string name="pref_gesture_down">Gesture down</string>
+	<string name="pref_gesture_down_summary">Set action for gesture down \nCurrent action: %s</string>
+	<string name="pref_gesture_up">Gesture up</string>
+	<string name="pref_gesture_up_summary">Set action for gesture up \nCurrent action: %s</string>
+	<string name="pref_gesture_longpress">Long press</string>
+	<string name="pref_gesture_longpress_summary">Set action for long press \nCurrent action: %s</string>
+
+    <!-- Preferences general -->
+	<string name="pref_animation_profile">Animation profile</string>
+	<string name="pref_animation_profile_summary">Change the animation profile of the launcher \nCurrent profile: %s</string>
+	<string name="pref_animation_progress">Current animation speed: %s</string>	
+	<string name="pref_application_name">Cyra settings</string>
+    <string name="pref_launcher_version">Version</string>
+    <string name="pref_launcher_status">Release channel</string>
+    <string name="pref_launcher_date">Build date</string>
+    <string name="pref_launcher_tools">Build tools</string>
+
+	<!-- Cyra Admin -->
+    <string name="cyra_admin_title">Devicemanager privilges</string>	
+    <string name="cyra_admin_summary">Allows Cyra launcher to lock screen using the devicemanager privileges</string>
+    <string name="cyra_admin_enabled">Cyra launcher: admin privileges granted</string>	
+    <string name="cyra_admin_disabled">Cyra launcher: admin privileges withdrawn</string>		
+    <string name="cyra_admin_disable_requested">When disabling devicemanger privileges Cyra launcher is not allowed to lock the screen</string>	
+
+	<!-- Animations -->
+	<string name="anim_activity_start_delay">Activity start delay</string>
+	<string name="anim_activity_animation_delay">Activity animation delay</string>
+	<string name="anim_new_apps_animation_delay">New apps animation delay</string>
+	<string name="anim_new_apps_page_delay">New apps page delay</string>
+	<string name="anim_overview_transition">Overview transition time</string>
+	<string name="anim_workspace_unshrink">Workspace unshrink time</string>
+	<string name="anim_background_fade_out">Background fade out duration</string>
+	<string name="anim_zoom_in_time">Zoom in time</string>
+	<string name="anim_zoom_out_time">Zoom out time</string>
+	<string name="anim_fade_in_time">Fade in time</string>
+	<string name="anim_fade_out_time">Fade out time</string>
+	<string name="anim_reveal_time">Reveal time</string>
+	<string name="anim_conceal_time">Conceal time</string>
+
+	<!-- Overview buttons -->
+	<string name="cyra_app_button_text">Applications</string>
+	<string name="cyra_preference_button_text">Preferences</string>
+	<string name="cyra_settings_button_text">Settings</string>	
+
+</resources>

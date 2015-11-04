@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:launcher="http://schemas.android.com/apk/res-auto/eu.cyredra.launcher">
+
+       <PreferenceCategory 
+            android:title="@string/pref_category_drawer_style"
+            android:key="pref_key_drawer_style">
+
+            <ListPreference
+            	android:key="pref_key_drawerStyle"
+            	android:title="@string/pref_drawer_style"
+            	android:dialogTitle="@string/pref_drawer_style"
+            	android:summary="@string/pref_drawer_style_summary"
+            	android:entries="@array/pref_appDrawerStyle_entries"
+            	android:entryValues="@array/pref_appDrawerStyle_values"
+            	android:defaultValue="DRAWER_ZERO"/>
+
+   		</PreferenceCategory>
+
+       <PreferenceCategory 
+            android:title="@string/pref_category_drawer_icons"
+            android:key="pref_key_drawer_icons">
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_drawerIconSize"
+				android:title="@string/pref_icons_size_allapps"
+				android:defaultValue="95"
+				launcher:summary="@string/pref_icons_size_allapps_summary"
+				launcher:symbol="%"
+				launcher:negative="0"
+				launcher:minimum="50"
+				launcher:maximum="150" />
+
+			<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+				android:key="pref_key_drawerLabelColor"
+				android:title="@string/pref_drawer_label_color"
+				android:summary="@string/pref_drawer_label_color_summary"
+				android:defaultValue="@color/quantum_panel_text_color_dark"
+				alphaSlider="true"/>
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_drawer_gridsize"
+            android:key="pref_key_drawer_gridsize">
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_drawerRows"
+				android:title="@string/pref_drawer_rows"
+				launcher:summary="@string/pref_drawer_rows_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+ 				launcher:minimum="3"
+				launcher:maximum="12" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_drawerCols"
+				android:title="@string/pref_drawer_cols"
+				launcher:summary="@string/pref_drawer_cols_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="3"
+				launcher:maximum="12" />
+
+   		</PreferenceCategory>
+
+</PreferenceScreen>

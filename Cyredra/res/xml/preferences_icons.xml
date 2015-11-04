@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:launcher="http://schemas.android.com/apk/res-auto/nl.redmaner.launcher">
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_iconpack"
+            android:key="pref_key_iconpack_settings">
+
+        	<Preference
+            	android:key="pref_key_iconpack"
+            	android:title="@string/pref_icon_pack_title" />
+
+   		</PreferenceCategory>
+		
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_appearance"
+            android:key="pref_key_icon_settings">
+
+			<eu.cyredra.launcher.SeekBarPreference
+            	android:key="pref_key_iconBrightness"
+            	android:title="@string/pref_icons_brightness"
+            	android:defaultValue="100" 
+				launcher:summary="@string/pref_icons_brightness_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="0"
+				launcher:maximum="200" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+            	android:key="pref_key_iconSaturation"
+            	android:title="@string/pref_icons_saturation"
+            	android:defaultValue="100" 
+				launcher:summary="@string/pref_icons_saturation_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="0"
+				launcher:maximum="200" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_iconContrast"
+				android:title="@string/pref_icons_contrast"
+				android:defaultValue="100"
+				launcher:summary="@string/pref_icons_contrast_summary"
+				launcher:symbol=""
+				launcher:negative="100"
+				launcher:minimum="0"
+				launcher:maximum="200" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+            	android:key="pref_key_iconHue"
+            	android:title="@string/pref_icons_hue"
+            	android:defaultValue="180" 
+				launcher:summary="@string/pref_icons_hue_summary"
+				launcher:symbol=""
+				launcher:negative="180"
+				launcher:minimum="0"
+				launcher:maximum="360" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+            	android:key="pref_key_iconAlpha"
+            	android:title="@string/pref_icons_alpha"
+            	android:defaultValue="100" 
+				launcher:summary="@string/pref_icons_alpha_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="0"
+				launcher:maximum="100" />
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_iconmask"
+            android:key="pref_key_iconmask_settings">
+
+			<SwitchPreference
+				android:key="pref_key_iconMask"
+				android:title="@string/pref_icons_mask"
+				android:summary="@string/pref_icons_mask_summary"	
+				android:defaultValue="false"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/material_color_accent"
+            	android:key="pref_key_iconMaskColor"
+            	android:summary="@string/pref_icons_mask_color_summary"
+           	 	android:title="@string/pref_icons_mask_color"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+			<SwitchPreference
+				android:key="pref_key_iconMaskRandom"
+				android:title="@string/pref_icons_mask_random"
+				android:summary="@string/pref_icons_mask_random_summary"	
+				android:defaultValue="false"
+				android:dependency="pref_key_iconMask"/>
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
+            android:title="@string/pref_category_icon_presets"
+            android:key="pref_key_icon_presets">
+
+            <ListPreference
+            	android:key="pref_key_iconPreset"
+            	android:title="@string/pref_icons_preset"
+            	android:dialogTitle="@string/pref_icons_preset"
+            	android:summary="@string/pref_icons_preset_summary"
+            	android:entries="@array/pref_iconPresets_entries"
+            	android:entryValues="@array/pref_iconPresets_values"/>
+
+   		</PreferenceCategory>
+
+</PreferenceScreen>

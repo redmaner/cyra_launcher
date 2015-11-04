@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2015 Redmaner
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<resources>
+    <!-- App drawer style entries -->
+    <array name="pref_appDrawerStyle_entries">
+        <item>No card</item>
+        <item>Light card</item>
+        <item>Dark card</item>
+    </array>
+
+    <!-- App drawer style values -->
+    <array name="pref_appDrawerStyle_values">
+        <item>DRAWER_ZERO</item>
+        <item>DRAWER_LIGHT</item>
+        <item>DRAWER_DARK</item>
+    </array>
+
+
+    <!-- Icon presets entries -->
+    <array name="pref_iconPresets_entries">
+        <item>Normal icons</item>
+        <item>Colorful icons (recommended)</item>
+        <item>Clear color mask</item>
+		<item>Vintage icons</item>
+        <item>Clear color mask (rainbow)</item>
+    </array>
+
+    <!-- Icon presets values -->
+    <array name="pref_iconPresets_values">
+        <item>ICON_PRESET_NONE</item>
+        <item>ICON_PRESET_LIFE</item>
+        <item>ICON_PRESET_MASK</item>
+        <item>ICON_PRESET_VINTAGE</item>
+        <item>ICON_PRESET_RAINBOW</item>
+    </array>
+
+    <!-- Gesture entries -->
+    <array name="pref_gesture_entries">
+        <item>No action</item>
+        <item>Open overview</item>
+        <item>Open app drawer</item>
+        <item>Open widget tray</item>
+        <item>Open settings</item>
+        <item>Expand notifications</item>
+        <item>Lock screen</item>
+    </array>
+
+    <!-- Gesture values -->
+    <array name="pref_gesture_values">
+        <item>GES_NONE</item>
+        <item>GES_OVERVIEW</item>
+        <item>GES_APPS</item>
+        <item>GES_WIDGETS</item>
+        <item>GES_SETTINGS</item>
+        <item>GES_NOTIFICATIONS</item>
+        <item>GES_LOCKSCREEN</item>
+    </array>
+
+    <!-- Animation profile entries -->
+    <array name="pref_animationProfile_entries">
+        <item>Lazy</item>
+        <item>Normal (android)</item>
+        <item>Cyra</item>
+    </array>
+
+    <!-- Animation profile values -->
+    <array name="pref_animationProfile_values">
+        <item>ANIMATION_LAZY</item>
+        <item>ANIMATION_NORMAL</item>
+        <item>ANIMATION_CYRA</item>
+    </array>
+</resources>

@@ -200,6 +200,13 @@ public class IconCache {
     }
 
     /**
+     * Empty out the cache.
+     */
+    public synchronized void flush() {
+        mCache.clear();
+    }
+
+    /**
      * Remove any records for the supplied package name from memory.
      */
     private void removeFromMemCacheLocked(String packageName, UserHandleCompat user) {

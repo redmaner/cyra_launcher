@@ -154,6 +154,7 @@ public class Launcher extends Activity
 
     private static final int REQUEST_BIND_APPWIDGET = 11;
     private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
+	static final int REQUEST_PICK_ICON = 13;
 
     private static final int WORKSPACE_BACKGROUND_GRADIENT = 0;
     private static final int WORKSPACE_BACKGROUND_TRANSPARENT = 1;
@@ -1199,14 +1200,9 @@ public class Launcher extends Activity
         }
     }
 
-    protected boolean hasSettings() {
-        if (mLauncherCallbacks != null) {
-            return mLauncherCallbacks.hasSettings();
-        } else {
-            // On devices with a locked orientation, we will at least have the allow rotation
-            // setting.
-            return !Utilities.isRotationAllowedForDevice(this);
-        }
+    protected void startSettings() {
+        Intent i = new Intent("eu.cyredra.launcher.SETTINGS");
+        startActivity(i);
     }
 
     public void addToCustomContentPage(View customContent,
@@ -1396,19 +1392,15 @@ public class Launcher extends Activity
         wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View settingsButton = findViewById(R.id.settings_button);
-        if (hasSettings()) {
-            settingsButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    if (!mWorkspace.isSwitchingState()) {
-                        onClickSettingsButton(arg0);
-                    }
+        settingsButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (!mWorkspace.isSwitchingState()) {
+                    onClickSettingsButton(arg0);
                 }
-            });
-            settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
-        } else {
-            settingsButton.setVisibility(View.GONE);
-        }
+            }
+        });
+        settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         mOverviewPanel.setAlpha(0f);
 
@@ -2755,11 +2747,7 @@ public class Launcher extends Activity
      */
     protected void onClickSettingsButton(View v) {
         if (LOGD) Log.d(TAG, "onClickSettingsButton");
-        if (mLauncherCallbacks != null) {
-            mLauncherCallbacks.onClickSettingsButton(v);
-        } else {
-            startActivity(new Intent(this, SettingsActivity.class));
-        }
+        startSettings();
     }
 
     public View.OnTouchListener getHapticFeedbackTouchListener() {
