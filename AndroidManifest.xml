@@ -48,6 +48,7 @@
         android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST"
         android:protectionLevel="signatureOrSystem" />
 
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
@@ -154,7 +155,7 @@
         </activity>
 
         <activity
-            android:name="eu.cyredra.launcher.LauncherPreferencesActivity"
+            android:name="eu.cyredra.launcher.CyraPreferencesActivity"
             android:theme="@style/Theme.Settings"
         	android:label="@string/pref_application_name"
             android:autoRemoveFromRecents="true">>
@@ -185,6 +186,16 @@
             android:enabled="@bool/debug_memory_enabled"
             >
         </service>
+
+		<receiver 
+			android:name="com.android.launcher3.CyraAdmin"
+        	android:permission="android.permission.BIND_DEVICE_ADMIN">
+    		<meta-data android:name="android.app.device_admin"
+            	android:resource="@xml/policies" />
+    		<intent-filter>
+        		<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+    		</intent-filter>
+		</receiver>
 
         <receiver
             android:name="com.android.launcher3.WallpaperChangedReceiver">

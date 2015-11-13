@@ -38,6 +38,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -57,6 +58,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -67,6 +69,7 @@ public class IconCache {
     private static final String TAG = "Launcher.IconCache";
 
     private static final int INITIAL_ICON_CACHE_CAPACITY = 50;
+	private IconPackHelper mIconPackHelper;
 
     // Empty class name is used for storing package default entry.
     private static final String EMPTY_CLASS_NAME = ".";
@@ -121,6 +124,10 @@ public class IconCache {
         mIconDb = new IconDB(context);
 
         mWorkerHandler = new Handler(LauncherModel.getWorkerLooper());
+
+		// Get iconpack
+        mIconPackHelper = new IconPackHelper(context);
+        loadIconPack();
 
         mActivityBgColor = context.getResources().getColor(R.color.quantum_panel_bg_color);
         mPackageBgColor = context.getResources().getColor(R.color.quantum_panel_bg_color_dark);
@@ -190,6 +197,17 @@ public class IconCache {
         d.draw(c);
         c.setBitmap(null);
         return b;
+    }	
+
+	// Load iconpack
+    private void loadIconPack() {
+        mIconPackHelper.unloadIconPack();
+        String iconPack = PreferenceManager.getDefaultSharedPreferences(mContext)
+                    .getString(CyraPreferencesProvider.KEY_ICON_PACK, "");
+        if (!TextUtils.isEmpty(iconPack) && !mIconPackHelper.loadIconPack(iconPack)) {
+            PreferenceManager.getDefaultSharedPreferences(mContext).edit()
+                    .putString(CyraPreferencesProvider.KEY_ICON_PACK, "").commit();
+        }
     }
 
     /**
@@ -203,7 +221,9 @@ public class IconCache {
      * Empty out the cache.
      */
     public synchronized void flush() {
-        mCache.clear();
+        mIconDb.clearDB(mIconDb.getWritableDatabase());
+		mCache.clear();
+		loadIconPack();
     }
 
     /**
@@ -551,7 +571,21 @@ public class IconCache {
             // Check the DB first.
             if (!getEntryFromDB(componentName, user, entry, useLowResIcon)) {
                 if (info != null) {
-                    entry.icon = Utilities.createIconBitmap(info.getBadgedIcon(mIconDpi), mContext);
+					// Load icon from iconpack if available
+					if (mIconPackHelper != null && mIconPackHelper.isIconPackLoaded()) {
+						int iconId = mIconPackHelper.getResourceIdForActivityIcon(
+							info.getComponentName().getPackageName(), info.getName());
+						if (iconId != 0) { 
+							Drawable mIconPackIcon = getFullResIcon(mIconPackHelper.getIconPackResources(), iconId);
+							entry.icon = Utilities.createIconBitmap(mIconPackIcon, mContext);
+						} else {
+							entry.icon = Utilities.createIconBitmap(info.getBadgedIcon(mIconDpi), mContext, 
+									mIconPackHelper.getIconBack(), mIconPackHelper.getIconMask(), mIconPackHelper.getIconUpon(), 
+									mIconPackHelper.getIconScale());
+						}
+					} else {
+                    	entry.icon = Utilities.createIconBitmap(info.getBadgedIcon(mIconDpi), mContext);
+					}
                 } else {
                     if (usePackageIcon) {
                         CacheEntry packageEntry = getEntryForPackageLocked(
@@ -569,7 +603,7 @@ public class IconCache {
                                 componentName.toShortString());
                         entry.icon = getDefaultIcon(user);
                     }
-                }
+                }	
             }
 
             if (TextUtils.isEmpty(entry.title) && info != null) {

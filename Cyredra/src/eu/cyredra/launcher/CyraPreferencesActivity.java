@@ -21,7 +21,7 @@ import com.android.launcher3.LauncherAppState;
 
 import java.util.List;
 
-public final class LauncherPreferencesActivity extends PreferenceActivity {
+public final class CyraPreferencesActivity extends PreferenceActivity {
 
 	public static final String KEY_WORKSPACE_ROWS = "pref_key_workspaceRows";
 	public static final String KEY_WORKSPACE_COLS = "pref_key_workspaceCols";
@@ -31,7 +31,7 @@ public final class LauncherPreferencesActivity extends PreferenceActivity {
 
  	private static final String TAG = "LauncherPreferences";
 
-	public static LauncherPreferencesActivity instance = null;
+	public static CyraPreferencesActivity instance = null;
 
 	private static Context context;
 
@@ -40,7 +40,7 @@ public final class LauncherPreferencesActivity extends PreferenceActivity {
     {
         super.onCreate(savedInstanceState);
 		instance = this;
-		LauncherPreferencesActivity.context = this;
+		CyraPreferencesActivity.context = this;
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -158,6 +158,6 @@ public final class LauncherPreferencesActivity extends PreferenceActivity {
 	}
 
     public static Context getAppContext() {
-        return LauncherPreferencesActivity.context;
+        return CyraPreferencesActivity.context;
     }
 }

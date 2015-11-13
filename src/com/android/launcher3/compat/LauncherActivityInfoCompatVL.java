@@ -56,6 +56,10 @@ public class LauncherActivityInfoCompatVL extends LauncherActivityInfoCompat {
         return mLauncherActivityInfo.getFirstInstallTime();
     }
 
+    public String getName() {
+        return mLauncherActivityInfo.getName();
+    }
+
     public Drawable getBadgedIcon(int density) {
         return mLauncherActivityInfo.getBadgedIcon(density);
     }

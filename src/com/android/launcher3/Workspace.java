@@ -103,7 +103,10 @@ public class Workspace extends PagedView
     static final boolean MAP_RECURSE = true;
 
     private static final long CUSTOM_CONTENT_GESTURE_DELAY = 200;
+    private static final long CYRA_GESTURE_DELAY = 600;
     private long mTouchDownTime = -1;
+	public long mLastGestureTime = -1;
+	private long mCurrentGestureTime = -1;
     private long mCustomContentShowTime = -1;
 
     private LayoutTransition mLayoutTransition;
@@ -255,6 +258,10 @@ public class Workspace extends PagedView
     @Thunk Runnable mDeferredAction;
     private boolean mDeferDropAfterUninstall;
     private boolean mUninstallSuccessful;
+
+	// Cyra gestures
+	public String mGestureDown = "GES_NONE";
+	public String mGestureUp = "GES_OVERVIEW";
 
     // State related to Launcher Overlay
     LauncherOverlay mLauncherOverlay;
@@ -1053,6 +1060,40 @@ public class Workspace extends PagedView
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {
+		case MotionEvent.ACTION_MOVE:
+        	// Disallow scrolling if we don't have a valid pointer index
+        	final int pointerIndex = ev.findPointerIndex(mActivePointerId);
+        	if (pointerIndex == -1) break;
+
+        	final float xx = ev.getX(pointerIndex);
+        	final float yy = ev.getY(pointerIndex);
+
+        	final int xDiff = (int) Math.abs(xx - mLastMotionX);
+        	final int yDiff = (int) Math.abs(yy - mLastMotionY);
+
+        	final int touchSlop = mGestureTouchSlop;
+        	boolean xMoved = xDiff > touchSlop;
+        	boolean yMoved = yDiff > touchSlop;
+
+			mCurrentGestureTime = System.currentTimeMillis();
+
+			if ((mCurrentGestureTime - mLastGestureTime) > CYRA_GESTURE_DELAY) {
+				if (xMoved || yMoved) {
+					// Only y axis movement. So may be a Swipe down or up gesture
+	            	if ((yy - mLastMotionY) > 0){
+	            		if(Math.abs(yy-mLastMotionY)>(touchSlop*6)) {
+	            			mLauncher.gestureAction(mGestureDown);
+            				mLastGestureTime = System.currentTimeMillis();
+						}
+	            	} else {
+	            		if (Math.abs(yy-mLastMotionY)>(touchSlop*6)) {
+							mLauncher.gestureAction(mGestureUp);           
+							mLastGestureTime = System.currentTimeMillis();
+						}
+	            	}
+        		}
+			}
+			break;
         case MotionEvent.ACTION_DOWN:
             mXDown = ev.getX();
             mYDown = ev.getY();

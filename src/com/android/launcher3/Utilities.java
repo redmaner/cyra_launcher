@@ -40,6 +40,9 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -64,6 +67,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
+import eu.cyredra.launcher.ImageProcessor;
 import eu.cyredra.launcher.R;
 
 /**
@@ -175,10 +180,15 @@ public final class Utilities {
         return createIconBitmap(new BitmapDrawable(context.getResources(), icon), context);
     }
 
+    public static Bitmap createIconBitmap(Drawable icon, Context context) {
+        return createIconBitmap(icon, context, null, null, null, 1f);
+    }
+
     /**
      * Returns a bitmap suitable for the all apps view.
      */
-    public static Bitmap createIconBitmap(Drawable icon, Context context) {
+    public static Bitmap createIconBitmap(Drawable icon, Context context, Drawable iconBack,
+            Drawable iconMask, Drawable iconUpon, float scale) {
         synchronized (sCanvas) {
             final int iconBitmapSize = getIconBitmapSize();
 
@@ -213,7 +223,7 @@ public final class Utilities {
             int textureWidth = iconBitmapSize;
             int textureHeight = iconBitmapSize;
 
-            final Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight,
+            Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight,
                     Bitmap.Config.ARGB_8888);
             final Canvas canvas = sCanvas;
             canvas.setBitmap(bitmap);
@@ -234,8 +244,65 @@ public final class Utilities {
 
             sOldBounds.set(icon.getBounds());
             icon.setBounds(left, top, left+width, top+height);
+
+			int mIconBrightness = CyraPreferencesProvider.getIconBrightness();
+			int mIconSaturation = CyraPreferencesProvider.getIconSaturation();
+			int mIconContrast = CyraPreferencesProvider.getIconContrast();
+			int mIconHue = CyraPreferencesProvider.getIconHue();
+			int mIconAlpha = CyraPreferencesProvider.getIconAlpha();
+
+			boolean mIconMask = CyraPreferencesProvider.getIconMask();
+			int mIconMaskColor = CyraPreferencesProvider.getIconMaskColor();
+			boolean mIconMaskRandom = CyraPreferencesProvider.getIconMaskRandom();
+
+			ImageProcessor.enhanceIcon(icon, mIconBrightness, mIconSaturation, mIconContrast, mIconHue, mIconAlpha);
+
+            canvas.save();
+            if (iconMask != null || iconBack != null) {
+                canvas.scale(scale, scale, width/2, height/2);
+            }
             icon.draw(canvas);
+            canvas.restore();
+
+			// Icon pack iconMask
+            if (iconMask != null) {
+                iconMask.setBounds(icon.getBounds());
+                ((BitmapDrawable) iconMask).getPaint().setXfermode(
+                        new PorterDuffXfermode(Mode.DST_OUT));
+                iconMask.draw(canvas);
+                canvas.setBitmap(null);
+            }
+
+			// Icon pack iconBack
+            if (iconBack != null) {
+                Bitmap finalBitmap = Bitmap.createBitmap(textureWidth, textureHeight,
+                        Bitmap.Config.ARGB_8888);
+                canvas.setBitmap(finalBitmap);
+                iconBack.setBounds(icon.getBounds());
+                Paint paint = ((BitmapDrawable) iconBack).getPaint();
+                paint.setXfermode(
+                        new PorterDuffXfermode(Mode.DST_OVER));
+                iconBack.draw(canvas);
+                canvas.drawBitmap(bitmap, null, icon.getBounds(), null);
+                bitmap = finalBitmap;
+            }
+
+			// Icon pack iconUpon
+            if (iconUpon != null) {
+                iconUpon.setBounds(icon.getBounds());
+                iconUpon.draw(canvas);
+            }
             icon.setBounds(sOldBounds);
+
+			// ImageProcessor colormask
+			if (mIconMask) {
+				if (mIconMaskRandom) {
+					ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, ImageProcessor.randomizeColor());
+				} else {
+					ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, mIconMaskColor);
+				}
+			}
+
             canvas.setBitmap(null);
 
             return bitmap;

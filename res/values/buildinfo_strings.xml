@@ -18,8 +18,8 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="cyra_launcher_version">1.150</string>
+	<string name="cyra_launcher_version">1.151</string>
 	<string name="cyra_launcher_status">charlie</string>
-	<string name="cyra_launcher_date">Wed 04 November 2015 20:04 CET</string>
+	<string name="cyra_launcher_date">Fri 13 November 2015 18:45 CET</string>
 	<string name="cyra_launcher_tools">Java 1.7, Gradle 2.7, android gradle plugin 1.3.1, build tools 23.0.1</string>
 </resources>

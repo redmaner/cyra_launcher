@@ -29,6 +29,7 @@ import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.app.admin.DevicePolicyManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
@@ -42,6 +43,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -65,6 +67,7 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.preference.PreferenceManager;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -127,6 +130,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import eu.cyredra.launcher.CyraPreferencesActivity;
+import eu.cyredra.launcher.CyraPreferencesProvider;
+import eu.cyredra.launcher.ImageProcessor;
 import eu.cyredra.launcher.R;
 
 /**
@@ -415,6 +421,41 @@ public class Launcher extends Activity
         }
     };
 
+	// Cyra Launcher settings
+	private String mAppDrawerStyle;
+	private String mAnimationProfile;
+	private String mIconPreset;
+	private String mGestureLongpress = "GES_OVERVIEW";
+	private boolean mCyraAdmin;
+
+	// Cyra animations
+    private int mZoomInTime;
+    private int mFadeInTime;
+    private int mRevealTime;
+	private int mZoomOutTime;
+	private int mFadeOutTime;
+	private int mConcealTime;
+
+	// Cyra Gestures
+	protected static final String GESTURE_NONE = "GES_NONE";
+	protected static final String GESTURE_SHOW_OVERVIEW = "GES_OVERVIEW";
+	protected static final String GESTURE_SHOW_APPS = "GES_APPS";
+	protected static final String GESTURE_SHOW_WIDGETS = "GES_WIDGETS"; 
+	protected static final String GESTURE_SHOW_SETTINGS = "GES_SETTINGS";
+	protected static final String GESTURE_SHOW_NOTIFICATIONS = "GES_NOTIFICATIONS";
+	protected static final String GESTURE_LOCK_SCREEN = "GES_LOCKSCREEN";
+
+	// Cyra overview
+	private boolean mOverviewTileWallpaper;
+	private boolean mOverviewTileWidgets;
+	private boolean mOverviewTileApps;
+	private boolean mOverviewTileSettings;
+
+	static final int RESULT_ENABLE = 1;
+
+    DevicePolicyManager deviceManager;  
+    ComponentName mCyraAdminName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (DEBUG_STRICT_MODE) {
@@ -499,6 +540,23 @@ public class Launcher extends Activity
                 mModel.startLoader(mWorkspace.getRestorePage());
             }
         }
+
+		// Cyra settings
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(mSharedPreferencesObserver);
+
+		// Set default values
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_workspace, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_drawer, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_icons, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_gestures, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_general, false);
+
+		updateCyraSettings();
+
+        deviceManager = (DevicePolicyManager)getSystemService(  
+        	Context.DEVICE_POLICY_SERVICE); 
+        mCyraAdminName = new ComponentName(this, CyraAdmin.class);
 
         // For handling default keys
         mDefaultKeySsb = new SpannableStringBuilder();
@@ -1981,9 +2039,269 @@ public class Launcher extends Activity
         }
     }
 
+    private final OnSharedPreferenceChangeListener mSharedPreferencesObserver = new OnSharedPreferenceChangeListener() {
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+	     String key) {
+
+	     	if(CyraPreferencesProvider.isCyraPreference(key) 
+			|| CyraPreferencesProvider.isCyraDeviceProfile(key)) {
+	        	if(!isFinishing()) {
+					CyraPreferencesProvider.loadCyraPreferences(Launcher.this);
+					if(key.equals(CyraPreferencesProvider.KEY_ICON_MASK) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_COLOR) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_RANDOM) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_SATURATION) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_CONTRAST) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_HUE) 
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_ALPHA)
+					|| key.equals(CyraPreferencesProvider.KEY_ICON_PACK)  
+					|| key.equals(CyraPreferencesProvider.KEY_DRAWER_ALLAPPS)) {
+						mIconCache.flush();
+						LauncherAppState.getInstance().getModel().forceReload();
+					} else if (key.equals(CyraPreferencesProvider.KEY_CYRA_ADMIN)) {
+						cyraAdminActivate();
+					} else if (key.equals(CyraPreferencesProvider.KEY_ANIMATION_PROFILE)) {
+						cyraAnimationProfile();
+						if (CyraPreferencesActivity.instance != null) {
+							try {  
+            					CyraPreferencesActivity.instance.finish(); 
+        					} catch (Exception e) {}
+    						}
+					} else if (key.equals(CyraPreferencesProvider.KEY_ICON_PRESET)) {
+						setCyraIconPreset();
+						if (CyraPreferencesActivity.instance != null) {
+							try {  
+            					CyraPreferencesActivity.instance.finish(); 
+        					} catch (Exception e) {}
+    						}
+					}
+		     		Launcher.this.
+		     		recreate();
+		 		}
+	     	}
+		}
+    };
+
+	private void updateCyraSettings () {
+
+		CyraPreferencesProvider.loadCyraPreferences(this);
+
+	/**
+		// General preferences
+		mAppDrawerStyle = CyraPreferencesProvider.getDrawerStyle();
+		mWorkspace.mWallpaperScroll = CyraPreferencesProvider.getWorkspaceWallpaperScroll();
+	**/
+
+		mWorkspace.mGestureDown = CyraPreferencesProvider.getGestureDown();
+		mWorkspace.mGestureUp = CyraPreferencesProvider.getGestureUp();
+		mGestureLongpress = CyraPreferencesProvider.getGestureLongpress();
+
+	/**
+		// Animation profiles
+    	mZoomInTime = 350 * CyraPreferencesProvider.getAnimZoomInTime() / 100;
+    	mFadeInTime = 250 * CyraPreferencesProvider.getAnimFadeInTime() / 100;
+    	mRevealTime = 220 * CyraPreferencesProvider.getAnimRevealTime() / 100;
+        mZoomOutTime = 600 * CyraPreferencesProvider.getAnimZoomOutTime() / 100;
+        mFadeOutTime = 200 * CyraPreferencesProvider.getAnimFadeOutTime() / 100;
+        mConcealTime = 250 * CyraPreferencesProvider.getAnimConcealTime() / 100;
+		mWorkspace.mOverviewTransitionTime = 250 * CyraPreferencesProvider.getAnimOverviewTransition() / 100;
+		mWorkspace.mWorkspaceShrinkTime = 300 * CyraPreferencesProvider.getAnimWorkspaceUnshrink() / 100;
+    	mWorkspace.BACKGROUND_FADE_OUT_DURATION = 350 * CyraPreferencesProvider.getAnimBackgroundFadeOut() / 100;
+
+	**/
+
+	}
+
+	private void getCyraOverviewTiles () {
+		// Overview
+		mOverviewTileWallpaper = CyraPreferencesProvider.getOverviewWallpaper();
+		mOverviewTileWidgets = CyraPreferencesProvider.getOverviewWidgets();
+		mOverviewTileApps = CyraPreferencesProvider.getOverviewApps();
+		mOverviewTileSettings = CyraPreferencesProvider.getOverviewSettings();
+
+	}
+
+	private void cyraAnimationProfile () {
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = prefs.edit();
+
+		mAnimationProfile = CyraPreferencesProvider.getAnimationProfile();
+
+		switch (mAnimationProfile) {
+			case "ANIMATION_CYRA":
+				editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_IN_TIME, 75);
+    			editor.putInt(CyraPreferencesProvider.ANIM_FADE_IN_TIME, 75);
+    			editor.putInt(CyraPreferencesProvider.ANIM_REVEAL_TIME, 75);
+        		editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_OUT_TIME, 75);
+        		editor.putInt(CyraPreferencesProvider.ANIM_FADE_OUT_TIME, 75);
+        		editor.putInt(CyraPreferencesProvider.ANIM_CONCEAL_TIME, 75);
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION, 50);
+				editor.putInt(CyraPreferencesProvider.ANIM_WORKSPACE_UNSHRINK, 50);
+    			editor.putInt(CyraPreferencesProvider.ANIM_BACKGROUND_FADE_OUT, 50);
+		    	editor.apply();
+				break;
+			case "ANIMATION_NORMAL":
+				editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_IN_TIME, 100);
+    			editor.putInt(CyraPreferencesProvider.ANIM_FADE_IN_TIME, 100);
+    			editor.putInt(CyraPreferencesProvider.ANIM_REVEAL_TIME, 100);
+        		editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_OUT_TIME, 100);
+        		editor.putInt(CyraPreferencesProvider.ANIM_FADE_OUT_TIME, 100);
+        		editor.putInt(CyraPreferencesProvider.ANIM_CONCEAL_TIME, 100);
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION, 100);
+				editor.putInt(CyraPreferencesProvider.ANIM_WORKSPACE_UNSHRINK, 100);
+    			editor.putInt(CyraPreferencesProvider.ANIM_BACKGROUND_FADE_OUT, 100);
+		    	editor.apply();
+				break;
+			case "ANIMATION_LAZY":
+				editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_IN_TIME, 150);
+    			editor.putInt(CyraPreferencesProvider.ANIM_FADE_IN_TIME, 150);
+    			editor.putInt(CyraPreferencesProvider.ANIM_REVEAL_TIME, 150);
+        		editor.putInt(CyraPreferencesProvider.ANIM_ZOOM_OUT_TIME, 150);
+        		editor.putInt(CyraPreferencesProvider.ANIM_FADE_OUT_TIME, 150);
+        		editor.putInt(CyraPreferencesProvider.ANIM_CONCEAL_TIME, 150);
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION, 150);
+				editor.putInt(CyraPreferencesProvider.ANIM_WORKSPACE_UNSHRINK, 150);
+    			editor.putInt(CyraPreferencesProvider.ANIM_BACKGROUND_FADE_OUT, 150);
+		    	editor.apply();
+				break;
+			default:
+				break;
+		} 
+	}
+
+	private void setCyraIconPreset() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = prefs.edit();
+
+		mIconPreset = CyraPreferencesProvider.getIconPreset();
+
+		switch (mIconPreset) {
+			case "ICON_PRESET_NONE":
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 180);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, false);
+				editor.apply();
+				break;
+			case "ICON_PRESET_LIFE":
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 105);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 115);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 110);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 180);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, false);
+				editor.apply();
+				break;
+			case "ICON_PRESET_MASK":
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 105);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 0);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 125);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, true);
+				editor.apply();
+				break;
+			case "ICON_PRESET_VINTAGE":
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 40);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 120);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, true);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_MASK_COLOR, 
+									ImageProcessor.makeColor(218, 165, 35));				
+				editor.apply();
+				break;
+			case "ICON_PRESET_RAINBOW":
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 105);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 0);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 125);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 100);
+				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, true);
+				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK_RANDOM, true);
+				editor.apply();
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void cyraAdminActivate() {
+		mCyraAdmin = CyraPreferencesProvider.getCyraAdmin();
+		boolean mCyraAdminActive = deviceManager.isAdminActive(mCyraAdminName);
+		if (!mCyraAdmin && mCyraAdminActive) {
+			deviceManager.removeActiveAdmin(mCyraAdminName);  
+		} else if (mCyraAdmin && !mCyraAdminActive) {
+   			Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);  
+           	intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mCyraAdminName); 
+			intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,  
+                    getResources().getString(R.string.cyra_admin_summary));
+           	this.startActivityForResult(intent, RESULT_ENABLE);
+		}
+	}
+
+    private void showNotifications() {
+        try {
+            Object service = getSystemService("statusbar");
+            Class<?> statusBarManager = Class
+                            .forName("android.app.StatusBarManager");
+            Method collapse = statusBarManager.getMethod("expandNotificationsPanel");
+            collapse.invoke(service);
+        } catch (Exception e) {
+        }
+    }
+
+	public void gestureAction (String action) {
+		switch (action) {
+		case GESTURE_NONE:
+			break;
+		case GESTURE_SHOW_OVERVIEW:
+            if (!mWorkspace.isInOverviewMode()) {
+                // Show the overview mode
+                showOverviewMode(true);
+            } else {
+                showWorkspace(true);
+            };
+			break;
+		case GESTURE_SHOW_APPS:
+			showAppsView(true /* animated */, false /* resetListToTop */,
+                    true /* updatePredictedApps */, false /* focusSearchBar */);
+			break;
+		case GESTURE_SHOW_WIDGETS:
+           	showWidgetsView(true /* animated */, true /* resetPageToZero */);
+			break;
+		case GESTURE_SHOW_SETTINGS:
+			Intent i = new Intent("eu.cyredra.launcher.SETTINGS");
+        	this.startActivity(i);
+			break;
+		case GESTURE_SHOW_NOTIFICATIONS:
+			showNotifications();
+			break;
+		case GESTURE_LOCK_SCREEN:
+    		boolean mCyraAdminActive = deviceManager.isAdminActive(mCyraAdminName);  
+            if (mCyraAdminActive) {  
+            	deviceManager.lockNow();  
+			} else {
+				cyraAdminActivate();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(mSharedPreferencesObserver);
 
         // Remove all pending runnables
         mHandler.removeMessages(ADVANCE_MSG);
@@ -3165,7 +3483,13 @@ public class Launcher extends Activity
                 if (mWorkspace.isInOverviewMode()) {
                     mWorkspace.startReordering(v);
                 } else {
-                    showOverviewMode(true);
+					if (mWorkspace.mGestureDown.equals("GES_OVERVIEW") 
+					|| mWorkspace.mGestureUp.equals("GES_OVERVIEW")) {
+                    	gestureAction(mGestureLongpress);
+					} else {
+                    	showOverviewMode(true);
+					}
+					mWorkspace.mLastGestureTime = System.currentTimeMillis();
                 }
             } else {
                 final boolean isAllAppsButton = inHotseat && isAllAppsButtonRank(

@@ -143,6 +143,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     protected OnLongClickListener mLongClickListener;
 
     protected int mTouchSlop;
+    protected int mGestureTouchSlop;
     private int mMaximumVelocity;
     protected int mPageLayoutWidthGap;
     protected int mPageLayoutHeightGap;
@@ -249,6 +250,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledPagingTouchSlop();
+		mGestureTouchSlop = configuration.getScaledTouchSlop();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
         mDensity = getResources().getDisplayMetrics().density;
 

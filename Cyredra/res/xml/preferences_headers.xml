@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$WorkspaceFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$WorkspaceFragment"
         android:title="@string/pref_screen_workspace"
         android:icon="@drawable/ic_settings_workspace" />
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$OverviewFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$OverviewFragment"
         android:title="@string/pref_screen_overview"
         android:icon="@drawable/ic_settings_overview" />
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$DrawerFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$DrawerFragment"
         android:title="@string/pref_screen_drawer"
         android:icon="@drawable/ic_settings_drawer" />
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$IconsFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$IconsFragment"
         android:title="@string/pref_screen_icons"
         android:icon="@drawable/ic_settings_icons" />
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$GesturesFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$GesturesFragment"
         android:title="@string/pref_screen_gestures"
         android:icon="@drawable/ic_settings_gestures" />
     <header 
-        android:fragment="eu.cyredra.launcher.LauncherPreferencesActivity$GeneralFragment"
+        android:fragment="eu.cyredra.launcher.CyraPreferencesActivity$GeneralFragment"
         android:title="@string/pref_screen_general"
         android:icon="@drawable/ic_settings_general" />
 </preference-headers>
