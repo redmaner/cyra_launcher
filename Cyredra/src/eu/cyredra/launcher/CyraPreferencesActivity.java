@@ -44,7 +44,6 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		/**
         InvariantDeviceProfile inv = LauncherAppState.getInstance().getInvariantDeviceProfile();
 
         if(inv != null) {
@@ -54,29 +53,24 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
 
 			// Default workspace grid
             if(prefs.getInt(KEY_WORKSPACE_ROWS, 0) < 1) {
-          	    Log.i(TAG,"Loading r default value from: "+inv.toString());
                 editor.putInt(KEY_WORKSPACE_ROWS, (int)inv.numRows);
             } 
             if(prefs.getInt(KEY_WORKSPACE_COLS, 0) < 1) {
-                Log.i(TAG,"Loading c default value from: "+inv.toString());
                 editor.putInt(KEY_WORKSPACE_COLS, (int)inv.numColumns);
             }
 
 			// Default app drawer grid
             if(prefs.getInt(KEY_DRAWER_ROWS, 0) < 1) {
-          	    Log.i(TAG,"Loading adr default value from: "+inv.toString());
-                editor.putInt(KEY_DRAWER_ROWS, (int)inv.numFolderRows);
+                editor.putInt(KEY_DRAWER_ROWS, (int)inv.numRows);
             } 
             if(prefs.getInt(KEY_DRAWER_COLS, 0) < 1) {
-                Log.i(TAG,"Loading adc default value from: "+inv.toString());
-                editor.putInt(KEY_DRAWER_COLS, (int)inv.numFolderColumns);
+                editor.putInt(KEY_DRAWER_COLS, (int)inv.numColumns);
             }
 
             editor.apply();
         } else {
             Log.w(TAG, "No DynamicGrid to get default values!");
         }
-		**/
 
     }
 

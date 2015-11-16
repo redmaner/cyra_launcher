@@ -596,14 +596,7 @@ public class Launcher extends Activity
     }
 
     @Override
-    public void onSettingsChanged(String settings, boolean value) {
-        if (Utilities.ALLOW_ROTATION_PREFERENCE_KEY.equals(settings)) {
-            mRotationEnabled = value;
-            if (!waitUntilResume(mUpdateOrientationRunnable, true)) {
-                mUpdateOrientationRunnable.run();
-            }
-        }
-    }
+    public void onSettingsChanged(String settings, boolean value) {}
 
     private LauncherCallbacks mLauncherCallbacks;
 
@@ -1262,6 +1255,13 @@ public class Launcher extends Activity
         Intent i = new Intent("eu.cyredra.launcher.SETTINGS");
         startActivity(i);
     }
+
+	public void restartLauncher() {
+		Intent i = getBaseContext().getPackageManager()
+				.getLaunchIntentForPackage(getBaseContext().getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+	}
 
     public void addToCustomContentPage(View customContent,
             CustomContentCallbacks callbacks, String description) {
@@ -2048,6 +2048,7 @@ public class Launcher extends Activity
 			|| CyraPreferencesProvider.isCyraDeviceProfile(key)) {
 	        	if(!isFinishing()) {
 					CyraPreferencesProvider.loadCyraPreferences(Launcher.this);
+					CyraPreferencesProvider.loadCyraDeviceProfile(Launcher.this);
 					if(key.equals(CyraPreferencesProvider.KEY_ICON_MASK) 
 					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_COLOR) 
 					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_RANDOM) 
@@ -2088,12 +2089,14 @@ public class Launcher extends Activity
 
 		CyraPreferencesProvider.loadCyraPreferences(this);
 
-	/**
+		mRotationEnabled = CyraPreferencesProvider.getAllowRotation();
+        if (!waitUntilResume(mUpdateOrientationRunnable, true)) {
+        	mUpdateOrientationRunnable.run();
+        }
+
 		// General preferences
 		mAppDrawerStyle = CyraPreferencesProvider.getDrawerStyle();
 		mWorkspace.mWallpaperScroll = CyraPreferencesProvider.getWorkspaceWallpaperScroll();
-	**/
-
 		mWorkspace.mGestureDown = CyraPreferencesProvider.getGestureDown();
 		mWorkspace.mGestureUp = CyraPreferencesProvider.getGestureUp();
 		mGestureLongpress = CyraPreferencesProvider.getGestureLongpress();

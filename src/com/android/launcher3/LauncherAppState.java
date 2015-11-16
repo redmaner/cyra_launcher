@@ -21,6 +21,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.android.launcher3.accessibility.LauncherAccessibilityDelegate;
@@ -30,6 +33,7 @@ import com.android.launcher3.util.Thunk;
 
 import java.lang.ref.WeakReference;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 public class LauncherAppState {
@@ -104,6 +108,9 @@ public class LauncherAppState {
         filter.addAction(LauncherAppsCompat.ACTION_MANAGED_PROFILE_REMOVED);
 
         sContext.registerReceiver(mModel, filter);
+
+        PreferenceManager.getDefaultSharedPreferences(sContext)
+                .registerOnSharedPreferenceChangeListener(mSharedPreferencesObserver);
     }
 
     /**
@@ -114,6 +121,9 @@ public class LauncherAppState {
         final LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(sContext);
         launcherApps.removeOnAppsChangedCallback(mModel);
         PackageInstallerCompat.getInstance(sContext).onStop();
+
+        PreferenceManager.getDefaultSharedPreferences(sContext)
+                .unregisterOnSharedPreferenceChangeListener(mSharedPreferencesObserver);
     }
 
     /**
@@ -124,6 +134,19 @@ public class LauncherAppState {
         mModel.resetLoadedState(false, true);
         mModel.startLoaderFromBackground();
     }
+
+    private final OnSharedPreferenceChangeListener mSharedPreferencesObserver = new OnSharedPreferenceChangeListener() {
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                String key) {
+
+            if (CyraPreferencesProvider.isCyraDeviceProfile(key)) {
+				CyraPreferencesProvider.loadCyraDeviceProfile(getContext());
+                mInvariantDeviceProfile.updateFromPreferences();
+            }
+        }
+    };
 
     LauncherModel setLauncher(Launcher launcher) {
         getLauncherProvider().setLauncherProviderChangeListener(launcher);

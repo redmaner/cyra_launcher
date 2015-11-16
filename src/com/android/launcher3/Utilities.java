@@ -106,10 +106,7 @@ public final class Utilities {
     }
 
     public static boolean isAllowRotationPrefEnabled(Context context, boolean multiProcess) {
-        SharedPreferences sharedPrefs = context.getSharedPreferences(
-                LauncherAppState.getSharedPreferencesKey(), Context.MODE_PRIVATE | (multiProcess ?
-                        Context.MODE_MULTI_PROCESS : 0));
-        boolean allowRotationPref = sharedPrefs.getBoolean(ALLOW_ROTATION_PREFERENCE_KEY, false);
+        boolean allowRotationPref = CyraPreferencesProvider.getAllowRotation();
         return sForceEnableRotation || allowRotationPref;
     }
 

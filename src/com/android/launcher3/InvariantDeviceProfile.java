@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 public class InvariantDeviceProfile {
@@ -69,6 +70,7 @@ public class InvariantDeviceProfile {
     public int numFolderRows;
     public int numFolderColumns;
     float iconSize;
+	float iconSizeStatic;
     int iconBitmapSize;
     int fillResIconDpi;
     float iconTextSize;
@@ -78,6 +80,7 @@ public class InvariantDeviceProfile {
      */
     float numHotseatIcons;
     float hotseatIconSize;
+	float hotseatIconSizeStatic;
     int defaultLayoutId;
 
     // Derived invariant properties
@@ -112,10 +115,13 @@ public class InvariantDeviceProfile {
         numFolderColumns = fc;
         minAllAppsPredictionColumns = maapc;
         iconSize = is;
+		iconSizeStatic = is;
         iconTextSize = its;
         numHotseatIcons = hs;
         hotseatIconSize = his;
+		hotseatIconSizeStatic = his;
         defaultLayoutId = dlId;
+
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -301,5 +307,52 @@ public class InvariantDeviceProfile {
             return Float.POSITIVE_INFINITY;
         }
         return (float) (WEIGHT_EFFICIENT / Math.pow(d, pow));
+    }
+
+    void updateFromPreferences() {
+		// Workspace gridsize
+        int mPrefNumColumns = CyraPreferencesProvider.getWorkspaceCols();
+        if(mPrefNumColumns > 0) {
+            numColumns = mPrefNumColumns;
+        }
+
+        int mPrefNumRows = CyraPreferencesProvider.getWorkspaceRows();
+        if(mPrefNumRows > 0) {
+            numRows = mPrefNumRows;
+        }
+
+	/**
+		// App Drawer gridsize
+        int mPrefAllAppsNumCols = CyraPreferencesProvider.getDrawerCols();
+        if(mPrefAllAppsNumCols > 0) {
+            allAppsNumCols = mPrefAllAppsNumCols;
+        }
+
+        int mPrefAllAppsNumRows = CyraPreferencesProvider.getDrawerRows();
+        if(mPrefAllAppsNumRows > 0) {
+            allAppsNumRows = mPrefAllAppsNumRows;
+        }
+	**/
+
+		// Icon sizes
+		int mPrefIconSize = CyraPreferencesProvider.getWorkspaceIconSize();
+		if(mPrefIconSize > 0) {
+			iconSize = iconSizeStatic * (float) mPrefIconSize / 100;
+		}
+
+		int mPrefHotseatIconSize = CyraPreferencesProvider.getHotseatIconSize();
+		if(mPrefHotseatIconSize > 0) {
+			hotseatIconSize = hotseatIconSizeStatic * (float) mPrefHotseatIconSize / 100;
+		}
+
+	/**
+
+		int mPrefAllAppsIconSize = CyraPreferencesProvider.getDrawerIconSize();
+		if(mPrefAllAppsIconSize > 0) {
+			allAppsIconSize = allAppsIconSizeStatic * mPrefAllAppsIconSize / 100;
+		}
+
+	**/
+
     }
 }

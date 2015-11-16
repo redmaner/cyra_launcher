@@ -33,6 +33,7 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 public class DeviceProfile {
@@ -106,6 +107,8 @@ public class DeviceProfile {
 
         this.inv = inv;
         this.isLandscape = isLandscape;
+
+		
 
         Resources res = context.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();

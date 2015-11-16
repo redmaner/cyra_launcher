@@ -53,6 +53,7 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.ArrayList;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -209,6 +210,10 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     private final LauncherEdgeEffect mEdgeGlowLeft = new LauncherEdgeEffect();
     private final LauncherEdgeEffect mEdgeGlowRight = new LauncherEdgeEffect();
 
+	// Cyra settings
+	public boolean mInfiniteScroll = true;
+	private boolean mInfiniteScrolled = false;
+
     public interface PageSwitchListener {
         void onPageSwitch(View newPage, int newPageIndex);
     }
@@ -233,6 +238,8 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 R.styleable.PagedView_pageLayoutHeightGap, 0);
         mPageIndicatorViewId = a.getResourceId(R.styleable.PagedView_pageIndicator, -1);
         a.recycle();
+
+		mInfiniteScroll = CyraPreferencesProvider.getWorkspaceInfiniteScroll();
 
         setHapticFeedbackEnabled(false);
         mIsRtl = Utilities.isRtl(getResources());
@@ -562,7 +569,12 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
     @Override
     public void scrollBy(int x, int y) {
-        scrollTo(getScrollX() + x, getScrollY() + y);
+		if (mInfiniteScrolled) {
+			mInfiniteScrolled = false;
+			scrollTo(0, getScrollY() + y);
+		} else {
+        	scrollTo(getScrollX() + x, getScrollY() + y);
+		}
     }
 
     @Override
@@ -583,8 +595,12 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         boolean isXBeforeFirstPage = mIsRtl ? (x > mMaxScrollX) : (x < 0);
         boolean isXAfterLastPage = mIsRtl ? (x < 0) : (x > mMaxScrollX);
         if (isXBeforeFirstPage) {
-            super.scrollTo(mIsRtl ? mMaxScrollX : 0, y);
-            if (mAllowOverScroll) {
+			if (mInfiniteScroll) {
+            	super.scrollBy(mMaxScrollX, y);
+			} else {
+            	super.scrollTo(mIsRtl ? mMaxScrollX : 0, y);
+			}
+            if (mAllowOverScroll || !mInfiniteScroll) {
                 mWasInOverscroll = true;
                 if (mIsRtl) {
                     overScroll(x - mMaxScrollX);
@@ -593,8 +609,13 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 }
             }
         } else if (isXAfterLastPage) {
-            super.scrollTo(mIsRtl ? 0 : mMaxScrollX, y);
-            if (mAllowOverScroll) {
+			if (mInfiniteScroll) {
+				mInfiniteScrolled = true;
+				super.scrollTo(0, y);
+			} else {
+            	super.scrollTo(mIsRtl ? 0 : mMaxScrollX, y);
+			}
+            if (mAllowOverScroll || !mInfiniteScroll) {
                 mWasInOverscroll = true;
                 if (mIsRtl) {
                     overScroll(x);

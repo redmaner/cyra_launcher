@@ -56,6 +56,7 @@ public final class CyraPreferencesProvider{
 
 	// General - Preference keys
 	public static final String KEY_ANIMATION_PROFILE = "pref_key_animationProfile";
+	public static final String KEY_ALLOW_ROTATION = "pref_allowRotation";
 	public static final String KEY_CYRA_ADMIN = "pref_key_cyraAdmin";
 
 	// Animations - Preference keys
@@ -113,6 +114,7 @@ public final class CyraPreferencesProvider{
 
 	// General - Variables
 	private static String mAnimationProfile = "ANIMATION_CYRA";
+	private static boolean mAllowRotation = false;
 	private static boolean mCyraAdmin = false;
 
 	// Animations - Variables
@@ -188,6 +190,8 @@ public final class CyraPreferencesProvider{
 		// General
 		mAnimationProfile = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_ANIMATION_PROFILE, "ANIMATION_CYRA");
+		mAllowRotation = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_ALLOW_ROTATION, false);
 		mCyraAdmin = PreferenceManager.getDefaultSharedPreferences(context)
                         .getBoolean(KEY_CYRA_ADMIN, false);
 
@@ -348,6 +352,9 @@ public final class CyraPreferencesProvider{
 	public static String getAnimationProfile() {
 		return mAnimationProfile;
 	}
+	public static boolean getAllowRotation() {
+		return mAllowRotation;
+	}
 	public static boolean getCyraAdmin() {
 		return mCyraAdmin;
 	}
@@ -406,6 +413,7 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_GESTURE_UP)
  			|| key.equals(KEY_GESTURE_LONGPRESS)
 			|| key.equals(KEY_ANIMATION_PROFILE)
+			|| key.equals(KEY_ALLOW_ROTATION)
 			|| key.equals(KEY_CYRA_ADMIN)
 			|| key.equals(ANIM_ZOOM_IN_TIME)
 			|| key.equals(ANIM_FADE_IN_TIME)

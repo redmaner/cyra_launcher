@@ -259,9 +259,10 @@ public class Workspace extends PagedView
     private boolean mDeferDropAfterUninstall;
     private boolean mUninstallSuccessful;
 
-	// Cyra gestures
+	// Cyra settings
 	public String mGestureDown = "GES_NONE";
 	public String mGestureUp = "GES_OVERVIEW";
+	public boolean mWallpaperScroll = false;
 
     // State related to Launcher Overlay
     LauncherOverlay mLauncherOverlay;
@@ -1460,7 +1461,7 @@ public class Workspace extends PagedView
 
             int firstPageScrollX = getScrollForPage(firstIndex);
             int scrollRange = getScrollForPage(lastIndex) - firstPageScrollX;
-            if (scrollRange == 0) {
+            if (scrollRange == 0 || !mWallpaperScroll) {
                 return 0;
             } else {
                 // Sometimes the left parameter of the pages is animated during a layout transition;
