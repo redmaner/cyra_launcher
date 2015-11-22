@@ -89,6 +89,8 @@ public class LauncherAppState {
         }
 
         mInvariantDeviceProfile = new InvariantDeviceProfile(sContext);
+		CyraPreferencesProvider.loadCyraDeviceProfile(sContext);
+		mInvariantDeviceProfile.updateFromPreferences(sContext);
         mIconCache = new IconCache(sContext, mInvariantDeviceProfile);
         mWidgetCache = new WidgetPreviewLoader(sContext, mIconCache);
 
@@ -143,7 +145,7 @@ public class LauncherAppState {
 
             if (CyraPreferencesProvider.isCyraDeviceProfile(key)) {
 				CyraPreferencesProvider.loadCyraDeviceProfile(getContext());
-                mInvariantDeviceProfile.updateFromPreferences();
+                mInvariantDeviceProfile.updateFromPreferences(getContext());
             }
         }
     };

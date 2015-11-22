@@ -18,7 +18,7 @@
 -->
 
 <resources>
-    <style name="Theme.Settings" parent="@android:style/Theme.Material">
+    <style name="Theme.Settings" parent="@android:style/Theme.Material.Light.DarkActionBar">
         <item name="android:colorPrimary">@color/material_color_primary</item>
         <item name="android:colorPrimaryDark">@color/material_color_primary_dark</item>
         <item name="android:colorAccent">@color/material_color_accent</item>

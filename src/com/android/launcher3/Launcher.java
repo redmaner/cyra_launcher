@@ -1251,17 +1251,15 @@ public class Launcher extends Activity
         }
     }
 
-    protected void startSettings() {
+    protected void startPreferences() {
         Intent i = new Intent("eu.cyredra.launcher.SETTINGS");
         startActivity(i);
     }
 
-	public void restartLauncher() {
-		Intent i = getBaseContext().getPackageManager()
-				.getLaunchIntentForPackage(getBaseContext().getPackageName());
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
-	}
+    protected void startSystemSettings() {
+        Intent i = new Intent("android.settings.SETTINGS");
+        startActivity(i);
+    }
 
     public void addToCustomContentPage(View customContent,
             CustomContentCallbacks callbacks, String description) {
@@ -1406,6 +1404,9 @@ public class Launcher extends Activity
     private void setupViews() {
         final DragController dragController = mDragController;
 
+		CyraPreferencesProvider.loadCyraOverviewPreferences(this);
+		getCyraOverviewTiles();
+
         mLauncherView = findViewById(R.id.launcher);
         mFocusHandler = (FocusIndicatorView) findViewById(R.id.focus_indicator);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
@@ -1428,37 +1429,75 @@ public class Launcher extends Activity
 
         mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
         mWidgetsButton = findViewById(R.id.widget_button);
-        mWidgetsButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (!mWorkspace.isSwitchingState()) {
-                    onClickAddWidgetButton(arg0);
-                }
-            }
-        });
-        mWidgetsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+		if (mOverviewTileWidgets) {
+        	mWidgetsButton.setOnClickListener(new OnClickListener() {
+            	@Override
+            	public void onClick(View arg0) {
+                	if (!mWorkspace.isSwitchingState()) {
+                    	onClickAddWidgetButton(arg0);
+                	}
+            	}
+        	});
+        	mWidgetsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+		} else {
+			mWidgetsButton.setVisibility(View.GONE);
+		}
 
-        View wallpaperButton = findViewById(R.id.wallpaper_button);
-        wallpaperButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (!mWorkspace.isSwitchingState()) {
-                    onClickWallpaperPicker(arg0);
-                }
-            }
-        });
-        wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
+        View mWallpaperButton = findViewById(R.id.wallpaper_button);
+		if (mOverviewTileWallpaper) {		
+        	mWallpaperButton.setOnClickListener(new OnClickListener() {
+           		@Override
+            	public void onClick(View arg0) {
+                	if (!mWorkspace.isSwitchingState()) {
+                    	onClickWallpaperPicker(arg0);
+                	}
+            	}
+        	});
+        	mWallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
+		} else {
+			mWallpaperButton.setVisibility(View.GONE);
+		}
 
-        View settingsButton = findViewById(R.id.settings_button);
-        settingsButton.setOnClickListener(new OnClickListener() {
+        View mAppsButton = findViewById(R.id.apps_button);
+		if (mOverviewTileApps) {		
+        	mAppsButton.setOnClickListener(new OnClickListener() {
+           		@Override
+            	public void onClick(View arg0) {
+                	if (!mWorkspace.isSwitchingState()) {
+                    	onClickAppsButton(arg0);
+                	}
+            	}
+        	});
+        	mAppsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+		} else {
+			mAppsButton.setVisibility(View.GONE);
+		}
+
+        View mSettingsButton = findViewById(R.id.settings_button);
+		if (mOverviewTileSettings) {		
+        	mSettingsButton.setOnClickListener(new OnClickListener() {
+           		@Override
+            	public void onClick(View arg0) {
+                	if (!mWorkspace.isSwitchingState()) {
+                    	onClickSettingsButton(arg0);
+                	}
+            	}
+        	});
+        	mSettingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+		} else {
+			mSettingsButton.setVisibility(View.GONE);
+		}
+
+        View preferencesButton = findViewById(R.id.preferences_button);
+        preferencesButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 if (!mWorkspace.isSwitchingState()) {
-                    onClickSettingsButton(arg0);
+                    onClickPreferencesButton(arg0);
                 }
             }
         });
-        settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+        preferencesButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         mOverviewPanel.setAlpha(0f);
 
@@ -2044,50 +2083,61 @@ public class Launcher extends Activity
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 	     String key) {
 
-	     	if(CyraPreferencesProvider.isCyraPreference(key) 
-			|| CyraPreferencesProvider.isCyraDeviceProfile(key)) {
-	        	if(!isFinishing()) {
-					CyraPreferencesProvider.loadCyraPreferences(Launcher.this);
-					CyraPreferencesProvider.loadCyraDeviceProfile(Launcher.this);
-					if(key.equals(CyraPreferencesProvider.KEY_ICON_MASK) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_COLOR) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_MASK_RANDOM) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_SATURATION) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_CONTRAST) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_HUE) 
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_ALPHA)
-					|| key.equals(CyraPreferencesProvider.KEY_ICON_PACK)  
-					|| key.equals(CyraPreferencesProvider.KEY_DRAWER_ALLAPPS)) {
-						mIconCache.flush();
-						LauncherAppState.getInstance().getModel().forceReload();
-					} else if (key.equals(CyraPreferencesProvider.KEY_CYRA_ADMIN)) {
-						cyraAdminActivate();
-					} else if (key.equals(CyraPreferencesProvider.KEY_ANIMATION_PROFILE)) {
-						cyraAnimationProfile();
-						if (CyraPreferencesActivity.instance != null) {
-							try {  
-            					CyraPreferencesActivity.instance.finish(); 
-        					} catch (Exception e) {}
-    						}
-					} else if (key.equals(CyraPreferencesProvider.KEY_ICON_PRESET)) {
+	     	if(CyraPreferencesProvider.isCyraPreference(key) && !isFinishing()) {
+
+	     		if(CyraPreferencesProvider.isCyraWorkspacePreference(key)) {
+					CyraPreferencesProvider.loadCyraWorkspacePreferences(Launcher.this);
+				} 
+				if (CyraPreferencesProvider.isCyraOverviewPreference(key)) {
+					CyraPreferencesProvider.loadCyraOverviewPreferences(Launcher.this);
+				} 
+				if (CyraPreferencesProvider.isCyraAllAppsPreference(key)) {
+					CyraPreferencesProvider.loadCyraAllAppsPreferences(Launcher.this);
+				} 
+				if (CyraPreferencesProvider.isCyraIconPreference(key)) {
+					CyraPreferencesProvider.loadCyraIconPreferences(Launcher.this);
+					if (key.equals(CyraPreferencesProvider.KEY_ICON_PRESET)) {
 						setCyraIconPreset();
 						if (CyraPreferencesActivity.instance != null) {
 							try {  
             					CyraPreferencesActivity.instance.finish(); 
         					} catch (Exception e) {}
-    						}
+    					}
 					}
-		     		Launcher.this.
-		     		recreate();
-		 		}
+					mIconCache.flush();
+					LauncherAppState.getInstance().getModel().forceReload();
+				}
+				if (CyraPreferencesProvider.isCyraGesturePreference(key)) {
+					CyraPreferencesProvider.loadCyraGesturePreferences(Launcher.this);
+				}
+				if (CyraPreferencesProvider.isCyraGeneralPreference(key)) {
+					CyraPreferencesProvider.loadCyraGeneralPreferences(Launcher.this);
+					if (key.equals(CyraPreferencesProvider.KEY_CYRA_ADMIN)) {
+						cyraAdminActivate();
+					}
+				}
+				if (CyraPreferencesProvider.isCyraAnimationPreference(key)) {
+					CyraPreferencesProvider.loadCyraAnimationPreferences(Launcher.this);
+					if (key.equals(CyraPreferencesProvider.KEY_ANIMATION_PROFILE)) {
+						cyraAnimationProfile();
+						if (CyraPreferencesActivity.instance != null) {
+							try {  
+            					CyraPreferencesActivity.instance.finish(); 
+        					} catch (Exception e) {}
+    					}
+					}
+				}
+		    Launcher.this.
+		    recreate();
 	     	}
 		}
     };
 
 	private void updateCyraSettings () {
 
-		CyraPreferencesProvider.loadCyraPreferences(this);
+		if (!CyraPreferencesProvider.isInitialLoaded()) {
+			CyraPreferencesProvider.loadInitialCyraPreferences(this);
+		}
 
 		mRotationEnabled = CyraPreferencesProvider.getAllowRotation();
         if (!waitUntilResume(mUpdateOrientationRunnable, true)) {
@@ -2123,7 +2173,6 @@ public class Launcher extends Activity
 		mOverviewTileWidgets = CyraPreferencesProvider.getOverviewWidgets();
 		mOverviewTileApps = CyraPreferencesProvider.getOverviewApps();
 		mOverviewTileSettings = CyraPreferencesProvider.getOverviewSettings();
-
 	}
 
 	private void cyraAnimationProfile () {
@@ -3063,12 +3112,31 @@ public class Launcher extends Activity
     }
 
     /**
+     * Event handler for a click on the preferences button that appears after a long press
+     * on the home screen.
+     */
+    protected void onClickAppsButton(View v) {
+        if (LOGD) Log.d(TAG, "onClickAppsButton");
+        	showAppsView(true /* animated */, false /* resetListToTop */,
+            true /* updatePredictedApps */, false /* focusSearchBar */);
+    }
+
+    /**
+     * Event handler for a click on the preferences button that appears after a long press
+     * on the home screen.
+     */
+    protected void onClickPreferencesButton(View v) {
+        if (LOGD) Log.d(TAG, "onClickPreferencesButton");
+        startPreferences();
+    }
+
+    /**
      * Event handler for a click on the settings button that appears after a long press
      * on the home screen.
      */
     protected void onClickSettingsButton(View v) {
         if (LOGD) Log.d(TAG, "onClickSettingsButton");
-        startSettings();
+        startSystemSettings();
     }
 
     public View.OnTouchListener getHapticFeedbackTouchListener() {

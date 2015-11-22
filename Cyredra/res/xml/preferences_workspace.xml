@@ -27,6 +27,30 @@
    		</PreferenceCategory>
 
         <PreferenceCategory 
+            android:title="@string/pref_category_workspace_appearance"
+            android:key="pref_key_workspace_icons">
+
+            <ListPreference
+            	android:key="pref_key_workspaceEdgeMargin"
+            	android:title="@string/pref_workspace_edge"
+            	android:dialogTitle="@string/pref_workspace_edge"
+            	android:summary="@string/pref_workspace_edge_summary"
+            	android:entries="@array/pref_workspaceMargin_entries"
+            	android:entryValues="@array/pref_workspaceMargin_values"
+            	android:defaultValue="MARGIN_TIGHT"/>
+
+            <ListPreference
+            	android:key="pref_key_workspaceTopMargin"
+            	android:title="@string/pref_workspace_top"
+            	android:dialogTitle="@string/pref_workspace_top"
+            	android:summary="@string/pref_workspace_top_summary"
+            	android:entries="@array/pref_workspaceMargin_entries"
+            	android:entryValues="@array/pref_workspaceMargin_values"
+            	android:defaultValue="MARGIN_NONE"/>
+
+   		</PreferenceCategory>
+
+        <PreferenceCategory 
             android:title="@string/pref_category_workspace_icons"
             android:key="pref_key_workspace_icons">
 
@@ -62,6 +86,15 @@
 				launcher:negative="0"
 				launcher:minimum="50"
 				launcher:maximum="150" />
+
+			<eu.cyredra.launcher.SeekBarPreference
+				android:key="pref_key_hotseatIcons"
+				android:title="@string/pref_hotseat_icons"
+				launcher:summary="@string/pref_hotseat_icons_summary"
+				launcher:symbol=""
+				launcher:negative="0"
+				launcher:minimum="3"
+				launcher:maximum="9" />
 
    		</PreferenceCategory>
 

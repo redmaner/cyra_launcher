@@ -48,6 +48,19 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/apps_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/apps_button"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal"
+        android:text="@string/cyra_apps_button_text"
+        android:textAllCaps="true"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/settings_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,7 +69,20 @@
         android:drawableTop="@drawable/setting_button"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
-        android:text="@string/settings_button_text"
+        android:text="@string/cyra_settings_button_text"
+        android:textAllCaps="true"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/preferences_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/preferences_button"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal"
+        android:text="@string/cyra_preferences_button_text"
         android:textAllCaps="true"
         android:textSize="12sp" />
 

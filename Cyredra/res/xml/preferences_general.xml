@@ -152,17 +152,12 @@
             			android:title="@string/pref_launcher_version"/>
 
         			<Preference 
-            			android:key="pref_key_launcher_version"
-            			android:summary="@string/cyra_launcher_status"
-            			android:title="@string/pref_launcher_status"/>
-
-        			<Preference 
-            			android:key="pref_key_launcher_version"
+            			android:key="pref_key_launcher_date"
             			android:summary="@string/cyra_launcher_date"
             			android:title="@string/pref_launcher_date"/>
 
         			<Preference 
-            			android:key="pref_key_launcher_version"
+            			android:key="pref_key_launcher_tools"
             			android:summary="@string/cyra_launcher_tools"
             			android:title="@string/pref_launcher_tools"/>
 

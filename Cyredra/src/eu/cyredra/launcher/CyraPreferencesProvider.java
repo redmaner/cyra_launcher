@@ -19,6 +19,8 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_WORKSPACE_LABEL_COLOR = "pref_key_workspaceLabelColor";
 	public static final String KEY_WORKSPACE_WALLPAPER_SCROLL = "pref_key_workspaceWallpaperScroll";
 	public static final String KEY_WORKSPACE_INFINITE_SCROLL = "pref_key_workspaceInfiniteScroll";
+	public static final String KEY_WORKSPACE_EDGE = "pref_key_workspaceEdgeMargin";
+	public static final String KEY_WORKSPACE_TOP = "pref_key_workspaceTopMargin";
 
 	// Overview - Preference keys
 	public static final String KEY_OVERVIEW_WALLPAPER = "pref_key_overviewTileWallpaper";
@@ -28,6 +30,7 @@ public final class CyraPreferencesProvider{
 
 	// Hotseat - Preference keys
 	public static final String KEY_HOTSEAT_ICONSIZE = "pref_key_hotseatIconSize";
+	public static final String KEY_HOTSEAT_ICONS = "pref_key_hotseatIcons";
 
 	// Icons - Preference keys
 	public static final String KEY_ICON_BRIGHTNESS = "pref_key_iconBrightness";
@@ -70,6 +73,9 @@ public final class CyraPreferencesProvider{
 	public static final String ANIM_WORKSPACE_UNSHRINK = "pref_anim_workspaceUnshrink";
 	public static final String ANIM_BACKGROUND_FADE_OUT = "pref_anim_backgroundFadeOut";
 
+	// Cyra initial load
+	private static boolean isInitialLoaded = false;
+
 	// Workspace - Variables
 	private static int mWorkspaceRows;
 	private static int mWorkspaceCols;
@@ -77,6 +83,8 @@ public final class CyraPreferencesProvider{
 	private static int mWorkspaceLabelColor;
 	private static boolean mWorkspaceWallpaperScroll = false;
 	private static boolean mWorkspaceInfiniteScroll = false;
+	private static String mWorkspaceEdgeMargin = "MARGIN_TIGHT";
+	private static String mWorkspaceTopMargin = "MARGIN_NONE";
 
 	// Overview - Variables
 	private static boolean mOverviewWallpaper = true;
@@ -86,6 +94,7 @@ public final class CyraPreferencesProvider{
 
 	// Hotseat - Variables
 	private static int mHotseatIconSize = 95;
+	private static int mHotseatIcons;
 
 	// Icons - Variables
 	private static int mIconBrightness = 100;
@@ -129,7 +138,7 @@ public final class CyraPreferencesProvider{
 	private static int mAnimBackgroundFadeOut = 50;
 
 	// Load non deviceprofile preferences in memory
-	public static void loadCyraPreferences(Context context) {
+	public static void loadInitialCyraPreferences(Context context) {
 
 		// Workspace 
 		mWorkspaceLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
@@ -215,7 +224,121 @@ public final class CyraPreferencesProvider{
 		mAnimBackgroundFadeOut = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(ANIM_BACKGROUND_FADE_OUT, 0);
 
+		isInitialLoaded = true;
+
 	}	
+
+	public static void loadCyraWorkspacePreferences(Context context) {
+
+		// Workspace 
+		mWorkspaceLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_WORKSPACE_LABEL_COLOR, 0);
+		mWorkspaceWallpaperScroll = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_WORKSPACE_WALLPAPER_SCROLL, true);
+		mWorkspaceInfiniteScroll = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_WORKSPACE_INFINITE_SCROLL, true);	
+
+	}
+
+	public static void loadCyraOverviewPreferences(Context context) {
+
+		// Overview
+		mOverviewWallpaper = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_OVERVIEW_WALLPAPER, true);	
+		mOverviewWidgets = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_OVERVIEW_WIDGETS, true);
+		mOverviewApps = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_OVERVIEW_APPS, true);
+		mOverviewSettings = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_OVERVIEW_SETTINGS, true);
+
+	}
+
+	public static void loadCyraIconPreferences(Context context) {
+
+		// Icons
+		mIconBrightness = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_BRIGHTNESS, 0);
+		mIconSaturation = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_SATURATION, 0);
+		mIconContrast = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_CONTRAST, 0);
+		mIconHue = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_HUE, 0);
+		mIconAlpha = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_ALPHA, 0);
+		mIconMask = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_ICON_MASK, true);
+		mIconMaskColor = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_ICON_MASK_COLOR, 0);
+		mIconMaskRandom = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_ICON_MASK_RANDOM, true);
+		mIconPreset = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_ICON_PRESET, "");
+		mIconPack = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_ICON_PACK, "");
+
+	}
+
+	public static void loadCyraAllAppsPreferences(Context context) {
+
+		// App Drawer
+		mDrawerAllApps = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_DRAWER_ALLAPPS, true);
+		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
+		mDrawerLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_DRAWER_LABEL_COLOR, 0);
+
+	}
+
+	public static void loadCyraGesturePreferences(Context context) {
+
+		// Gestures		
+		mGestureDown = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_GESTURE_DOWN, "GES_NONE");
+		mGestureUp = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_GESTURE_UP, "GES_NONE");
+		mGestureLongpress = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_GESTURE_LONGPRESS, "GES_NONE");
+
+	}
+
+	public static void loadCyraGeneralPreferences(Context context) {
+
+		// General
+		mAnimationProfile = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_ANIMATION_PROFILE, "ANIMATION_CYRA");
+		mAllowRotation = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_ALLOW_ROTATION, false);
+		mCyraAdmin = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_CYRA_ADMIN, false);
+
+	}
+
+	public static void loadCyraAnimationPreferences(Context context) {
+
+		// Animations
+		mAnimZoomInTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_ZOOM_IN_TIME, 0);
+		mAnimFadeInTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_FADE_IN_TIME, 0);
+		mAnimRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_REVEAL_TIME, 0);
+		mAnimZoomOutTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_ZOOM_OUT_TIME, 0);
+		mAnimFadeOutTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_FADE_OUT_TIME, 0);
+		mAnimConcealTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_CONCEAL_TIME, 0);
+		mAnimOverviewTransition = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERVIEW_TRANSITION, 0);
+		mAnimWorkspaceUnshrink = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_WORKSPACE_UNSHRINK, 0);
+		mAnimBackgroundFadeOut = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_BACKGROUND_FADE_OUT, 0);
+
+	}
 
 	public static void loadCyraDeviceProfile(Context context) {
 
@@ -226,10 +349,16 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_WORKSPACE_COLS, 0);
 		mWorkspaceIconSize = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_WORKSPACE_ICONSIZE, 0);
+		mWorkspaceEdgeMargin = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_WORKSPACE_EDGE, "");
+		mWorkspaceTopMargin = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(KEY_WORKSPACE_TOP, "");
 
 		// Hotseat
 		mHotseatIconSize = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_HOTSEAT_ICONSIZE, 0);
+		mHotseatIcons = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_HOTSEAT_ICONS, 0);
 
 		// App drawer
 		mDrawerRows = PreferenceManager.getDefaultSharedPreferences(context)
@@ -240,6 +369,9 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_DRAWER_ICONSIZE, 0);
 	}
 
+	public static boolean isInitialLoaded() {
+		return isInitialLoaded;
+	}
 
 	// Workspace
 	public static int getWorkspaceRows() {
@@ -266,6 +398,14 @@ public final class CyraPreferencesProvider{
 		return mWorkspaceInfiniteScroll;
 	}
 
+	public static String getWorkspaceEdgeMargin() {
+		return mWorkspaceEdgeMargin;
+	}
+
+	public static String getWorkspaceTopMargin() {
+		return mWorkspaceTopMargin;
+	}
+
 	// Overview 
 	public static boolean getOverviewWallpaper() {
 		return mOverviewWallpaper;
@@ -283,6 +423,9 @@ public final class CyraPreferencesProvider{
 	// Hotseat
 	public static int getHotseatIconSize() {
 		return mHotseatIconSize;
+	}
+	public static int getHotseatIcons() {
+		return mHotseatIcons;
 	}
 
 	// Icons
@@ -426,11 +569,71 @@ public final class CyraPreferencesProvider{
 			|| key.equals(ANIM_BACKGROUND_FADE_OUT);
     }
 
+    public static boolean isCyraWorkspacePreference(String key) {
+        return key.equals(KEY_WORKSPACE_LABEL_COLOR)
+ 			|| key.equals(KEY_WORKSPACE_WALLPAPER_SCROLL)
+ 			|| key.equals(KEY_WORKSPACE_INFINITE_SCROLL);
+
+	}
+
+	public static boolean isCyraOverviewPreference(String key) {
+ 		return key.equals(KEY_OVERVIEW_WALLPAPER)
+ 			|| key.equals(KEY_OVERVIEW_WIDGETS)
+ 			|| key.equals(KEY_OVERVIEW_APPS)
+ 			|| key.equals(KEY_OVERVIEW_SETTINGS);
+	}
+
+	public static boolean isCyraIconPreference(String key) {
+ 		return key.equals(KEY_ICON_BRIGHTNESS)
+ 			|| key.equals(KEY_ICON_SATURATION)
+ 			|| key.equals(KEY_ICON_CONTRAST)
+ 			|| key.equals(KEY_ICON_HUE)
+ 			|| key.equals(KEY_ICON_ALPHA)
+ 			|| key.equals(KEY_ICON_MASK)
+ 			|| key.equals(KEY_ICON_MASK_COLOR)
+ 			|| key.equals(KEY_ICON_MASK_RANDOM)
+ 			|| key.equals(KEY_ICON_PRESET)
+ 			|| key.equals(KEY_ICON_PACK);
+	}
+
+	public static boolean isCyraAllAppsPreference(String key) {
+		return key.equals(KEY_DRAWER_ALLAPPS)
+			|| key.equals(KEY_DRAWER_STYLE)
+			|| key.equals(KEY_DRAWER_LABEL_COLOR);
+	}
+
+	public static boolean isCyraGesturePreference(String key) {
+ 		return key.equals(KEY_GESTURE_DOWN)
+ 			|| key.equals(KEY_GESTURE_UP)
+ 			|| key.equals(KEY_GESTURE_LONGPRESS);
+	}
+
+	public static boolean isCyraGeneralPreference(String key) {
+		return key.equals(KEY_ALLOW_ROTATION)
+			|| key.equals(KEY_CYRA_ADMIN);
+	}
+
+	public static boolean isCyraAnimationPreference(String key) {
+		return key.equals(KEY_ANIMATION_PROFILE)
+			|| key.equals(ANIM_ZOOM_IN_TIME)
+			|| key.equals(ANIM_FADE_IN_TIME)
+			|| key.equals(ANIM_REVEAL_TIME)
+			|| key.equals(ANIM_ZOOM_OUT_TIME)
+			|| key.equals(ANIM_FADE_OUT_TIME)
+			|| key.equals(ANIM_CONCEAL_TIME)
+			|| key.equals(ANIM_OVERVIEW_TRANSITION)
+			|| key.equals(ANIM_WORKSPACE_UNSHRINK)
+			|| key.equals(ANIM_BACKGROUND_FADE_OUT);
+    }
+
     public static boolean isCyraDeviceProfile(String key) {
         return key.equals(KEY_WORKSPACE_ROWS)
 			|| key.equals(KEY_WORKSPACE_COLS)
 			|| key.equals(KEY_WORKSPACE_ICONSIZE)
+			|| key.equals(KEY_WORKSPACE_EDGE)
+			|| key.equals(KEY_WORKSPACE_TOP)
 			|| key.equals(KEY_HOTSEAT_ICONSIZE)
+			|| key.equals(KEY_HOTSEAT_ICONS)
 			|| key.equals(KEY_DRAWER_ROWS)
 			|| key.equals(KEY_DRAWER_COLS)
 			|| key.equals(KEY_DRAWER_ICONSIZE);

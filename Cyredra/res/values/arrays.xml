@@ -16,6 +16,23 @@
  -->
 
 <resources>
+
+    <!-- Workspace margin entries -->
+    <array name="pref_workspaceMargin_entries">
+        <item>None</item>
+        <item>Tight</item>
+        <item>Normal</item>
+        <item>Big</item>
+    </array>
+
+    <!-- App drawer style values -->
+    <array name="pref_workspaceMargin_values">
+        <item>MARGIN_NONE</item>
+        <item>MARGIN_TIGHT</item>
+        <item>MARGIN_NORMAL</item>
+        <item>MARGIN_BIG</item>
+    </array>
+
     <!-- App drawer style entries -->
     <array name="pref_appDrawerStyle_entries">
         <item>No card</item>

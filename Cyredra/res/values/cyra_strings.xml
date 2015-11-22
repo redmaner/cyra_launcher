@@ -37,6 +37,7 @@
 
 	<!-- Preference categories --> 
     <string name="pref_category_workspace_gridsize">Gridsize</string>
+    <string name="pref_category_workspace_appearance">Appearance</string>
     <string name="pref_category_workspace_icons">Icons</string>
     <string name="pref_category_workspace_dock">Dock</string>
     <string name="pref_category_workspace_scrolling">Scrolling</string>
@@ -61,12 +62,18 @@
     <string name="pref_workspace_rows_summary">Current rows: %s</string>
     <string name="pref_workspace_cols">Columns</string>
     <string name="pref_workspace_cols_summary">Current columns: %s</string>
+	<string name="pref_workspace_edge">Edge margin</string>
+	<string name="pref_workspace_edge_summary">Current margin: %s</string>
+	<string name="pref_workspace_top">Top margin</string>
+	<string name="pref_workspace_top_summary">Current margin: %s</string>
 	<string name="pref_workspace_label_color">Icon label color</string>
 	<string name="pref_workspace_label_color_summary">Set custom icon label color</string>
 	<string name="pref_workspace_wallpaper_scroll">Scroll wallpaper</string>
 	<string name="pref_workspace_wallpaper_scroll_summary">Scroll wallpaper when switching screens.</string>
 	<string name="pref_workspace_infinite_scroll">Infinite scrolling</string>
 	<string name="pref_workspace_infinite_scroll_summary">Enables infinte scrolling, also for the appdrawer.</string>
+    <string name="pref_hotseat_icons">Dock icons</string>
+    <string name="pref_hotseat_icons_summary">Current dock icons: %s</string>
 
 	<!-- Preferences overview -->
 	<string name="pref_overview_tile_wallpaper">Wallpaper tile</string>
@@ -135,10 +142,9 @@
 	<string name="pref_animation_profile_summary">Change the animation profile of the launcher \nCurrent profile: %s</string>
 	<string name="pref_animation_progress">Current animation speed: %s</string>	
 	<string name="pref_application_name">Cyra settings</string>
-    <string name="pref_launcher_version">Version</string>
-    <string name="pref_launcher_status">Release channel</string>
+    <string name="pref_launcher_version">Build</string>
     <string name="pref_launcher_date">Build date</string>
-    <string name="pref_launcher_tools">Build tools</string>
+    <string name="pref_launcher_tools">Build with</string>
 
 	<!-- Cyra Admin -->
     <string name="cyra_admin_title">Devicemanager privilges</string>	
@@ -163,8 +169,8 @@
 	<string name="anim_conceal_time">Conceal time</string>
 
 	<!-- Overview buttons -->
-	<string name="cyra_app_button_text">Applications</string>
-	<string name="cyra_preference_button_text">Preferences</string>
+	<string name="cyra_apps_button_text">Applications</string>
+	<string name="cyra_preferences_button_text">Preferences</string>
 	<string name="cyra_settings_button_text">Settings</string>	
 
 </resources>

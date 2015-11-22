@@ -163,6 +163,14 @@ public class LauncherExtension extends Launcher {
         }
 
         @Override
+        public void onClickAppsButton(View v) {
+        }
+
+        @Override
+        public void onClickPreferencesButton(View v) {
+        }
+
+        @Override
         public void onClickAddWidgetButton(View v) {
         }
 

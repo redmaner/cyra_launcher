@@ -62,15 +62,16 @@ public class DeviceProfile {
     private final float overviewModeScaleFactor;
 
     // Workspace
-    private int desiredWorkspaceLeftRightMarginPx;
-    public final int edgeMarginPx;
+    public int edgeMarginPx;
+    public int topMarginPx;
     public final Rect defaultWidgetPadding;
-    private final int pageIndicatorHeightPx;
+    public int pageIndicatorHeightPx;
     private final int defaultPageSpacingPx;
     private float dragViewScale;
 
     // Workspace icons
     public int iconSizePx;
+	public int iconSizePxStatic;
     public int iconTextSizePx;
     public int iconDrawablePaddingPx;
     public int iconDrawablePaddingOriginalPx;
@@ -88,18 +89,21 @@ public class DeviceProfile {
     public int hotseatCellWidthPx;
     public int hotseatCellHeightPx;
     public int hotseatIconSizePx;
+    public int hotseatIconSizePxStatic;
     private int hotseatBarHeightPx;
 
     // All apps
     public int allAppsNumCols;
     public int allAppsNumPredictiveCols;
     public int allAppsButtonVisualSize;
-    public final int allAppsIconSizePx;
+    public int allAppsIconSizePx;
+    public int allAppsIconSizePxStatic;
     public final int allAppsIconTextSizePx;
 
     // QSB
     private int searchBarSpaceWidthPx;
-    private int searchBarSpaceHeightPx;
+    public int searchBarSpaceHeightPx;
+    public int searchBarSpaceHeightPxStatic;
 
     public DeviceProfile(Context context, InvariantDeviceProfile inv,
             Point minSize, Point maxSize,
@@ -125,8 +129,8 @@ public class DeviceProfile {
         ComponentName cn = new ComponentName(context.getPackageName(),
                 this.getClass().getName());
         defaultWidgetPadding = AppWidgetHostView.getDefaultPaddingForWidget(context, cn, null);
-        edgeMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
-        desiredWorkspaceLeftRightMarginPx = 2 * edgeMarginPx;
+        edgeMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
+        topMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);
         pageIndicatorHeightPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_page_indicator_height);
         defaultPageSpacingPx =
@@ -151,6 +155,7 @@ public class DeviceProfile {
 
         // AllApps uses the original non-scaled icon size
         allAppsIconSizePx = Utilities.pxFromDp(inv.iconSize, dm);
+		allAppsIconSizePxStatic = allAppsIconSizePx;
 
         // Determine sizes.
         widthPx = width;
@@ -199,15 +204,18 @@ public class DeviceProfile {
     private void updateIconSize(float scale, int drawablePadding, Resources res,
                                 DisplayMetrics dm) {
         iconSizePx = (int) (Utilities.pxFromDp(inv.iconSize, dm) * scale);
+		iconSizePxStatic = iconSizePx;
         iconTextSizePx = (int) (Utilities.pxFromSp(inv.iconTextSize, dm) * scale);
         iconDrawablePaddingPx = drawablePadding;
         hotseatIconSizePx = (int) (Utilities.pxFromDp(inv.hotseatIconSize, dm) * scale);
+        hotseatIconSizePxStatic = hotseatIconSizePx;
 
         // Search Bar
         searchBarSpaceWidthPx = Math.min(widthPx,
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_max_width));
         searchBarSpaceHeightPx = getSearchBarTopOffset()
                 + res.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_height);
+		searchBarSpaceHeightPxStatic = searchBarSpaceHeightPx;
 
         // Calculate the actual text height
         Paint textPaint = new Paint();
@@ -219,13 +227,13 @@ public class DeviceProfile {
         dragViewScale = (iconSizePx + scaleDps) / iconSizePx;
 
         // Hotseat
-        hotseatBarHeightPx = iconSizePx + 4 * edgeMarginPx;
-        hotseatCellWidthPx = iconSizePx;
-        hotseatCellHeightPx = iconSizePx;
+        hotseatBarHeightPx = hotseatIconSizePx + 4 * topMarginPx;
+        hotseatCellWidthPx = hotseatIconSizePx;
+        hotseatCellHeightPx = hotseatIconSizePx;
 
         // Folder
         folderCellWidthPx = cellWidthPx + 3 * edgeMarginPx;
-        folderCellHeightPx = cellHeightPx + edgeMarginPx;
+        folderCellHeightPx = cellHeightPx + topMarginPx;
         folderBackgroundOffset = -edgeMarginPx;
         folderIconSizePx = iconSizePx + 2 * -folderBackgroundOffset;
     }
@@ -249,9 +257,9 @@ public class DeviceProfile {
     /** Returns the search bar top offset */
     private int getSearchBarTopOffset() {
         if (isTablet && !isVerticalBarLayout()) {
-            return 4 * edgeMarginPx;
+            return 4 * topMarginPx;
         } else {
-            return 2 * edgeMarginPx;
+            return 2 * topMarginPx;
         }
     }
 
@@ -279,9 +287,9 @@ public class DeviceProfile {
                         availableWidthPx - (edgeMarginPx + gap),
                         searchBarSpaceHeightPx);
             } else {
-                bounds.set(desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.left,
+                bounds.set(edgeMarginPx - defaultWidgetPadding.left,
                         getSearchBarTopOffset(),
-                        availableWidthPx - (desiredWorkspaceLeftRightMarginPx -
+                        availableWidthPx - (edgeMarginPx -
                         defaultWidgetPadding.right), searchBarSpaceHeightPx);
             }
         }
@@ -295,11 +303,11 @@ public class DeviceProfile {
         if (isLandscape && transposeLayoutWithOrientation) {
             // Pad the left and right of the workspace with search/hotseat bar sizes
             if (isLayoutRtl) {
-                padding.set(hotseatBarHeightPx, edgeMarginPx,
+                padding.set(hotseatBarHeightPx, topMarginPx,
                         searchBarBounds.width(), edgeMarginPx);
             } else {
                 padding.set(searchBarBounds.width(), edgeMarginPx,
-                        hotseatBarHeightPx, edgeMarginPx);
+                        hotseatBarHeightPx, topMarginPx);
             }
         } else {
             if (isTablet) {
@@ -318,9 +326,9 @@ public class DeviceProfile {
                         availableWidth / 2, paddingBottom + availableHeight / 2);
             } else {
                 // Pad the top and bottom of the workspace with search/hotseat bar sizes
-                padding.set(desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.left,
+                padding.set(edgeMarginPx - defaultWidgetPadding.left,
                         searchBarBounds.bottom,
-                        desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.right,
+                        edgeMarginPx - defaultWidgetPadding.right,
                         hotseatBarHeightPx + pageIndicatorHeightPx);
             }
         }

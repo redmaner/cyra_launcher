@@ -16,15 +16,16 @@
 -->
 <com.android.launcher3.SearchDropTargetBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="false" >
+    android:layout_height="wrap_content"
+    android:focusable="false"
+	android:layout_gravity="top|center">
 
     <!-- Drag specific targets container -->
 
     <LinearLayout
         android:id="@+id/drag_target_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center" >
 
         <FrameLayout

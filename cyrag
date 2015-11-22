@@ -98,7 +98,7 @@ android {
     buildToolsVersion "$BUILD_TOOLS"
     defaultConfig {
         versionCode $VERSION_CODE
-        versionName "$VERSION_NAME.$VERSION_CODE"
+        versionName "$VERSION_CODE"
         applicationId "$APPLICATION_ID"
         minSdkVersion $MIN_SDK_VERSION
         targetSdkVersion $TARGET_SDK_VERSION
@@ -143,10 +143,13 @@ cat > $up/res/values/buildinfo_strings.xml << EOF
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="cyra_launcher_version">$VERSION_NAME.$VERSION_CODE</string>
-	<string name="cyra_launcher_status">$VERSION_STATUS</string>
+	<string name="cyra_launcher_version">$VERSION_CODE</string>
 	<string name="cyra_launcher_date">$BUILD_DATE</string>
-	<string name="cyra_launcher_tools">Java $JAVA, Gradle $GRADLE, android gradle plugin $GRADLE_ANDROID_PLUGIN, build tools $BUILD_TOOLS</string>
+	<string name="cyra_launcher_tools">"Java $JAVA, 
+Gradle $GRADLE, 
+android gradle plugin $GRADLE_ANDROID_PLUGIN, 
+android build tools $BUILD_TOOLS, 
+android support library $SUPPORT_LIBRARY"</string>
 </resources>
 EOF
 }
@@ -171,6 +174,7 @@ fi
 }
 
 git_commit () {
+rm -f $up/res/values/buildinfo_strings.xml
 git add src
 git add res
 git add AndroidManifest.xml

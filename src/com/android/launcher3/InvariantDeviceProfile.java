@@ -18,6 +18,7 @@ package com.android.launcher3;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -70,7 +71,6 @@ public class InvariantDeviceProfile {
     public int numFolderRows;
     public int numFolderColumns;
     float iconSize;
-	float iconSizeStatic;
     int iconBitmapSize;
     int fillResIconDpi;
     float iconTextSize;
@@ -78,9 +78,8 @@ public class InvariantDeviceProfile {
     /**
      * Number of icons inside the hotseat area.
      */
-    float numHotseatIcons;
+    public float numHotseatIcons;
     float hotseatIconSize;
-	float hotseatIconSizeStatic;
     int defaultLayoutId;
 
     // Derived invariant properties
@@ -115,11 +114,9 @@ public class InvariantDeviceProfile {
         numFolderColumns = fc;
         minAllAppsPredictionColumns = maapc;
         iconSize = is;
-		iconSizeStatic = is;
         iconTextSize = its;
         numHotseatIcons = hs;
         hotseatIconSize = his;
-		hotseatIconSizeStatic = his;
         defaultLayoutId = dlId;
 
     }
@@ -309,17 +306,38 @@ public class InvariantDeviceProfile {
         return (float) (WEIGHT_EFFICIENT / Math.pow(d, pow));
     }
 
-    void updateFromPreferences() {
+    public void updateFromPreferences(Context context) {
+
+		Resources res = context.getResources();
+
+		// Workspace settings
+		int mPrefNumColumns = CyraPreferencesProvider.getWorkspaceCols();
+        int mPrefNumRows = CyraPreferencesProvider.getWorkspaceRows();
+		int mPrefIconSize = CyraPreferencesProvider.getWorkspaceIconSize();
+		String mPrefEdgeMargin = CyraPreferencesProvider.getWorkspaceEdgeMargin();
+		String mPrefTopMargin = CyraPreferencesProvider.getWorkspaceTopMargin();
+
+		// Hotseat settings
+		int mPrefHotseatIcons = CyraPreferencesProvider.getHotseatIcons();		
+		int mPrefHotseatIconSize = CyraPreferencesProvider.getHotseatIconSize();
+
+		// AllApps settings
+		int mPrefAllAppsIconSize = CyraPreferencesProvider.getDrawerIconSize();
+
 		// Workspace gridsize
-        int mPrefNumColumns = CyraPreferencesProvider.getWorkspaceCols();
         if(mPrefNumColumns > 0) {
             numColumns = mPrefNumColumns;
         }
 
-        int mPrefNumRows = CyraPreferencesProvider.getWorkspaceRows();
         if(mPrefNumRows > 0) {
             numRows = mPrefNumRows;
         }
+
+		// Hotseat icons
+		if(mPrefHotseatIcons > 0) {
+			numHotseatIcons = (float) mPrefHotseatIcons;
+			hotseatAllAppsRank = (int) (numHotseatIcons / 2);
+		}
 
 	/**
 		// App Drawer gridsize
@@ -333,26 +351,89 @@ public class InvariantDeviceProfile {
             allAppsNumRows = mPrefAllAppsNumRows;
         }
 	**/
-
+	
 		// Icon sizes
-		int mPrefIconSize = CyraPreferencesProvider.getWorkspaceIconSize();
 		if(mPrefIconSize > 0) {
-			iconSize = iconSizeStatic * (float) mPrefIconSize / 100;
+			portraitProfile.iconSizePx = portraitProfile.iconSizePxStatic * mPrefIconSize / 100;
+			landscapeProfile.iconSizePx = landscapeProfile.iconSizePxStatic * mPrefIconSize / 100;
 		}
 
-		int mPrefHotseatIconSize = CyraPreferencesProvider.getHotseatIconSize();
 		if(mPrefHotseatIconSize > 0) {
-			hotseatIconSize = hotseatIconSizeStatic * (float) mPrefHotseatIconSize / 100;
+			portraitProfile.hotseatIconSizePx = portraitProfile.hotseatIconSizePxStatic * mPrefHotseatIconSize / 100;
+			landscapeProfile.hotseatIconSizePx = landscapeProfile.hotseatIconSizePxStatic * mPrefHotseatIconSize / 100;
 		}
 
-	/**
-
-		int mPrefAllAppsIconSize = CyraPreferencesProvider.getDrawerIconSize();
 		if(mPrefAllAppsIconSize > 0) {
-			allAppsIconSize = allAppsIconSizeStatic * mPrefAllAppsIconSize / 100;
+			portraitProfile.allAppsIconSizePx = portraitProfile.allAppsIconSizePxStatic * mPrefAllAppsIconSize / 100;
+			landscapeProfile.allAppsIconSizePx = landscapeProfile.allAppsIconSizePxStatic * mPrefAllAppsIconSize / 100;
 		}
 
-	**/
+		// Workspace Edge Margin
+		switch (mPrefEdgeMargin) {
+			case "MARGIN_NONE":
+				portraitProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);
+				landscapeProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);		
+				break;
+			case "MARGIN_TIGHT":
+				portraitProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
+				landscapeProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
+				break;
+			case "MARGIN_NORMAL":
+				portraitProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);
+				landscapeProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);		
+				break;
+			case "MARGIN_BIG":
+				portraitProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);
+				landscapeProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);		
+				break;
+			default:
+				portraitProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
+				landscapeProfile.edgeMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
+				break;
+		}
 
+		// Workspace Top Margin
+		switch (mPrefTopMargin) {
+			case "MARGIN_NONE":
+				portraitProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);
+				landscapeProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);		
+				break;
+			case "MARGIN_TIGHT":
+				portraitProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
+				landscapeProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
+				break;
+			case "MARGIN_NORMAL":
+				portraitProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);
+				landscapeProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);		
+				break;
+			case "MARGIN_BIG":
+				portraitProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);
+				landscapeProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);		
+				break;
+			default:
+				portraitProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
+				landscapeProfile.topMarginPx = 
+					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
+				break;
+		}
     }
 }

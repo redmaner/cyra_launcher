@@ -23,12 +23,6 @@ import java.util.List;
 
 public final class CyraPreferencesActivity extends PreferenceActivity {
 
-	public static final String KEY_WORKSPACE_ROWS = "pref_key_workspaceRows";
-	public static final String KEY_WORKSPACE_COLS = "pref_key_workspaceCols";
-
-	public static final String KEY_DRAWER_ROWS = "pref_key_drawerRows";
-	public static final String KEY_DRAWER_COLS = "pref_key_drawerCols";
-
  	private static final String TAG = "LauncherPreferences";
 
 	public static CyraPreferencesActivity instance = null;
@@ -52,19 +46,15 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
             SharedPreferences.Editor editor = prefs.edit();
 
 			// Default workspace grid
-            if(prefs.getInt(KEY_WORKSPACE_ROWS, 0) < 1) {
-                editor.putInt(KEY_WORKSPACE_ROWS, (int)inv.numRows);
+            if(prefs.getInt(CyraPreferencesProvider.KEY_WORKSPACE_ROWS, 0) < 1) {
+                editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_ROWS, (int)inv.numRows);
             } 
-            if(prefs.getInt(KEY_WORKSPACE_COLS, 0) < 1) {
-                editor.putInt(KEY_WORKSPACE_COLS, (int)inv.numColumns);
+            if(prefs.getInt(CyraPreferencesProvider.KEY_WORKSPACE_COLS, 0) < 1) {
+                editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_COLS, (int)inv.numColumns);
             }
 
-			// Default app drawer grid
-            if(prefs.getInt(KEY_DRAWER_ROWS, 0) < 1) {
-                editor.putInt(KEY_DRAWER_ROWS, (int)inv.numRows);
-            } 
-            if(prefs.getInt(KEY_DRAWER_COLS, 0) < 1) {
-                editor.putInt(KEY_DRAWER_COLS, (int)inv.numColumns);
+            if(prefs.getInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONS, 0) < 1) {
+                editor.putInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONS, (int)inv.numHotseatIcons);
             }
 
             editor.apply();
