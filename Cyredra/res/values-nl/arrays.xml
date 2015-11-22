@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2015 Redmaner
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+
+<resources>
+
+    <!-- Workspace margin entries -->
+    <array name="pref_workspaceMargin_entries">
+        <item>Geen</item>
+        <item>Klein</item>
+        <item>Normaal</item>
+        <item>Groot</item>
+    </array>
+
+    <!-- App drawer style entries -->
+    <array name="pref_appDrawerStyle_entries">
+        <item>Geen kaart</item>
+        <item>Lichte kaart</item>
+        <item>Donkere kaart</item>
+    </array>
+
+    <!-- Icon presets entries -->
+    <array name="pref_iconPresets_entries">
+        <item>Normale iconen</item>
+        <item>Kleurijke iconen (aanbevolen)</item>
+        <item>Helder kleurmasker</item>
+		<item>Vintage iconen</item>
+        <item>Helder kleurmasker (regenboog)</item>
+    </array>
+
+    <!-- Gesture entries -->
+    <array name="pref_gesture_entries">
+        <item>Geen actie</item>
+        <item>Open overview</item>
+        <item>Open app drawer</item>
+        <item>Open widgets</item>
+        <item>Open instellingen</item>
+        <item>Meldingen uitklappen</item>
+        <item>Scherm vergrendelen</item>
+    </array>
+
+    <!-- Animation profile entries -->
+    <array name="pref_animationProfile_entries">
+        <item>Langzaam</item>
+        <item>Normaal (android)</item>
+        <item>Cyra</item>
+    </array>
+
+</resources>

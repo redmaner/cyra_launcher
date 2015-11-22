@@ -40,28 +40,4 @@
 
    		</PreferenceCategory>
 
-        <PreferenceCategory 
-            android:title="@string/pref_category_drawer_gridsize"
-            android:key="pref_key_drawer_gridsize">
-
-			<eu.cyredra.launcher.SeekBarPreference
-				android:key="pref_key_drawerRows"
-				android:title="@string/pref_drawer_rows"
-				launcher:summary="@string/pref_drawer_rows_summary"
-				launcher:symbol=""
-				launcher:negative="0"
- 				launcher:minimum="3"
-				launcher:maximum="12" />
-
-			<eu.cyredra.launcher.SeekBarPreference
-				android:key="pref_key_drawerCols"
-				android:title="@string/pref_drawer_cols"
-				launcher:summary="@string/pref_drawer_cols_summary"
-				launcher:symbol=""
-				launcher:negative="0"
-				launcher:minimum="3"
-				launcher:maximum="12" />
-
-   		</PreferenceCategory>
-
 </PreferenceScreen>

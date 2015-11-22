@@ -140,8 +140,7 @@ import eu.cyredra.launcher.R;
  */
 public class Launcher extends Activity
         implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
-                   View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener,
-                   LauncherStateTransitionAnimation.Callbacks {
+                   View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener {
     static final String TAG = "Launcher";
     static final boolean LOGD = false;
 
@@ -217,9 +216,6 @@ public class Launcher extends Activity
     public static final String SHOW_WEIGHT_WATCHER = "debug.show_mem";
     public static final boolean SHOW_WEIGHT_WATCHER_DEFAULT = false;
 
-    private static final String QSB_WIDGET_ID = "qsb_widget_id";
-    private static final String QSB_WIDGET_PROVIDER = "qsb_widget_provider";
-
     public static final String USER_HAS_MIGRATED = "launcher.user_migrated_from_old_data";
 
     /** The different states that Launcher can be in. */
@@ -284,7 +280,6 @@ public class Launcher extends Activity
     @Thunk WidgetsModel mWidgetsModel;
 
     private boolean mAutoAdvanceRunning = false;
-    private AppWidgetHostView mQsb;
 
     private Bundle mSavedState;
     // We set the state in both onCreate and then onNewIntent in some cases, which causes both
@@ -496,7 +491,7 @@ public class Launcher extends Activity
 
         mDragController = new DragController(this);
         mInflater = getLayoutInflater();
-        mStateTransitionAnimation = new LauncherStateTransitionAnimation(this, this);
+        mStateTransitionAnimation = new LauncherStateTransitionAnimation(this);
 
         mStats = new Stats(this);
 
@@ -1098,7 +1093,6 @@ public class Launcher extends Activity
         // (framework issue). On resuming, we ensure that any widgets are inflated for the current
         // orientation.
         getWorkspace().reinflateWidgetsIfNecessary();
-        reinflateQSBIfNecessary();
 
         if (DEBUG_RESUME_TIME) {
             Log.d(TAG, "Time spent in onResume: " + (System.currentTimeMillis() - startTime));
@@ -1527,7 +1521,6 @@ public class Launcher extends Activity
         dragController.addDropTarget(mWorkspace);
         if (mSearchDropTargetBar != null) {
             mSearchDropTargetBar.setup(this, dragController);
-            mSearchDropTargetBar.setQsbSearchBar(getOrCreateQsbBar());
         }
 
         if (getResources().getBoolean(R.bool.debug_memory_enabled)) {
@@ -1581,6 +1574,7 @@ public class Launcher extends Activity
     public View createShortcut(ViewGroup parent, ShortcutInfo info) {
         BubbleTextView favorite = (BubbleTextView) mInflater.inflate(R.layout.app_icon,
                 parent, false);
+		favorite.setTextColor(CyraPreferencesProvider.getWorkspaceLabelColor());
         favorite.applyFromShortcutInfo(info, mIconCache);
         favorite.setCompoundDrawablePadding(mDeviceProfile.iconDrawablePaddingPx);
         favorite.setOnClickListener(this);
@@ -2083,7 +2077,8 @@ public class Launcher extends Activity
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 	     String key) {
 
-	     	if(CyraPreferencesProvider.isCyraPreference(key) && !isFinishing()) {
+	     	if(CyraPreferencesProvider.isCyraPreference(key) && !isFinishing()
+			|| CyraPreferencesProvider.isCyraDeviceProfile(key) && !isFinishing()) {
 
 	     		if(CyraPreferencesProvider.isCyraWorkspacePreference(key)) {
 					CyraPreferencesProvider.loadCyraWorkspacePreferences(Launcher.this);
@@ -2421,96 +2416,6 @@ public class Launcher extends Activity
     private void onStartForResult(int requestCode) {
         if (requestCode >= 0) {
             setWaitingForResult(true);
-        }
-    }
-
-    /**
-     * Indicates that we want global search for this activity by setting the globalSearch
-     * argument for {@link #startSearch} to true.
-     */
-    @Override
-    public void startSearch(String initialQuery, boolean selectInitialQuery,
-            Bundle appSearchData, boolean globalSearch) {
-
-        if (initialQuery == null) {
-            // Use any text typed in the launcher as the initial query
-            initialQuery = getTypedText();
-        }
-        if (appSearchData == null) {
-            appSearchData = new Bundle();
-            appSearchData.putString("source", "launcher-search");
-        }
-        Rect sourceBounds = new Rect();
-        if (mSearchDropTargetBar != null) {
-            sourceBounds = mSearchDropTargetBar.getSearchBarBounds();
-        }
-
-        boolean clearTextImmediately = startSearch(initialQuery, selectInitialQuery,
-                appSearchData, sourceBounds);
-        if (clearTextImmediately) {
-            clearTypedText();
-        }
-
-        // We need to show the workspace after starting the search
-        showWorkspace(true);
-    }
-
-    /**
-     * Start a text search.
-     *
-     * @return {@code true} if the search will start immediately, so any further keypresses
-     * will be handled directly by the search UI. {@code false} if {@link Launcher} should continue
-     * to buffer keypresses.
-     */
-    public boolean startSearch(String initialQuery,
-            boolean selectInitialQuery, Bundle appSearchData, Rect sourceBounds) {
-        if (mLauncherCallbacks != null && mLauncherCallbacks.providesSearch()) {
-            return mLauncherCallbacks.startSearch(initialQuery, selectInitialQuery, appSearchData,
-                    sourceBounds);
-        }
-
-        startGlobalSearch(initialQuery, selectInitialQuery,
-                appSearchData, sourceBounds);
-        return false;
-    }
-
-    /**
-     * Starts the global search activity. This code is a copied from SearchManager
-     */
-    private void startGlobalSearch(String initialQuery,
-            boolean selectInitialQuery, Bundle appSearchData, Rect sourceBounds) {
-        final SearchManager searchManager =
-            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        ComponentName globalSearchActivity = searchManager.getGlobalSearchActivity();
-        if (globalSearchActivity == null) {
-            Log.w(TAG, "No global search activity found.");
-            return;
-        }
-        Intent intent = new Intent(SearchManager.INTENT_ACTION_GLOBAL_SEARCH);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setComponent(globalSearchActivity);
-        // Make sure that we have a Bundle to put source in
-        if (appSearchData == null) {
-            appSearchData = new Bundle();
-        } else {
-            appSearchData = new Bundle(appSearchData);
-        }
-        // Set source to package name of app that starts global search if not set already.
-        if (!appSearchData.containsKey("source")) {
-            appSearchData.putString("source", getPackageName());
-        }
-        intent.putExtra(SearchManager.APP_DATA, appSearchData);
-        if (!TextUtils.isEmpty(initialQuery)) {
-            intent.putExtra(SearchManager.QUERY, initialQuery);
-        }
-        if (selectInitialQuery) {
-            intent.putExtra(SearchManager.EXTRA_SELECT_QUERY, selectInitialQuery);
-        }
-        intent.setSourceBounds(sourceBounds);
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException ex) {
-            Log.e(TAG, "Global search activity not found: " + globalSearchActivity);
         }
     }
 
@@ -3650,14 +3555,6 @@ public class Launcher extends Activity
         }
     }
 
-    @Override
-    public void onStateTransitionHideSearchBar() {
-        // Hide the search bar
-        if (mSearchDropTargetBar != null) {
-            mSearchDropTargetBar.hideSearchBar(false /* animated */);
-        }
-    }
-
     public void showWorkspace(boolean animated) {
         showWorkspace(WorkspaceStateTransitionAnimation.SCROLL_TO_CURRENT_PAGE, animated, null);
     }
@@ -3679,12 +3576,6 @@ public class Launcher extends Activity
             mWorkspace.setVisibility(View.VISIBLE);
             mStateTransitionAnimation.startAnimationToWorkspace(mState, Workspace.State.NORMAL,
                     snapToPage, animated, onCompleteRunnable);
-
-            // Show the search bar (only animate if we were showing the drop target bar in spring
-            // loaded mode)
-            if (mSearchDropTargetBar != null) {
-                mSearchDropTargetBar.showSearchBar(animated && wasInSpringLoadedMode);
-            }
 
             // Set focus to the AppsCustomize button
             if (mAllAppsButton != null) {
@@ -3862,71 +3753,6 @@ public class Launcher extends Activity
 
     protected void disableVoiceButtonProxy(boolean disable) {
         // NO-OP
-    }
-
-    public View getOrCreateQsbBar() {
-        if (mLauncherCallbacks != null && mLauncherCallbacks.providesSearch()) {
-            return mLauncherCallbacks.getQsbBar();
-        }
-
-        if (mQsb == null) {
-            AppWidgetProviderInfo searchProvider = Utilities.getSearchWidgetProvider(this);
-            if (searchProvider == null) {
-                return null;
-            }
-
-            Bundle opts = new Bundle();
-            opts.putInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY,
-                    AppWidgetProviderInfo.WIDGET_CATEGORY_SEARCHBOX);
-
-            SharedPreferences sp = getSharedPreferences(
-                    LauncherAppState.getSharedPreferencesKey(), MODE_PRIVATE);
-            int widgetId = sp.getInt(QSB_WIDGET_ID, -1);
-            AppWidgetProviderInfo widgetInfo = mAppWidgetManager.getAppWidgetInfo(widgetId);
-            if (!searchProvider.provider.flattenToString().equals(
-                    sp.getString(QSB_WIDGET_PROVIDER, null))
-                    || (widgetInfo == null)
-                    || !widgetInfo.provider.equals(searchProvider.provider)) {
-                // A valid widget is not already bound.
-                if (widgetId > -1) {
-                    mAppWidgetHost.deleteAppWidgetId(widgetId);
-                    widgetId = -1;
-                }
-
-                // Try to bind a new widget
-                widgetId = mAppWidgetHost.allocateAppWidgetId();
-
-                if (!AppWidgetManagerCompat.getInstance(this)
-                        .bindAppWidgetIdIfAllowed(widgetId, searchProvider, opts)) {
-                    mAppWidgetHost.deleteAppWidgetId(widgetId);
-                    widgetId = -1;
-                }
-
-                sp.edit()
-                    .putInt(QSB_WIDGET_ID, widgetId)
-                    .putString(QSB_WIDGET_PROVIDER, searchProvider.provider.flattenToString())
-                    .commit();
-            }
-
-            mAppWidgetHost.setQsbWidgetId(widgetId);
-            if (widgetId != -1) {
-                mQsb = mAppWidgetHost.createView(this, widgetId, searchProvider);
-                mQsb.updateAppWidgetOptions(opts);
-                mQsb.setPadding(0, 0, 0, 0);
-                mSearchDropTargetBar.addView(mQsb);
-                mSearchDropTargetBar.setQsbSearchBar(mQsb);
-            }
-        }
-        return mQsb;
-    }
-
-    private void reinflateQSBIfNecessary() {
-        if (mQsb instanceof LauncherAppWidgetHostView &&
-                ((LauncherAppWidgetHostView) mQsb).isReinflateRequired()) {
-            mSearchDropTargetBar.removeView(mQsb);
-            mQsb = null;
-            mSearchDropTargetBar.setQsbSearchBar(getOrCreateQsbBar());
-        }
     }
 
     @Override
@@ -4486,17 +4312,6 @@ public class Launcher extends Activity
         return mDeviceProfile.getSearchBarBounds(Utilities.isRtl(getResources()));
     }
 
-    public void bindSearchablesChanged() {
-        if (mSearchDropTargetBar == null) {
-            return;
-        }
-        if (mQsb != null) {
-            mSearchDropTargetBar.removeView(mQsb);
-            mQsb = null;
-        }
-        mSearchDropTargetBar.setQsbSearchBar(getOrCreateQsbBar());
-    }
-
     /**
      * A runnable that we can dequeue and re-enqueue when all applications are bound (to prevent
      * multiple calls to bind the same list.)
@@ -4902,14 +4717,12 @@ public class Launcher extends Activity
         if (mWorkspace != null) mWorkspace.setAlpha(1f);
         if (mHotseat != null) mHotseat.setAlpha(1f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(1f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.showSearchBar(false);
     }
 
     void hideWorkspaceSearchAndHotseat() {
         if (mWorkspace != null) mWorkspace.setAlpha(0f);
         if (mHotseat != null) mHotseat.setAlpha(0f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(0f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.hideSearchBar(false);
     }
 
     // TODO: These method should be a part of LauncherSearchCallback

@@ -228,8 +228,6 @@ public class WorkspaceStateTransitionAnimation {
         int duration = getAnimationDuration(states);
         animateWorkspace(states, toPage, animated, duration, layerViews,
                 accessibilityEnabled);
-        animateSearchBar(states, animated, duration, hasOverlaySearchBar, layerViews,
-                accessibilityEnabled);
         animateBackgroundGradient(states, animated, BACKGROUND_FADE_OUT_DURATION);
         return mStateAnimator;
     }
@@ -470,72 +468,6 @@ public class WorkspaceStateTransitionAnimation {
             if (accessibilityEnabled && overviewPanel.getVisibility() == View.VISIBLE) {
                 overviewPanel.getChildAt(0).performAccessibilityAction(
                         AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
-            }
-        }
-    }
-
-    /**
-     * Coordinates with the workspace animation to animate the search bar.
-     *
-     * TODO: This should really be coordinated with the SearchDropTargetBar, otherwise the
-     *       bar has no idea that it is hidden, and this has no idea what state the bar is
-     *       actually in.
-     */
-    private void animateSearchBar(TransitionStates states, boolean animated, int duration,
-            boolean hasOverlaySearchBar, final HashMap<View, Integer> layerViews,
-            final boolean accessibilityEnabled) {
-
-        // The search bar is only visible in the workspace
-        final View searchBar = mLauncher.getOrCreateQsbBar();
-        if (searchBar != null) {
-            final boolean searchBarWillBeShown = states.stateIsNormal;
-            final float finalSearchBarAlpha = searchBarWillBeShown ? 1f : 0f;
-            if (animated) {
-                if (hasOverlaySearchBar) {
-                    // If there is an overlay search bar, then we will coordinate with it.
-                    mStateAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            // If we are transitioning to a visible search bar, show it immediately
-                            // and let the overlay search bar has faded out
-                            if (searchBarWillBeShown) {
-                                searchBar.setAlpha(finalSearchBarAlpha);
-                                AlphaUpdateListener.updateVisibility(searchBar, accessibilityEnabled);
-                            }
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            // If we are transitioning to a hidden search bar, hide it only after
-                            // the overlay search bar has faded in
-                            if (!searchBarWillBeShown) {
-                                searchBar.setAlpha(finalSearchBarAlpha);
-                                AlphaUpdateListener.updateVisibility(searchBar, accessibilityEnabled);
-                            }
-                        }
-                    });
-                } else {
-                    // Otherwise, we can just do the normal animation
-                    LauncherViewPropertyAnimator searchBarAlpha =
-                            new LauncherViewPropertyAnimator(searchBar).alpha(finalSearchBarAlpha);
-                    searchBarAlpha.addListener(new AlphaUpdateListener(searchBar,
-                            accessibilityEnabled));
-                    searchBar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-                    if (layerViews != null) {
-                        // If layerViews is not null, we add these views, and indicate that
-                        // the caller can manage layer state.
-                        layerViews.put(searchBar, LauncherStateTransitionAnimation.BUILD_AND_SET_LAYER);
-                    } else {
-                        // Otherwise let the animator handle layer management.
-                        searchBarAlpha.withLayer();
-                    }
-                    searchBarAlpha.setDuration(duration);
-                    mStateAnimator.play(searchBarAlpha);
-                }
-            } else {
-                // Set the search bar state immediately
-                searchBar.setAlpha(finalSearchBarAlpha);
-                AlphaUpdateListener.updateVisibility(searchBar, accessibilityEnabled);
             }
         }
     }

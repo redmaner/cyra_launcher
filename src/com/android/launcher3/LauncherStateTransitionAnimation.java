@@ -82,13 +82,6 @@ import eu.cyredra.launcher.R;
 public class LauncherStateTransitionAnimation {
 
     /**
-     * Callbacks made during the state transition
-     */
-    interface Callbacks {
-        public void onStateTransitionHideSearchBar();
-    }
-
-    /**
      * Private callbacks made during transition setup.
      */
     static abstract class PrivateTransitionCallbacks {
@@ -113,12 +106,10 @@ public class LauncherStateTransitionAnimation {
     public static final int SINGLE_FRAME_DELAY = 16;
 
     @Thunk Launcher mLauncher;
-    @Thunk Callbacks mCb;
     @Thunk AnimatorSet mStateAnimation;
 
-    public LauncherStateTransitionAnimation(Launcher l, Callbacks cb) {
+    public LauncherStateTransitionAnimation(Launcher l) {
         mLauncher = l;
-        mCb = cb;
     }
 
     /**
@@ -337,10 +328,6 @@ public class LauncherStateTransitionAnimation {
                         }
                     }
 
-                    if (hideSearchBar) {
-                        mCb.onStateTransitionHideSearchBar();
-                    }
-
                     // This can hold unnecessary references to views.
                     mStateAnimation = null;
                     pCb.onTransitionComplete();
@@ -398,10 +385,6 @@ public class LauncherStateTransitionAnimation {
 
             // Show the content view
             contentView.setVisibility(View.VISIBLE);
-
-            if (hideSearchBar) {
-                mCb.onStateTransitionHideSearchBar();
-            }
 
             dispatchOnLauncherTransitionPrepare(fromView, animated, false);
             dispatchOnLauncherTransitionStart(fromView, animated, false);

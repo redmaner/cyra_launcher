@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* Copyright 2015, Cyredra project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<resources>
+
+    <!-- General -->
+	<string name="cyra_application_name">Cyra Launcher</string>
+
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Kleurenkiezer</string>
+    <string name="press_color_to_apply">Klik op kleur om toe te passen</string>   
+
+	<!-- Preference screens -->
+	<string name="pref_screen_workspace">Werkblad</string>
+    <string name="pref_screen_drawer">App drawer</string>
+	<string name="pref_screen_icons">Iconen</string>
+	<string name="pref_screen_gestures">Gebaren</string>
+    <string name="pref_screen_general">Algemeen</string>
+    <string name="pref_screen_animation_custom">Animaties aanpassen</string>
+
+	<!-- Preference categories --> 
+    <string name="pref_category_workspace_gridsize">Rastergrootte</string>
+    <string name="pref_category_workspace_appearance">Uiterlijk</string>
+    <string name="pref_category_workspace_icons">Iconen</string>
+    <string name="pref_category_workspace_dock">Dock</string>
+    <string name="pref_category_workspace_scrolling">Scrollen</string>
+    <string name="pref_category_overview_tiles">Tegels</string>
+	<string name="pref_category_icons_appearance">Uiterlijk</string>
+    <string name="pref_category_drawer_style">Stijl</string>
+    <string name="pref_category_drawer_icons">Iconen</string>
+	<string name="pref_category_iconpack">Iconen pakket</string>
+	<string name="pref_category_icon_presets">Icoon presets</string>
+	<string name="pref_category_appearance">Uiterlijk</string>
+	<string name="pref_category_iconmask">Icoon kleurmask</string>
+	<string name="pref_category_gestures">Gebaren</string>
+	<string name="pref_category_about">Over launcher</string>
+	<string name="pref_category_general_animation">Animaties</string>
+    <string name="pref_category_animation_workspace">Werkblad</string>
+    <string name="pref_category_animation_drawer">App drawer</string>
+
+    <!-- Preferences workspace -->
+    <string name="pref_workspace_rows">Rijen</string>
+    <string name="pref_workspace_rows_summary">Huidige rijen: %s</string>
+    <string name="pref_workspace_cols">Kolommen</string>
+    <string name="pref_workspace_cols_summary">Huidige kolommen: %s</string>
+	<string name="pref_workspace_edge">Marge zijkant</string>
+	<string name="pref_workspace_edge_summary">Huidige marge: %s</string>
+	<string name="pref_workspace_top">Marge bovenkant</string>
+	<string name="pref_workspace_top_summary">Huidige marge: %s</string>
+	<string name="pref_workspace_label_color">Icoon tekstkleur</string>
+	<string name="pref_workspace_label_color_summary">Stel aangepaste tekstkleur in</string>
+	<string name="pref_workspace_wallpaper_scroll">Scroll achtergrond</string>
+	<string name="pref_workspace_wallpaper_scroll_summary">Scroll achtergrond bij het wisselen tussen schermen</string>
+	<string name="pref_workspace_infinite_scroll">Oneindig scrollen</string>
+	<string name="pref_workspace_infinite_scroll_summary">Oneindig scrollen tussen schermen, ook bij de app drawer</string>
+
+	<!-- Preferences overview -->
+	<string name="pref_overview_tile_wallpaper">Achtergrond tegel</string>
+	<string name="pref_overview_tile_widgets">Widgets tegel</string>
+	<string name="pref_overview_tile_apps">Apps tegel</string>
+	<string name="pref_overview_tile_settings">Systeem instellingen tegel</string>
+
+    <!-- Preferences app drawer -->
+    <string name="pref_drawer_style">App drawer stijl</string>
+    <string name="pref_drawer_style_summary">Verander de app drawer stijl \nHuidige stijl: %s</string>
+	<string name="pref_drawer_label_color">Tekstkleur</string>
+	<string name="pref_drawer_label_color_summary">Stel aangepast tekstkleur in</string>
+
+	<!-- Preferences icons -->
+	<string name="pref_icons_size_workspace">Werkblad icoongrootte</string>
+	<string name="pref_icons_size_workspace_summary">Huidige werkblad icoongrootte: %s</string>
+	<string name="pref_icons_size_hotseat">Dock icoongrootte</string>
+	<string name="pref_icons_size_hotseat_summary">Huidige dock icoongrootte: %s</string>
+	<string name="pref_icons_size_allapps">App drawer icoongrootte</string>
+	<string name="pref_icons_size_allapps_summary">Huidige app drawer icoongrootte: %s</string>
+
+	<string name="pref_icons_brightness">Helderheid</string>
+	<string name="pref_icons_brightness_summary">Verander de helderheid van iconen \nHuidige helderheid: %s</string>
+	<string name="pref_icons_saturation">Verzadiging</string>
+	<string name="pref_icons_saturation_summary">Verander de verzadiging van iconen \nHuidige verzadiging: %s</string>
+	<string name="pref_icons_contrast">Contrast</string>
+	<string name="pref_icons_contrast_summary">Verander het contrast van iconen \nHuidige contrast: %s</string>
+	<string name="pref_icons_hue">Hue</string>
+	<string name="pref_icons_hue_summary">Verander de hue van iconen \nHuidige hue: %s</string>
+	<string name="pref_icons_alpha">Alpha</string>
+	<string name="pref_icons_alpha_summary">Verander de alpha van iconen \nHuidige alpha: %s</string>	
+	<string name="pref_icons_mask">Icoon kleurmasker</string>
+	<string name="pref_icons_mask_summary">Tekent een kleurmasker over de iconen</string>
+	<string name="pref_icons_mask_color">Icoon masker kleur</string>
+	<string name="pref_icons_mask_color_summary">Stel icoon masker kleur in</string>
+	<string name="pref_icons_mask_random">Willekeurige kleuren</string>
+	<string name="pref_icons_mask_random_summary">Gebruik willekeurige kleuren (regenboog)</string>
+	<string name="pref_icons_preset">Presets</string>
+	<string name="pref_icons_preset_summary">Deze voor geselecteerde instellingen kunt u als basis gebruiken voor uw eigen icoon instellingen</string>
+
+	<!--Icon pack-->
+    <string name="dialog_pick_iconpack_title">Selecteer icoonpakket</string>
+    <string name="default_iconpack_title">Standaard iconen</string>
+    <string name="icon_packs_title">Icoonpaketten</string>
+    <string name="no_iconpacks_summary">Geen ondersteunde icoonpakketten geinstalleerd</string>
+    <string name="pref_icon_pack_title">Selecteer icoonpakket</string>
+
+	<!-- Preferences gestures -->
+	<string name="pref_gesture_down">Gebaar naar beneden</string>
+	<string name="pref_gesture_down_summary">Stel actie in voor gebaar naar beneden \nHuidige actie: %s</string>
+	<string name="pref_gesture_up">Gebaar naar boven</string>
+	<string name="pref_gesture_up_summary">Stel actie in voor gebaar naar boven \nHuidige actie: %s</string>
+	<string name="pref_gesture_longpress">Lang ingedrukt houden</string>
+	<string name="pref_gesture_longpress_summary">Stel actie in voor lang ingedrukt houden \nHuidige actie: %s</string>
+
+    <!-- Preferences general -->
+	<string name="pref_animation_profile">Animatie profiel</string>
+	<string name="pref_animation_profile_summary">Verander het animatieprofiel van de launcher \nHuidig profiel: %s</string>	
+	<string name="pref_animation_progress">Huidige animatiesnelheid: %s</string>
+	<string name="pref_application_name">Cyra instellingen</string>
+    <string name="pref_launcher_version">Build</string>
+    <string name="pref_launcher_date">Build datum</string>
+    <string name="pref_launcher_tools">Build with</string>
+
+	<!-- Cyra Admin -->
+    <string name="cyra_admin_title">Apparaatbeheerder privilges</string>	
+    <string name="cyra_admin_summary">Staat Cyra launcher toe scherm te vergrendelen met behulp van apparaatbeheerder privileges</string>
+    <string name="cyra_admin_enabled">Cyra launcher: privileges toegekent</string>	
+    <string name="cyra_admin_disabled">Cyra launcher: privileges ingetrokken</string>		
+    <string name="cyra_admin_disable_requested">Als apparaatbeheerder privileges zijn uitgeschakeld is Cyra launcher niet bevoegd het scherm te vergrendelen</string>	
+
+	<!-- Animations -->
+	<string name="anim_activity_start_delay">Activity start delay</string>
+	<string name="anim_activity_animation_delay">Activity animation delay</string>
+	<string name="anim_new_apps_animation_delay">New apps animation delay</string>
+	<string name="anim_new_apps_page_delay">New apps page delay</string>
+	<string name="anim_overview_transition">Overview transition time</string>
+	<string name="anim_workspace_unshrink">Workspace unshrink time</string>
+	<string name="anim_background_fade_out">Background fade out duration</string>
+	<string name="anim_zoom_in_time">Zoom in time</string>
+	<string name="anim_zoom_out_time">Zoom out time</string>
+	<string name="anim_fade_in_time">Fade in time</string>
+	<string name="anim_fade_out_time">Fade out time</string>
+	<string name="anim_reveal_time">Reveal time</string>
+	<string name="anim_conceal_time">Conceal time</string>
+
+	<!-- Overview buttons -->
+	<string name="cyra_app_button_text">Applicaties</string>
+	<string name="cyra_preference_button_text">Voorkeuren</string>
+	<string name="cyra_settings_button_text">Instellingen</string>	
+
+</resources>

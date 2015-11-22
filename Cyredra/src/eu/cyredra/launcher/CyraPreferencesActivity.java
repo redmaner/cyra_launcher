@@ -56,7 +56,6 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
             if(prefs.getInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONS, 0) < 1) {
                 editor.putInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONS, (int)inv.numHotseatIcons);
             }
-
             editor.apply();
         } else {
             Log.w(TAG, "No DynamicGrid to get default values!");

@@ -63,6 +63,7 @@ import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -370,10 +371,32 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
     protected void onUpdateBackgroundAndPaddings(Rect searchBarBounds, Rect padding) {
         boolean isRtl = Utilities.isRtl(getResources());
 
-        // TODO: Use quantum_panel instead of quantum_panel_shape
-        InsetDrawable background = new InsetDrawable(
-                getResources().getDrawable(R.drawable.quantum_panel_shape), padding.left, 0,
-                padding.right, 0);
+        String mAppDrawerStyle = CyraPreferencesProvider.getDrawerStyle();
+		InsetDrawable background;
+
+		switch (mAppDrawerStyle) {
+			case "DRAWER_LIGHT":
+				background = new InsetDrawable(
+                	getResources().getDrawable(R.drawable.quantum_panel_shape), padding.left, 0,
+                	padding.right, 0);
+				break;
+			case "DRAWER_DARK":
+				background = new InsetDrawable(
+                	getResources().getDrawable(R.drawable.quantum_panel_shape_dark), padding.left, 0,
+                	padding.right, 0);
+				break;
+			case "DRAWER_ZERO":
+				background = new InsetDrawable(
+                	getResources().getDrawable(R.drawable.quantum_panel_shape_zero), padding.left, 0,
+                	padding.right, 0);
+				break;
+			default:
+				background = new InsetDrawable(
+                	getResources().getDrawable(R.drawable.quantum_panel_shape_zero), padding.left, 0,
+                	padding.right, 0);
+				break;
+		}
+
         Rect bgPadding = new Rect();
         background.getPadding(bgPadding);
         mContainerView.setBackground(background);

@@ -38,12 +38,10 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     private static final int TRANSITION_DURATION = 200;
 
     private ObjectAnimator mShowDropTargetBarAnim;
-    private ValueAnimator mHideSearchBarAnim;
     private static final AccelerateInterpolator sAccelerateInterpolator =
             new AccelerateInterpolator();
 
     private boolean mIsSearchBarHidden;
-    private View mQSBSearchBar;
     private View mDropTargetBar;
     private boolean mDeferOnDragEnd = false;
 
@@ -75,18 +73,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         mInfoDropTarget.setLauncher(launcher);
         mDeleteDropTarget.setLauncher(launcher);
         mUninstallDropTarget.setLauncher(launcher);
-    }
-
-    public void setQsbSearchBar(View qsb) {
-        mQSBSearchBar = qsb;
-        if (mQSBSearchBar != null) {
-            mHideSearchBarAnim = LauncherAnimUtils.ofFloat(mQSBSearchBar, "alpha", 1f, 0f);
-            setupAnimation(mHideSearchBarAnim, mQSBSearchBar);
-        } else {
-            // Create a no-op animation of the search bar is null
-            mHideSearchBarAnim = ValueAnimator.ofFloat(0, 0);
-            mHideSearchBarAnim.setDuration(TRANSITION_DURATION);
-        }
     }
 
     private void prepareStartAnimation(View v) {
@@ -136,42 +122,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     public void finishAnimations() {
         prepareStartAnimation(mDropTargetBar);
         mShowDropTargetBarAnim.reverse();
-        prepareStartAnimation(mQSBSearchBar);
-        mHideSearchBarAnim.reverse();
-    }
-
-    /**
-     * Shows the search bar.
-     */
-    public void showSearchBar(boolean animated) {
-        if (!mIsSearchBarHidden) return;
-        if (animated) {
-            prepareStartAnimation(mQSBSearchBar);
-            mHideSearchBarAnim.reverse();
-        } else {
-            mHideSearchBarAnim.cancel();
-            if (mQSBSearchBar != null) {
-                mQSBSearchBar.setAlpha(1f);
-            }
-        }
-        mIsSearchBarHidden = false;
-    }
-
-    /**
-     * Hides the search bar.  We only use this for clings.
-     */
-    public void hideSearchBar(boolean animated) {
-        if (mIsSearchBarHidden) return;
-        if (animated) {
-            prepareStartAnimation(mQSBSearchBar);
-            mHideSearchBarAnim.start();
-        } else {
-            mHideSearchBarAnim.cancel();
-            if (mQSBSearchBar != null) {
-                mQSBSearchBar.setAlpha(0f);
-            }
-        }
-        mIsSearchBarHidden = true;
     }
 
     /**
@@ -181,7 +131,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         // Animate out the QSB search bar, and animate in the drop target bar
         prepareStartAnimation(mDropTargetBar);
         mShowDropTargetBarAnim.start();
-        hideSearchBar(true);
     }
 
     /**
@@ -191,7 +140,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         // Restore the QSB search bar, and animate out the drop target bar
         prepareStartAnimation(mDropTargetBar);
         mShowDropTargetBarAnim.reverse();
-        showSearchBar(true);
     }
 
     /*
@@ -215,26 +163,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         }
     }
 
-    public Rect getSearchBarBounds() {
-        if (mQSBSearchBar != null) {
-            final int[] pos = new int[2];
-            mQSBSearchBar.getLocationOnScreen(pos);
-
-            final Rect rect = new Rect();
-            rect.left = pos[0];
-            rect.top = pos[1];
-            rect.right = pos[0] + mQSBSearchBar.getWidth();
-            rect.bottom = pos[1] + mQSBSearchBar.getHeight();
-            return rect;
-        } else {
-            return null;
-        }
-    }
-
     public void enableAccessibleDrag(boolean enable) {
-        if (mQSBSearchBar != null) {
-            mQSBSearchBar.setVisibility(enable ? View.GONE : View.VISIBLE);
-        }
         mInfoDropTarget.enableAccessibleDrag(enable);
         mDeleteDropTarget.enableAccessibleDrag(enable);
         mUninstallDropTarget.enableAccessibleDrag(enable);

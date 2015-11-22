@@ -43,10 +43,8 @@
     <string name="pref_category_workspace_scrolling">Scrolling</string>
     <string name="pref_category_overview_tiles">Tiles</string>
 	<string name="pref_category_icons_appearance">Appearance</string>
-    <string name="pref_category_drawer">App drawer</string>
     <string name="pref_category_drawer_style">Style</string>
     <string name="pref_category_drawer_icons">Icons</string>
-    <string name="pref_category_drawer_gridsize">Gridsize</string>
 	<string name="pref_category_iconpack">Icon pack</string>
 	<string name="pref_category_appearance">Appearance</string>
 	<string name="pref_category_iconmask">Icon colormask</string>
@@ -82,16 +80,10 @@
 	<string name="pref_overview_tile_settings">System settings tile</string>
 
     <!-- Preferences app drawer -->
-    <string name="pref_drawer_allapps">App drawer</string>	
-    <string name="pref_drawer_allapps_summary">If the app drawer is disabled all the applications will be placed on workspace</string>	
     <string name="pref_drawer_style">App drawer style</string>
     <string name="pref_drawer_style_summary">Change the app drawer style\nCurrent style: %s</string>
 	<string name="pref_drawer_label_color">Label color</string>
 	<string name="pref_drawer_label_color_summary">Set custom label color</string>
-    <string name="pref_drawer_rows">Rows</string>
-    <string name="pref_drawer_rows_summary">Current rows: %s</string>
-    <string name="pref_drawer_cols">Columns</string>
-    <string name="pref_drawer_cols_summary">Current columns: %s</string>
 
 	<!-- Preferences iconsizes -->
 	<string name="pref_icons_size_workspace">Workspace icon size</string>

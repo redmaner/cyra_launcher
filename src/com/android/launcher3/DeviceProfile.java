@@ -103,7 +103,6 @@ public class DeviceProfile {
     // QSB
     private int searchBarSpaceWidthPx;
     public int searchBarSpaceHeightPx;
-    public int searchBarSpaceHeightPxStatic;
 
     public DeviceProfile(Context context, InvariantDeviceProfile inv,
             Point minSize, Point maxSize,
@@ -209,13 +208,6 @@ public class DeviceProfile {
         iconDrawablePaddingPx = drawablePadding;
         hotseatIconSizePx = (int) (Utilities.pxFromDp(inv.hotseatIconSize, dm) * scale);
         hotseatIconSizePxStatic = hotseatIconSizePx;
-
-        // Search Bar
-        searchBarSpaceWidthPx = Math.min(widthPx,
-                res.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_max_width));
-        searchBarSpaceHeightPx = getSearchBarTopOffset()
-                + res.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_height);
-		searchBarSpaceHeightPxStatic = searchBarSpaceHeightPx;
 
         // Calculate the actual text height
         Paint textPaint = new Paint();
@@ -405,31 +397,6 @@ public class DeviceProfile {
         FrameLayout.LayoutParams lp;
         boolean hasVerticalBarLayout = isVerticalBarLayout();
         final boolean isLayoutRtl = Utilities.isRtl(launcher.getResources());
-
-        // Layout the search bar space
-        View searchBar = launcher.getSearchBar();
-        lp = (FrameLayout.LayoutParams) searchBar.getLayoutParams();
-        if (hasVerticalBarLayout) {
-            // Vertical search bar space -- The search bar is fixed in the layout to be on the left
-            //                              of the screen regardless of RTL
-            lp.gravity = Gravity.LEFT;
-            lp.width = searchBarSpaceHeightPx;
-
-            LinearLayout targets = (LinearLayout) searchBar.findViewById(R.id.drag_target_bar);
-            targets.setOrientation(LinearLayout.VERTICAL);
-            FrameLayout.LayoutParams targetsLp = (FrameLayout.LayoutParams) targets.getLayoutParams();
-            targetsLp.gravity = Gravity.TOP;
-            targetsLp.height = LayoutParams.WRAP_CONTENT;
-
-        } else {
-            // Horizontal search bar space
-            lp.gravity = Gravity.TOP;
-            lp.height = searchBarSpaceHeightPx;
-
-            LinearLayout targets = (LinearLayout) searchBar.findViewById(R.id.drag_target_bar);
-            targets.getLayoutParams().width = searchBarSpaceWidthPx;
-        }
-        searchBar.setLayoutParams(lp);
 
         // Layout the workspace
         PagedView workspace = (PagedView) launcher.findViewById(R.id.workspace);

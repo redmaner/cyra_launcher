@@ -45,12 +45,9 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_ICON_PACK = "pref_key_iconpack";
 
 	// App drawer - Preference keys
-	public static final String KEY_DRAWER_ALLAPPS = "pref_key_drawerAllApps";
     public static final String KEY_DRAWER_STYLE = "pref_key_drawerStyle";
 	public static final String KEY_DRAWER_ICONSIZE = "pref_key_drawerIconSize";
     public static final String KEY_DRAWER_LABEL_COLOR = "pref_key_drawerLabelColor";
-	public static final String KEY_DRAWER_ROWS = "pref_key_drawerRows";
-	public static final String KEY_DRAWER_COLS = "pref_key_drawerCols";
 
 	// Gestures - Preference keys
 	public static final String KEY_GESTURE_DOWN = "pref_key_gestureDown";
@@ -109,12 +106,9 @@ public final class CyraPreferencesProvider{
 	private static String mIconPack;
 
 	// App drawer - Variables
-	private static boolean mDrawerAllApps = true;
 	private static String mDrawerStyle = "DRAWER_ZERO";
 	private static int mDrawerIconSize = 95;
 	private static int mDrawerLabelColor = -1;
-	private static int mDrawerRows;
-	private static int mDrawerCols;
 
 	// Gestures - Variables
 	private static String mGestureDown = "GES_NOTIFICATIONS";
@@ -181,8 +175,6 @@ public final class CyraPreferencesProvider{
                         .getString(KEY_ICON_PACK, "");
 
 		// App Drawer
-		mDrawerAllApps = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean(KEY_DRAWER_ALLAPPS, true);
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
 		mDrawerLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
@@ -283,8 +275,6 @@ public final class CyraPreferencesProvider{
 	public static void loadCyraAllAppsPreferences(Context context) {
 
 		// App Drawer
-		mDrawerAllApps = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getBoolean(KEY_DRAWER_ALLAPPS, true);
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
 		mDrawerLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
@@ -361,10 +351,6 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_HOTSEAT_ICONS, 0);
 
 		// App drawer
-		mDrawerRows = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_DRAWER_ROWS, 0);
-		mDrawerCols = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_DRAWER_COLS, 0);
 		mDrawerIconSize = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_DRAWER_ICONSIZE, 0);
 	}
@@ -461,9 +447,6 @@ public final class CyraPreferencesProvider{
 	}
 
 	// App drawer
-	public static boolean getDrawerAllApps() {
-		return mDrawerAllApps;
-	}
 	public static String getDrawerStyle() {
 		return mDrawerStyle;
 	}
@@ -472,12 +455,6 @@ public final class CyraPreferencesProvider{
 	}
 	public static int getDrawerLabelColor() {
 		return mDrawerLabelColor;
-	}
-	public static int getDrawerRows() {
-		return mDrawerRows;
-	}
-	public static int getDrawerCols() {
-		return mDrawerCols;
 	}
 
 	// Gestures
@@ -549,7 +526,6 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_ICON_MASK_RANDOM)
  			|| key.equals(KEY_ICON_PRESET)
  			|| key.equals(KEY_ICON_PACK)
-			|| key.equals(KEY_DRAWER_ALLAPPS)
 			|| key.equals(KEY_DRAWER_STYLE)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR)
  			|| key.equals(KEY_GESTURE_DOWN)
@@ -597,8 +573,7 @@ public final class CyraPreferencesProvider{
 	}
 
 	public static boolean isCyraAllAppsPreference(String key) {
-		return key.equals(KEY_DRAWER_ALLAPPS)
-			|| key.equals(KEY_DRAWER_STYLE)
+		return key.equals(KEY_DRAWER_STYLE)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR);
 	}
 
@@ -634,8 +609,6 @@ public final class CyraPreferencesProvider{
 			|| key.equals(KEY_WORKSPACE_TOP)
 			|| key.equals(KEY_HOTSEAT_ICONSIZE)
 			|| key.equals(KEY_HOTSEAT_ICONS)
-			|| key.equals(KEY_DRAWER_ROWS)
-			|| key.equals(KEY_DRAWER_COLS)
 			|| key.equals(KEY_DRAWER_ICONSIZE);
 	}
 }

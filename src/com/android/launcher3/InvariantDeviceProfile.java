@@ -63,7 +63,7 @@ public class InvariantDeviceProfile {
     /**
      * The minimum number of predicted apps in all apps.
      */
-    int minAllAppsPredictionColumns;
+    public int minAllAppsPredictionColumns;
 
     /**
      * Number of icons per row and column in the folder.
@@ -339,19 +339,6 @@ public class InvariantDeviceProfile {
 			hotseatAllAppsRank = (int) (numHotseatIcons / 2);
 		}
 
-	/**
-		// App Drawer gridsize
-        int mPrefAllAppsNumCols = CyraPreferencesProvider.getDrawerCols();
-        if(mPrefAllAppsNumCols > 0) {
-            allAppsNumCols = mPrefAllAppsNumCols;
-        }
-
-        int mPrefAllAppsNumRows = CyraPreferencesProvider.getDrawerRows();
-        if(mPrefAllAppsNumRows > 0) {
-            allAppsNumRows = mPrefAllAppsNumRows;
-        }
-	**/
-	
 		// Icon sizes
 		if(mPrefIconSize > 0) {
 			portraitProfile.iconSizePx = portraitProfile.iconSizePxStatic * mPrefIconSize / 100;
