@@ -52,6 +52,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:$GRADLE_ANDROID_PLUGIN'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.0'
     }
 }
 
@@ -62,23 +63,18 @@ allprojects {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
 
 android {
    sourceSets {
         main {
-            manifest.srcFile '$MANIFEST_DIR'
-            java.srcDirs = ['src', 'Cyredra/src', 'WallpaperPicker/src']
-
-            resources.srcDirs = ['$RESOURCES_DIR']
-            aidl.srcDirs = ['$AIDL_DIR']
-
-            renderscript.srcDirs = ['$RENDERSCRIPT_DIR']
-
             res.srcDirs = ['res', 'Cyredra/res', 'WallpaperPicker/res']
-            assets.srcDirs = ['$ASSESTS_DIR']
-
-            }
+            main.java.srcDirs = ['src', 'Cyredra/src', 'WallpaperPicker/src']
+            manifest.srcFile 'AndroidManifest.xml'
+            proto.srcDirs 'protos/'
+        }
 	}
+
     signingConfigs {
         $SIGN_CONFIG {
             keyAlias '$KEY_ALIAS'
@@ -87,13 +83,16 @@ android {
             storePassword '$STORE_PASWORD'
         }
     }
+
     compileOptions {
         sourceCompatibility = "$JAVA"
         targetCompatibility = "$JAVA"
     }
+
      lintOptions {
          abortOnError false
     }
+
     compileSdkVersion $COMPILE_SDK_VERSION
     buildToolsVersion "$BUILD_TOOLS"
     defaultConfig {
@@ -104,6 +103,7 @@ android {
         targetSdkVersion $TARGET_SDK_VERSION
         signingConfig signingConfigs.$SIGN_CONFIG
     }
+
     buildTypes {
         release {
             minifyEnabled $PROGUARD
@@ -115,7 +115,14 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:$SUPPORT_LIBRARY'
 	compile 'com.android.support:recyclerview-v7:$SUPPORT_LIBRARY'
-	compile files('libs/protobuf-java-2.3.0.jar')
+    compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-2'
+}
+
+protobuf {
+    // Configure the protoc executable
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0-alpha-3'
+    }
 }
 EOF
 }
@@ -229,6 +236,12 @@ if [ $# -gt 0 ]; then
 		echo -e "${txtblu}Assemble Debug:${txtrst} \nUsing Gradle $GRADLE, android gradle plugin $GRADLE_ANDROID_PLUGIN, Java $JAVA and android build tools $BUILD_TOOLS"
 		$GRADLEC assembleDebug &> $up/cyrag.log
 		check_succesful_build;;
+
+		clean)
+		$GRADLEC clean
+		rm -f build.gradle
+		rm -rf .gradle
+		rm -rf .cyrag;;
 
 		install)
 		install_apk;;

@@ -59,7 +59,6 @@ public class DeviceProfile {
     private final int overviewModeBarItemWidthPx;
     private final int overviewModeBarSpacerWidthPx;
     private final float overviewModeIconZoneRatio;
-    private final float overviewModeScaleFactor;
 
     // Workspace
     public int edgeMarginPx;
@@ -144,8 +143,6 @@ public class DeviceProfile {
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_overview_bar_spacer_width);
         overviewModeIconZoneRatio =
                 res.getInteger(R.integer.config_dynamic_grid_overview_icon_zone_percentage) / 100f;
-        overviewModeScaleFactor =
-                res.getInteger(R.integer.config_dynamic_grid_overview_scale_percentage) / 100f;
         iconDrawablePaddingOriginalPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_icon_drawable_padding);
 
@@ -339,18 +336,11 @@ public class DeviceProfile {
         }
     }
 
-    Rect getOverviewModeButtonBarRect() {
+    int getOverviewModeButtonBarHeight() {
         int zoneHeight = (int) (overviewModeIconZoneRatio * availableHeightPx);
         zoneHeight = Math.min(overviewModeMaxIconZoneHeightPx,
                 Math.max(overviewModeMinIconZoneHeightPx, zoneHeight));
-        return new Rect(0, availableHeightPx - zoneHeight, 0, availableHeightPx);
-    }
-
-    public float getOverviewModeScale(boolean isLayoutRtl) {
-        Rect workspacePadding = getWorkspacePadding(isLayoutRtl);
-        Rect overviewBar = getOverviewModeButtonBarRect();
-        int pageSpace = availableHeightPx - workspacePadding.top - workspacePadding.bottom;
-        return (overviewModeScaleFactor * (pageSpace - overviewBar.height())) / pageSpace;
+        return zoneHeight;
     }
 
     // The rect returned will be extended to below the system ui that covers the workspace
@@ -456,7 +446,7 @@ public class DeviceProfile {
         // Layout the Overview Mode
         ViewGroup overviewMode = launcher.getOverviewPanel();
         if (overviewMode != null) {
-            Rect r = getOverviewModeButtonBarRect();
+            int overviewButtonBarHeight = getOverviewModeButtonBarHeight();
             lp = (FrameLayout.LayoutParams) overviewMode.getLayoutParams();
             lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
 
@@ -465,7 +455,7 @@ public class DeviceProfile {
             int maxWidth = totalItemWidth + (visibleChildCount-1) * overviewModeBarSpacerWidthPx;
 
             lp.width = Math.min(availableWidthPx, maxWidth);
-            lp.height = r.height();
+            lp.height = overviewButtonBarHeight;
             overviewMode.setLayoutParams(lp);
 
             if (lp.width > totalItemWidth && visibleChildCount > 1) {

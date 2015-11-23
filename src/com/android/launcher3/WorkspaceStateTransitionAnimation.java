@@ -213,20 +213,20 @@ public class WorkspaceStateTransitionAnimation {
         mOverlayTransitionTime = res.getInteger(R.integer.config_overlayTransitionTime);
         mSpringLoadedShrinkFactor =
                 res.getInteger(R.integer.config_workspaceSpringLoadShrinkPercentage) / 100f;
+        mOverviewModeShrinkFactor =
+                res.getInteger(R.integer.config_workspaceOverviewShrinkPercentage) / 100f;
         mWorkspaceScrimAlpha = res.getInteger(R.integer.config_workspaceScrimAlpha) / 100f;
-        mOverviewModeShrinkFactor = grid.getOverviewModeScale(Utilities.isRtl(res));
         mWorkspaceFadeInAdjacentScreens = grid.shouldFadeAdjacentWorkspaceScreens();
     }
 
     public AnimatorSet getAnimationToState(Workspace.State fromState, Workspace.State toState,
-            int toPage, boolean animated, boolean hasOverlaySearchBar,
-            HashMap<View, Integer> layerViews) {
+            int toPage, boolean animated, HashMap<View, Integer> layerViews) {
         AccessibilityManager am = (AccessibilityManager)
                 mLauncher.getSystemService(Context.ACCESSIBILITY_SERVICE);
         final boolean accessibilityEnabled = am.isEnabled();
         TransitionStates states = new TransitionStates(fromState, toState);
-        int duration = getAnimationDuration(states);
-        animateWorkspace(states, toPage, animated, duration, layerViews,
+        int workspaceDuration = getAnimationDuration(states);
+        animateWorkspace(states, toPage, animated, workspaceDuration, layerViews,
                 accessibilityEnabled);
         animateBackgroundGradient(states, animated, BACKGROUND_FADE_OUT_DURATION);
         return mStateAnimator;
@@ -475,7 +475,7 @@ public class WorkspaceStateTransitionAnimation {
     /**
      * Animates the background scrim. Add to the state animator to prevent jankiness.
      *
-     * @param finalAlpha the final alpha for the background scrim
+     * @param states the current and final workspace states
      * @param animated whether or not to set the background alpha immediately
      * @duration duration of the animation
      */

@@ -18,14 +18,15 @@ package com.android.launcher3;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
+
+import com.android.launcher3.util.Thunk;
 
 import eu.cyredra.launcher.R;
 
@@ -35,15 +36,40 @@ import eu.cyredra.launcher.R;
  */
 public class SearchDropTargetBar extends FrameLayout implements DragController.DragListener {
 
-    private static final int TRANSITION_DURATION = 200;
+    /** The different states that the search bar space can be in. */
+    public enum State {
+        INVISIBLE   (0f, 0f),
+        SEARCH_BAR  (1f, 0f),
+        DROP_TARGET (0f, 1f);
 
-    private ObjectAnimator mShowDropTargetBarAnim;
+        private final float mSearchBarAlpha;
+        private final float mDropTargetBarAlpha;
+
+        State(float sbAlpha, float dtbAlpha) {
+            mSearchBarAlpha = sbAlpha;
+            mDropTargetBarAlpha = dtbAlpha;
+        }
+
+        float getSearchBarAlpha() {
+            return mSearchBarAlpha;
+        }
+
+        float getDropTargetBarAlpha() {
+            return mDropTargetBarAlpha;
+        }
+    }
+
+    private static int DEFAULT_DRAG_FADE_DURATION = 175;
+
+    private LauncherViewPropertyAnimator mDropTargetBarAnimator;
+    private LauncherViewPropertyAnimator mQSBSearchBarAnimator;
     private static final AccelerateInterpolator sAccelerateInterpolator =
             new AccelerateInterpolator();
 
-    private boolean mIsSearchBarHidden;
-    private View mDropTargetBar;
+    private State mState = State.SEARCH_BAR;
+    @Thunk View mDropTargetBar;
     private boolean mDeferOnDragEnd = false;
+    @Thunk boolean mAccessibilityEnabled = false;
 
     // Drop targets
     private ButtonDropTarget mInfoDropTarget;
@@ -75,27 +101,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         mUninstallDropTarget.setLauncher(launcher);
     }
 
-    private void prepareStartAnimation(View v) {
-        // Enable the hw layers before the animation starts (will be disabled in the onAnimationEnd
-        // callback below)
-        if (v != null) {
-            v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        }
-    }
-
-    private void setupAnimation(ValueAnimator anim, final View v) {
-        anim.setInterpolator(sAccelerateInterpolator);
-        anim.setDuration(TRANSITION_DURATION);
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if (v != null) {
-                    v.setLayerType(View.LAYER_TYPE_NONE, null);
-                }
-            }
-        });
-    }
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -112,34 +117,61 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
 
         // Create the various fade animations
         mDropTargetBar.setAlpha(0f);
-        mShowDropTargetBarAnim = LauncherAnimUtils.ofFloat(mDropTargetBar, "alpha", 0f, 1f);
-        setupAnimation(mShowDropTargetBarAnim, mDropTargetBar);
+        mDropTargetBarAnimator = new LauncherViewPropertyAnimator(mDropTargetBar);
+        mDropTargetBarAnimator.setInterpolator(sAccelerateInterpolator);
+        mDropTargetBarAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                // Ensure that the view is visible for the animation
+                mDropTargetBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mDropTargetBar != null) {
+                    AlphaUpdateListener.updateVisibility(mDropTargetBar, mAccessibilityEnabled);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Animates the current search bar state to a new state.  If the {@param duration} is 0, then
+     * the state is applied immediately.
+     */
+    public void animateToState(State newState, int duration) {
+        if (mState != newState) {
+            mState = newState;
+
+            // Update the accessibility state
+            AccessibilityManager am = (AccessibilityManager)
+                    getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
+            mAccessibilityEnabled = am.isEnabled();
+
+            animateViewAlpha(mDropTargetBarAnimator, mDropTargetBar, newState.getDropTargetBarAlpha(),
+                    duration);
+        }
     }
 
     /**
-     * Finishes all the animations on the search and drop target bars.
+     * Convenience method to animate the alpha of a view using hardware layers.
      */
-    public void finishAnimations() {
-        prepareStartAnimation(mDropTargetBar);
-        mShowDropTargetBarAnim.reverse();
-    }
+    private void animateViewAlpha(LauncherViewPropertyAnimator animator, View v, float alpha,
+            int duration) {
+        if (v == null) {
+            return;
+        }
 
-    /**
-     * Shows the drop target bar.
-     */
-    public void showDeleteTarget() {
-        // Animate out the QSB search bar, and animate in the drop target bar
-        prepareStartAnimation(mDropTargetBar);
-        mShowDropTargetBarAnim.start();
-    }
-
-    /**
-     * Hides the drop target bar.
-     */
-    public void hideDeleteTarget() {
-        // Restore the QSB search bar, and animate out the drop target bar
-        prepareStartAnimation(mDropTargetBar);
-        mShowDropTargetBarAnim.reverse();
+        animator.cancel();
+        if (Float.compare(v.getAlpha(), alpha) != 0) {
+            if (duration > 0) {
+                animator.alpha(alpha).withLayer().setDuration(duration).start();
+            } else {
+                v.setAlpha(alpha);
+                AlphaUpdateListener.updateVisibility(v, mAccessibilityEnabled);
+            }
+        }
     }
 
     /*
@@ -147,9 +179,13 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
      */
     @Override
     public void onDragStart(DragSource source, Object info, int dragAction) {
-        showDeleteTarget();
+        animateToState(State.DROP_TARGET, DEFAULT_DRAG_FADE_DURATION);
     }
 
+    /**
+     * This is called to defer hiding the delete drop target until the drop animation has completed,
+     * instead of hiding immediately when the drag has ended.
+     */
     public void deferOnDragEnd() {
         mDeferOnDragEnd = true;
     }
@@ -157,7 +193,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     @Override
     public void onDragEnd() {
         if (!mDeferOnDragEnd) {
-            hideDeleteTarget();
+            animateToState(State.SEARCH_BAR, DEFAULT_DRAG_FADE_DURATION);
         } else {
             mDeferOnDragEnd = false;
         }
