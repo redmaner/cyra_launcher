@@ -67,7 +67,7 @@
 	<string name="pref_workspace_wallpaper_scroll">Scroll achtergrond</string>
 	<string name="pref_workspace_wallpaper_scroll_summary">Scroll achtergrond bij het wisselen tussen schermen</string>
 	<string name="pref_workspace_infinite_scroll">Oneindig scrollen</string>
-	<string name="pref_workspace_infinite_scroll_summary">Oneindig scrollen tussen schermen, ook bij de app drawer</string>
+	<string name="pref_workspace_infinite_scroll_summary">Oneindig scrollen tussen schermen</string>
 
 	<!-- Preferences overview -->
 	<string name="pref_overview_tile_wallpaper">Achtergrond tegel</string>
@@ -124,7 +124,7 @@
 	<string name="pref_gesture_longpress_summary">Stel actie in voor lang ingedrukt houden \nHuidige actie: %s</string>
 
     <!-- Preferences general -->
-	<string name="pref_animation_profile">Animatie profiel</string>
+	<string name="pref_animation_profile">Animatieprofiel</string>
 	<string name="pref_animation_profile_summary">Verander het animatieprofiel van de launcher \nHuidig profiel: %s</string>	
 	<string name="pref_animation_progress">Huidige animatiesnelheid: %s</string>
 	<string name="pref_application_name">Cyra instellingen</string>
@@ -155,8 +155,8 @@
 	<string name="anim_conceal_time">Conceal time</string>
 
 	<!-- Overview buttons -->
-	<string name="cyra_app_button_text">Applicaties</string>
-	<string name="cyra_preference_button_text">Voorkeuren</string>
+	<string name="cyra_apps_button_text">Applicaties</string>
+	<string name="cyra_preferences_button_text">Voorkeuren</string>
 	<string name="cyra_settings_button_text">Instellingen</string>	
 
 </resources>
