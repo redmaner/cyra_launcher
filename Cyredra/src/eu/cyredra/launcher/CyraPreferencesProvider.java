@@ -12,6 +12,11 @@ import android.view.View;
 
 public final class CyraPreferencesProvider{
 
+	/**
+	 ** This key is used by launcher to determine if Cyra Launcher settings are set on first run
+	 **/
+	public static final String INITIAL_SET = "CYRA_SETTINGS_SET";
+
 	// Workspace - Preference keys
 	public static final String KEY_WORKSPACE_ROWS = "pref_key_workspaceRows";
 	public static final String KEY_WORKSPACE_COLS = "pref_key_workspaceCols";
@@ -60,15 +65,10 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_CYRA_ADMIN = "pref_key_cyraAdmin";
 
 	// Animations - Preference keys
-	public static final String ANIM_ZOOM_IN_TIME = "pref_anim_zoomInTime";
-	public static final String ANIM_FADE_IN_TIME = "pref_anim_fadeInTime";
-	public static final String ANIM_REVEAL_TIME = "pref_anim_revealTime";
-	public static final String ANIM_ZOOM_OUT_TIME = "pref_anim_zoomOutTime";
-	public static final String ANIM_FADE_OUT_TIME = "pref_anim_fadeOutTime";
-	public static final String ANIM_CONCEAL_TIME = "pref_anim_concealTime";
-	public static final String ANIM_OVERVIEW_TRANSITION = "pref_anim_overviewTransition";
-	public static final String ANIM_WORKSPACE_UNSHRINK = "pref_anim_workspaceUnshrink";
-	public static final String ANIM_BACKGROUND_FADE_OUT = "pref_anim_backgroundFadeOut";
+	public static final String ANIM_OVERLAY_REVEAL_TIME = "pref_anim_overlayRevealTime";
+	public static final String ANIM_OVERLAY_TRANSITION_TIME = "pref_anim_overlayTransitionTime";
+	public static final String ANIM_ALLAPPS_TRANSITION_TIME = "pref_anim_allAppsTransitionTime";
+	public static final String ANIM_OVERVIEW_TRANSITION_TIME = "pref_anim_overviewTransitionTime";
 
 	// Cyra initial load
 	private static boolean isInitialLoaded = false;
@@ -121,17 +121,12 @@ public final class CyraPreferencesProvider{
 	private static boolean mCyraAdmin = false;
 
 	// Animations - Variables
-	private static int mAnimZoomInTime = 75;
-	private static int mAnimFadeInTime = 75;
-	private static int mAnimRevealTime = 75;
-	private static int mAnimZoomOutTime = 75;
-	private static int mAnimFadeOutTime = 75;
-	private static int mAnimConcealTime = 75;
-	private static int mAnimOverviewTransition = 50;
-	private static int mAnimWorkspaceUnshrink = 50;
-	private static int mAnimBackgroundFadeOut = 50;
+	private static int mAnimOverlayRevealTime = 220;
+	private static int mAnimOverlayTransitionTime = 300;
+	private static int mAnimAllAppsTransitionTime = 100;
+	private static int mAnimOverviewTransitionTime = 250;
 
-	// Load non deviceprofile preferences in memory
+	// Load non deviceprofile preferences in memory at first run
 	public static void loadInitialCyraPreferences(Context context) {
 
 		// Workspace 
@@ -197,24 +192,14 @@ public final class CyraPreferencesProvider{
                         .getBoolean(KEY_CYRA_ADMIN, false);
 
 		// Animations
-		mAnimZoomInTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_ZOOM_IN_TIME, 0);
-		mAnimFadeInTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_FADE_IN_TIME, 0);
-		mAnimRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_REVEAL_TIME, 0);
-		mAnimZoomOutTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_ZOOM_OUT_TIME, 0);
-		mAnimFadeOutTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_FADE_OUT_TIME, 0);
-		mAnimConcealTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_CONCEAL_TIME, 0);
-		mAnimOverviewTransition = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_OVERVIEW_TRANSITION, 0);
-		mAnimWorkspaceUnshrink = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_WORKSPACE_UNSHRINK, 0);
-		mAnimBackgroundFadeOut = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_BACKGROUND_FADE_OUT, 0);
+		mAnimOverlayRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERLAY_REVEAL_TIME, 0);
+		mAnimOverlayTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERLAY_TRANSITION_TIME, 0);
+		mAnimAllAppsTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_ALLAPPS_TRANSITION_TIME, 0);
+		mAnimOverviewTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERVIEW_TRANSITION_TIME, 0);
 
 		isInitialLoaded = true;
 
@@ -309,24 +294,14 @@ public final class CyraPreferencesProvider{
 	public static void loadCyraAnimationPreferences(Context context) {
 
 		// Animations
-		mAnimZoomInTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_ZOOM_IN_TIME, 0);
-		mAnimFadeInTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_FADE_IN_TIME, 0);
-		mAnimRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_REVEAL_TIME, 0);
-		mAnimZoomOutTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_ZOOM_OUT_TIME, 0);
-		mAnimFadeOutTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_FADE_OUT_TIME, 0);
-		mAnimConcealTime = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_CONCEAL_TIME, 0);
-		mAnimOverviewTransition = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_OVERVIEW_TRANSITION, 0);
-		mAnimWorkspaceUnshrink = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_WORKSPACE_UNSHRINK, 0);
-		mAnimBackgroundFadeOut = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(ANIM_BACKGROUND_FADE_OUT, 0);
+		mAnimOverlayRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERLAY_REVEAL_TIME, 0);
+		mAnimOverlayTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERLAY_TRANSITION_TIME, 0);
+		mAnimAllAppsTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_ALLAPPS_TRANSITION_TIME, 0);
+		mAnimOverviewTransitionTime = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(ANIM_OVERVIEW_TRANSITION_TIME, 0);
 
 	}
 
@@ -480,32 +455,17 @@ public final class CyraPreferencesProvider{
 	}
 
 	// Animations 
-	public static int getAnimZoomInTime() {
-		return mAnimZoomInTime;
+	public static int getAnimOverlayRevealTime() {
+		return mAnimOverlayRevealTime;
 	}
-	public static int getAnimFadeInTime() {
-		return mAnimFadeInTime;
+	public static int getAnimOverlayTransitionTime() {
+		return mAnimOverlayTransitionTime;
 	}
-	public static int getAnimRevealTime() {
-		return mAnimRevealTime;
+	public static int getAnimAllAppsTransitionTime() {
+		return mAnimAllAppsTransitionTime;
 	}
-	public static int getAnimZoomOutTime() {
-		return mAnimZoomOutTime;
-	}
-	public static int getAnimFadeOutTime() {
-		return mAnimFadeOutTime;
-	}
-	public static int getAnimConcealTime() {
-		return mAnimConcealTime;
-	}
-	public static int getAnimOverviewTransition() {
-		return mAnimOverviewTransition;
-	}
-	public static int getAnimWorkspaceUnshrink() {
-		return mAnimWorkspaceUnshrink;
-	}
-	public static int getAnimBackgroundFadeOut() {
-		return mAnimBackgroundFadeOut;
+	public static int getAnimOverviewTransitionTime() {
+		return mAnimOverviewTransitionTime;
 	}
 
     public static boolean isCyraPreference(String key) {
@@ -534,15 +494,10 @@ public final class CyraPreferencesProvider{
 			|| key.equals(KEY_ANIMATION_PROFILE)
 			|| key.equals(KEY_ALLOW_ROTATION)
 			|| key.equals(KEY_CYRA_ADMIN)
-			|| key.equals(ANIM_ZOOM_IN_TIME)
-			|| key.equals(ANIM_FADE_IN_TIME)
-			|| key.equals(ANIM_REVEAL_TIME)
-			|| key.equals(ANIM_ZOOM_OUT_TIME)
-			|| key.equals(ANIM_FADE_OUT_TIME)
-			|| key.equals(ANIM_CONCEAL_TIME)
-			|| key.equals(ANIM_OVERVIEW_TRANSITION)
-			|| key.equals(ANIM_WORKSPACE_UNSHRINK)
-			|| key.equals(ANIM_BACKGROUND_FADE_OUT);
+			|| key.equals(ANIM_OVERLAY_REVEAL_TIME)
+			|| key.equals(ANIM_OVERLAY_TRANSITION_TIME)
+			|| key.equals(ANIM_ALLAPPS_TRANSITION_TIME)
+			|| key.equals(ANIM_OVERVIEW_TRANSITION_TIME);
     }
 
     public static boolean isCyraWorkspacePreference(String key) {
@@ -585,20 +540,15 @@ public final class CyraPreferencesProvider{
 
 	public static boolean isCyraGeneralPreference(String key) {
 		return key.equals(KEY_ALLOW_ROTATION)
+			|| key.equals(KEY_ANIMATION_PROFILE)
 			|| key.equals(KEY_CYRA_ADMIN);
 	}
 
 	public static boolean isCyraAnimationPreference(String key) {
-		return key.equals(KEY_ANIMATION_PROFILE)
-			|| key.equals(ANIM_ZOOM_IN_TIME)
-			|| key.equals(ANIM_FADE_IN_TIME)
-			|| key.equals(ANIM_REVEAL_TIME)
-			|| key.equals(ANIM_ZOOM_OUT_TIME)
-			|| key.equals(ANIM_FADE_OUT_TIME)
-			|| key.equals(ANIM_CONCEAL_TIME)
-			|| key.equals(ANIM_OVERVIEW_TRANSITION)
-			|| key.equals(ANIM_WORKSPACE_UNSHRINK)
-			|| key.equals(ANIM_BACKGROUND_FADE_OUT);
+		return key.equals(ANIM_OVERLAY_REVEAL_TIME)
+			|| key.equals(ANIM_OVERLAY_TRANSITION_TIME)
+			|| key.equals(ANIM_ALLAPPS_TRANSITION_TIME)
+			|| key.equals(ANIM_OVERVIEW_TRANSITION_TIME);
     }
 
     public static boolean isCyraDeviceProfile(String key) {

@@ -36,6 +36,7 @@ import com.android.launcher3.widget.WidgetsContainerView;
 
 import java.util.HashMap;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -208,7 +209,7 @@ public class LauncherStateTransitionAnimation {
         final AnimatorSet animation = LauncherAnimUtils.createAnimatorSet();
         final Resources res = mLauncher.getResources();
         final boolean material = Utilities.ATLEAST_LOLLIPOP;
-        final int revealDuration = res.getInteger(R.integer.config_overlayRevealTime);
+        final int revealDuration = 220 * CyraPreferencesProvider.getAnimOverlayRevealTime() / 100;
         final int itemsAlphaStagger =
                 res.getInteger(R.integer.config_overlayItemsAlphaStagger);
 
@@ -488,7 +489,7 @@ public class LauncherStateTransitionAnimation {
         final AnimatorSet animation = LauncherAnimUtils.createAnimatorSet();
         final Resources res = mLauncher.getResources();
         final boolean material = Utilities.ATLEAST_LOLLIPOP;
-        final int revealDuration = res.getInteger(R.integer.config_overlayRevealTime);
+        final int revealDuration = 220 * CyraPreferencesProvider.getAnimOverlayRevealTime() / 100;
         final int itemsAlphaStagger =
                 res.getInteger(R.integer.config_overlayItemsAlphaStagger);
 

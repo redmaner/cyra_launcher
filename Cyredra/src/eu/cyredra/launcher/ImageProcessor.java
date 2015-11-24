@@ -58,7 +58,7 @@ public final class ImageProcessor {
 
 		Random rand = new Random();
 
-		int rc = rand.nextInt(5);
+		int rc = rand.nextInt(6);
 		int r;
 		int g;
 		int b;
@@ -88,6 +88,11 @@ public final class ImageProcessor {
 				r = 255;
 				g = 235;
 				b = 59;
+				break;
+			case 5: //White
+				r = 255;
+				g = 255;
+				b = 255;
 				break;
 			default:
 				r = 33;

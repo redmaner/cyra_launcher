@@ -17,46 +17,7 @@
             	android:entryValues="@array/pref_animationProfile_values"
             	android:defaultValue="ANIMATION_CYRA" />
 
-				<PreferenceScreen
-					android:title="@string/pref_screen_animation_custom"
-					android:key="pref_screen_animation_custom">
-
-       				<PreferenceCategory 
-        				android:title="@string/pref_category_animation_workspace"
-        				android:key="pref_key_general_animation_workspace">
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_overviewTransition"
-							android:title="@string/anim_overview_transition"
-							android:defaultValue="50"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_workspaceUnshrink"
-							android:title="@string/anim_workspace_unshrink"
-							android:defaultValue="50"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_backgroundFadeOut"
-							android:title="@string/anim_background_fade_out"
-							android:defaultValue="50"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-    				</PreferenceCategory>
-
+				
        				<PreferenceCategory 
         				android:title="@string/pref_category_animation_drawer"
         				android:key="pref_key_general_animation_drawer">
@@ -125,13 +86,73 @@
 
 				</PreferenceScreen>
 
-    	</PreferenceCategory>
 
 	-->
 
        	<PreferenceCategory 
-        	android:title="@string/pref_category_about"
-        	android:key="pref_key_about_settings">
+        	android:title="@string/pref_category_general"
+        	android:key="pref_key_general_animation">
+
+			<PreferenceScreen
+				android:title="@string/pref_screen_advanced"
+				android:key="pref_screen_advanced">
+
+       			<PreferenceCategory 
+        			android:title="@string/pref_category_animation_customize"
+        			android:key="pref_key_general_advanced_animation">
+
+					<eu.cyredra.launcher.SeekBarPreference
+						android:key="pref_anim_overlayRevealTime"
+						android:title="@string/anim_overlay_reveal_time"
+						android:defaultValue="60"
+						launcher:summary="@string/anim_overlay_reveal_time_summary"
+						launcher:symbol="x"
+						launcher:negative="0"
+ 						launcher:minimum="1"
+						launcher:maximum="180" />
+
+					<eu.cyredra.launcher.SeekBarPreference
+						android:key="pref_anim_overlayTransitionTime"
+						android:title="@string/anim_overlay_transition_time"
+						android:defaultValue="60"
+						launcher:summary="@string/pref_animation_progress"
+						launcher:symbol="x"
+						launcher:negative="0"
+ 						launcher:minimum="1"
+						launcher:maximum="180" />
+
+					<eu.cyredra.launcher.SeekBarPreference
+						android:key="pref_anim_allAppsTransitionTime"
+						android:title="@string/anim_allapps_transition_time"
+						android:defaultValue="60"
+						launcher:summary="@string/pref_animation_progress"
+						launcher:symbol="x"
+						launcher:negative="0"
+ 						launcher:minimum="1"
+						launcher:maximum="180" />
+
+					<eu.cyredra.launcher.SeekBarPreference
+						android:key="pref_anim_overviewTransitionTime"
+						android:title="@string/anim_overview_transition_time"
+						android:defaultValue="60"
+						launcher:summary="@string/pref_animation_progress"
+						launcher:symbol="x"
+						launcher:negative="0"
+ 						launcher:minimum="1"
+						launcher:maximum="180" />
+
+    			</PreferenceCategory>
+
+			</PreferenceScreen>
+
+            <ListPreference
+            	android:key="pref_key_animationProfile"
+            	android:title="@string/pref_animation_profile"
+            	android:dialogTitle="@string/pref_animation_profile"
+            	android:summary="@string/pref_animation_profile_summary"
+            	android:entries="@array/pref_animationProfile_entries"
+            	android:entryValues="@array/pref_animationProfile_values"
+            	android:defaultValue="ANIMATION_CYRA" />
 
     		<SwitchPreference
             	android:key="pref_allowRotation"
@@ -146,26 +167,32 @@
             	android:title="@string/cyra_admin_title"
 				android:defaultValue="false"/>
 
-				<PreferenceScreen
-					android:title="@string/pref_screen_build_info"
-					android:key="pref_screen_build_info">
+    	</PreferenceCategory>
 
-        			<Preference 
-            			android:key="pref_key_launcher_version"
-            			android:summary="@string/cyra_launcher_version"
-            			android:title="@string/pref_launcher_version"/>
+       	<PreferenceCategory 
+        	android:title="@string/pref_category_about"
+        	android:key="pref_key_about_settings">
 
-        			<Preference 
-            			android:key="pref_key_launcher_date"
-            			android:summary="@string/cyra_launcher_date"
-            			android:title="@string/pref_launcher_date"/>
+			<PreferenceScreen
+				android:title="@string/pref_screen_build_info"
+				android:key="pref_screen_build_info">
 
-        			<Preference 
-            			android:key="pref_key_launcher_tools"
-            			android:summary="@string/cyra_launcher_tools"
-            			android:title="@string/pref_launcher_tools"/>
+       			<Preference 
+           			android:key="pref_key_launcher_version"
+           			android:summary="@string/cyra_launcher_version"
+           			android:title="@string/pref_launcher_version"/>
 
-				</PreferenceScreen>
+       			<Preference 
+           			android:key="pref_key_launcher_date"
+           			android:summary="@string/cyra_launcher_date"
+           			android:title="@string/pref_launcher_date"/>
+
+       			<Preference 
+           			android:key="pref_key_launcher_tools"
+           			android:summary="@string/cyra_launcher_tools"
+           			android:title="@string/pref_launcher_tools"/>
+
+			</PreferenceScreen>
 
     	</PreferenceCategory>
 

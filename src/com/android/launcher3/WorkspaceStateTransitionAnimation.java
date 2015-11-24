@@ -34,6 +34,7 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.HashMap;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -208,9 +209,9 @@ public class WorkspaceStateTransitionAnimation {
 
         DeviceProfile grid = mLauncher.getDeviceProfile();
         Resources res = launcher.getResources();
-        mAllAppsTransitionTime = res.getInteger(R.integer.config_allAppsTransitionTime);
-        mOverviewTransitionTime = res.getInteger(R.integer.config_overviewTransitionTime);
-        mOverlayTransitionTime = res.getInteger(R.integer.config_overlayTransitionTime);
+        mAllAppsTransitionTime = 100 * CyraPreferencesProvider.getAnimAllAppsTransitionTime() / 100;
+        mOverviewTransitionTime = 250 * CyraPreferencesProvider.getAnimOverviewTransitionTime() / 100;
+        mOverlayTransitionTime = 300 * CyraPreferencesProvider.getAnimOverlayTransitionTime() / 100;
         mSpringLoadedShrinkFactor =
                 res.getInteger(R.integer.config_workspaceSpringLoadShrinkPercentage) / 100f;
         mOverviewModeShrinkFactor =

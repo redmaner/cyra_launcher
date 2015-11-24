@@ -31,7 +31,7 @@
 	<string name="pref_screen_icons">Iconen</string>
 	<string name="pref_screen_gestures">Gebaren</string>
     <string name="pref_screen_general">Algemeen</string>
-    <string name="pref_screen_animation_custom">Animaties aanpassen</string>
+    <string name="pref_screen_advanced">Geavanceerd</string>
 
 	<!-- Preference categories --> 
     <string name="pref_category_workspace_gridsize">Rastergrootte</string>
@@ -49,9 +49,8 @@
 	<string name="pref_category_iconmask">Icoon kleurmask</string>
 	<string name="pref_category_gestures">Gebaren</string>
 	<string name="pref_category_about">Over launcher</string>
-	<string name="pref_category_general_animation">Animaties</string>
-    <string name="pref_category_animation_workspace">Werkblad</string>
-    <string name="pref_category_animation_drawer">App drawer</string>
+	<string name="pref_category_general">Algemeen</string>
+    <string name="pref_category_animation_customize">Animaties aanpassen</string>
 
     <!-- Preferences workspace -->
     <string name="pref_workspace_rows">Rijen</string>
@@ -140,19 +139,11 @@
     <string name="cyra_admin_disable_requested">Als apparaatbeheerder privileges zijn uitgeschakeld is Cyra launcher niet bevoegd het scherm te vergrendelen</string>	
 
 	<!-- Animations -->
-	<string name="anim_activity_start_delay">Activity start delay</string>
-	<string name="anim_activity_animation_delay">Activity animation delay</string>
-	<string name="anim_new_apps_animation_delay">New apps animation delay</string>
-	<string name="anim_new_apps_page_delay">New apps page delay</string>
-	<string name="anim_overview_transition">Overview transition time</string>
-	<string name="anim_workspace_unshrink">Workspace unshrink time</string>
-	<string name="anim_background_fade_out">Background fade out duration</string>
-	<string name="anim_zoom_in_time">Zoom in time</string>
-	<string name="anim_zoom_out_time">Zoom out time</string>
-	<string name="anim_fade_in_time">Fade in time</string>
-	<string name="anim_fade_out_time">Fade out time</string>
-	<string name="anim_reveal_time">Reveal time</string>
-	<string name="anim_conceal_time">Conceal time</string>
+	<string name="anim_overlay_reveal_time">Overlay reveal time</string>
+	<string name="anim_overlay_reveal_time_summary">Overlay reveal time mag niet hoger zijn dan overlay transition time\nCurrent animation speed: %s</string>
+	<string name="anim_overlay_transition_time">Overlay transition time</string>
+	<string name="anim_allapps_transition_time">App drawer transition time</string>
+	<string name="anim_overview_transition_time">Overview transition time</string>
 
 	<!-- Overview buttons -->
 	<string name="cyra_apps_button_text">Applicaties</string>
