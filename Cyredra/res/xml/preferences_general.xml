@@ -2,149 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:launcher="http://schemas.android.com/apk/res-auto/eu.cyredra.launcher">
 
-	<!--
-
-       	<PreferenceCategory 
-        	android:title="@string/pref_category_general_animation"
-        	android:key="pref_key_general_animation">
-
-            <ListPreference
-            	android:key="pref_key_animationProfile"
-            	android:title="@string/pref_animation_profile"
-            	android:dialogTitle="@string/pref_animation_profile"
-            	android:summary="@string/pref_animation_profile_summary"
-            	android:entries="@array/pref_animationProfile_entries"
-            	android:entryValues="@array/pref_animationProfile_values"
-            	android:defaultValue="ANIMATION_CYRA" />
-
-				
-       				<PreferenceCategory 
-        				android:title="@string/pref_category_animation_drawer"
-        				android:key="pref_key_general_animation_drawer">
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_zoomInTime"
-							android:title="@string/anim_zoom_in_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_zoomOutTime"
-							android:title="@string/anim_zoom_out_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_fadeInTime"
-							android:title="@string/anim_fade_in_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_fadeOutTime"
-							android:title="@string/anim_fade_out_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_revealTime"
-							android:title="@string/anim_reveal_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="1"
-							launcher:maximum="180" />
-
-						<eu.cyredra.launcher.SeekBarPreference
-							android:key="pref_anim_concealTime"
-							android:title="@string/anim_conceal_time"
-							android:defaultValue="75"
-							launcher:summary="@string/pref_animation_progress"
-							launcher:symbol="%"
-							launcher:negative="0"
- 							launcher:minimum="10"
-							launcher:maximum="180" />
-
-    				</PreferenceCategory>
-
-				</PreferenceScreen>
-
-
-	-->
-
        	<PreferenceCategory 
         	android:title="@string/pref_category_general"
         	android:key="pref_key_general_animation">
 
-			<PreferenceScreen
-				android:title="@string/pref_screen_advanced"
-				android:key="pref_screen_advanced">
-
-       			<PreferenceCategory 
-        			android:title="@string/pref_category_animation_customize"
-        			android:key="pref_key_general_advanced_animation">
-
-					<eu.cyredra.launcher.SeekBarPreference
-						android:key="pref_anim_overlayRevealTime"
-						android:title="@string/anim_overlay_reveal_time"
-						android:defaultValue="60"
-						launcher:summary="@string/anim_overlay_reveal_time_summary"
-						launcher:symbol="x"
-						launcher:negative="0"
- 						launcher:minimum="1"
-						launcher:maximum="180" />
-
-					<eu.cyredra.launcher.SeekBarPreference
-						android:key="pref_anim_overlayTransitionTime"
-						android:title="@string/anim_overlay_transition_time"
-						android:defaultValue="60"
-						launcher:summary="@string/pref_animation_progress"
-						launcher:symbol="x"
-						launcher:negative="0"
- 						launcher:minimum="1"
-						launcher:maximum="180" />
-
-					<eu.cyredra.launcher.SeekBarPreference
-						android:key="pref_anim_allAppsTransitionTime"
-						android:title="@string/anim_allapps_transition_time"
-						android:defaultValue="60"
-						launcher:summary="@string/pref_animation_progress"
-						launcher:symbol="x"
-						launcher:negative="0"
- 						launcher:minimum="1"
-						launcher:maximum="180" />
-
-					<eu.cyredra.launcher.SeekBarPreference
-						android:key="pref_anim_overviewTransitionTime"
-						android:title="@string/anim_overview_transition_time"
-						android:defaultValue="60"
-						launcher:summary="@string/pref_animation_progress"
-						launcher:symbol="x"
-						launcher:negative="0"
- 						launcher:minimum="1"
-						launcher:maximum="180" />
-
-    			</PreferenceCategory>
-
-			</PreferenceScreen>
-
             <ListPreference
             	android:key="pref_key_animationProfile"
             	android:title="@string/pref_animation_profile"
@@ -153,13 +14,6 @@
             	android:entries="@array/pref_animationProfile_entries"
             	android:entryValues="@array/pref_animationProfile_values"
             	android:defaultValue="ANIMATION_CYRA" />
-
-    		<SwitchPreference
-            	android:key="pref_allowRotation"
-            	android:title="@string/allow_rotation_title"
-            	android:defaultValue="@bool/allow_rotation"
-            	android:persistent="true" />
-
 
         	<SwitchPreference 
             	android:key="pref_key_cyraAdmin"
@@ -175,6 +29,7 @@
 
 			<PreferenceScreen
 				android:title="@string/pref_screen_build_info"
+				android:summary="@string/cyra_launcher_version"
 				android:key="pref_screen_build_info">
 
        			<Preference 
@@ -191,6 +46,58 @@
            			android:key="pref_key_launcher_tools"
            			android:summary="@string/cyra_launcher_tools"
            			android:title="@string/pref_launcher_tools"/>
+
+				<PreferenceScreen
+					android:title="@string/pref_screen_advanced"
+					android:key="pref_screen_advanced">
+
+       				<PreferenceCategory 
+        				android:title="@string/pref_category_animation_customize"
+        				android:key="pref_key_general_advanced_animation">
+
+						<eu.cyredra.launcher.SeekBarPreference
+							android:key="pref_anim_overlayRevealTime"
+							android:title="@string/anim_overlay_reveal_time"
+							android:defaultValue="60"
+							launcher:summary="@string/anim_overlay_reveal_time_summary"
+							launcher:symbol="x"
+							launcher:negative="0"
+ 							launcher:minimum="1"
+							launcher:maximum="180" />
+
+						<eu.cyredra.launcher.SeekBarPreference
+							android:key="pref_anim_overlayTransitionTime"
+							android:title="@string/anim_overlay_transition_time"
+							android:defaultValue="60"
+							launcher:summary="@string/pref_animation_progress"
+							launcher:symbol="x"
+							launcher:negative="0"
+ 							launcher:minimum="1"
+							launcher:maximum="180" />
+
+						<eu.cyredra.launcher.SeekBarPreference
+							android:key="pref_anim_allAppsTransitionTime"
+							android:title="@string/anim_allapps_transition_time"
+							android:defaultValue="60"
+							launcher:summary="@string/pref_animation_progress"
+							launcher:symbol="x"
+							launcher:negative="0"
+ 							launcher:minimum="1"
+							launcher:maximum="180" />
+
+						<eu.cyredra.launcher.SeekBarPreference
+							android:key="pref_anim_overviewTransitionTime"
+							android:title="@string/anim_overview_transition_time"
+							android:defaultValue="60"
+							launcher:summary="@string/pref_animation_progress"
+							launcher:symbol="x"
+							launcher:negative="0"
+ 							launcher:minimum="1"
+							launcher:maximum="180" />
+
+    				</PreferenceCategory>
+
+				</PreferenceScreen>
 
 			</PreferenceScreen>
 

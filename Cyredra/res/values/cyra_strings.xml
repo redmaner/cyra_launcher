@@ -33,7 +33,7 @@
 	<string name="pref_screen_gestures">Gestures</string>
     <string name="pref_screen_general">General</string>
     <string name="pref_screen_advanced">Advanced</string>
-    <string name="pref_screen_build_info">Cyra Launcher info</string>
+    <string name="pref_screen_build_info">Cyra Launcher</string>
 
 	<!-- Preference categories --> 
     <string name="pref_category_workspace_gridsize">Gridsize</string>
