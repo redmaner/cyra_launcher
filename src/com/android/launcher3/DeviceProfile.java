@@ -62,7 +62,6 @@ public class DeviceProfile {
 
     // Workspace
     public int edgeMarginPx;
-    public int topMarginPx;
     public final Rect defaultWidgetPadding;
     public int pageIndicatorHeightPx;
     private final int defaultPageSpacingPx;
@@ -128,7 +127,6 @@ public class DeviceProfile {
                 this.getClass().getName());
         defaultWidgetPadding = AppWidgetHostView.getDefaultPaddingForWidget(context, cn, null);
         edgeMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
-        topMarginPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);
         pageIndicatorHeightPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_page_indicator_height);
         defaultPageSpacingPx =
@@ -216,13 +214,13 @@ public class DeviceProfile {
         dragViewScale = (iconSizePx + scaleDps) / iconSizePx;
 
         // Hotseat
-        hotseatBarHeightPx = hotseatIconSizePx + 4 * topMarginPx;
+        hotseatBarHeightPx = hotseatIconSizePx + 4 * edgeMarginPx;
         hotseatCellWidthPx = hotseatIconSizePx;
         hotseatCellHeightPx = hotseatIconSizePx;
 
         // Folder
         folderCellWidthPx = cellWidthPx + 3 * edgeMarginPx;
-        folderCellHeightPx = cellHeightPx + topMarginPx;
+        folderCellHeightPx = cellHeightPx + edgeMarginPx;
         folderBackgroundOffset = -edgeMarginPx;
         folderIconSizePx = iconSizePx + 2 * -folderBackgroundOffset;
     }
@@ -246,9 +244,9 @@ public class DeviceProfile {
     /** Returns the search bar top offset */
     private int getSearchBarTopOffset() {
         if (isTablet && !isVerticalBarLayout()) {
-            return 4 * topMarginPx;
+            return 4 * edgeMarginPx;
         } else {
-            return 2 * topMarginPx;
+            return 2 * edgeMarginPx;
         }
     }
 
@@ -292,11 +290,11 @@ public class DeviceProfile {
         if (isLandscape && transposeLayoutWithOrientation) {
             // Pad the left and right of the workspace with search/hotseat bar sizes
             if (isLayoutRtl) {
-                padding.set(hotseatBarHeightPx, topMarginPx,
+                padding.set(hotseatBarHeightPx, edgeMarginPx,
                         searchBarBounds.width(), edgeMarginPx);
             } else {
                 padding.set(searchBarBounds.width(), edgeMarginPx,
-                        hotseatBarHeightPx, topMarginPx);
+                        hotseatBarHeightPx, edgeMarginPx);
             }
         } else {
             if (isTablet) {

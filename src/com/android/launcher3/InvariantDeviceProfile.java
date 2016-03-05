@@ -315,7 +315,6 @@ public class InvariantDeviceProfile {
         int mPrefNumRows = CyraPreferencesProvider.getWorkspaceRows();
 		int mPrefIconSize = CyraPreferencesProvider.getWorkspaceIconSize();
 		String mPrefEdgeMargin = CyraPreferencesProvider.getWorkspaceEdgeMargin();
-		String mPrefTopMargin = CyraPreferencesProvider.getWorkspaceTopMargin();
 
 		// Hotseat settings
 		int mPrefHotseatIcons = CyraPreferencesProvider.getHotseatIcons();		
@@ -385,40 +384,6 @@ public class InvariantDeviceProfile {
 				portraitProfile.edgeMarginPx = 
 					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
 				landscapeProfile.edgeMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
-				break;
-		}
-
-		// Workspace Top Margin
-		switch (mPrefTopMargin) {
-			case "MARGIN_NONE":
-				portraitProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);
-				landscapeProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_none);		
-				break;
-			case "MARGIN_TIGHT":
-				portraitProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
-				landscapeProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
-				break;
-			case "MARGIN_NORMAL":
-				portraitProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);
-				landscapeProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_normal);		
-				break;
-			case "MARGIN_BIG":
-				portraitProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);
-				landscapeProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_big);		
-				break;
-			default:
-				portraitProfile.topMarginPx = 
-					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);
-				landscapeProfile.topMarginPx = 
 					res.getDimensionPixelSize(R.dimen.dynamic_grid_margin_tight);		
 				break;
 		}

@@ -25,7 +25,6 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_WORKSPACE_WALLPAPER_SCROLL = "pref_key_workspaceWallpaperScroll";
 	public static final String KEY_WORKSPACE_INFINITE_SCROLL = "pref_key_workspaceInfiniteScroll";
 	public static final String KEY_WORKSPACE_EDGE = "pref_key_workspaceEdgeMargin";
-	public static final String KEY_WORKSPACE_TOP = "pref_key_workspaceTopMargin";
 
 	// Overview - Preference keys
 	public static final String KEY_OVERVIEW_WALLPAPER = "pref_key_overviewTileWallpaper";
@@ -81,7 +80,6 @@ public final class CyraPreferencesProvider{
 	private static boolean mWorkspaceWallpaperScroll = false;
 	private static boolean mWorkspaceInfiniteScroll = false;
 	private static String mWorkspaceEdgeMargin = "MARGIN_TIGHT";
-	private static String mWorkspaceTopMargin = "MARGIN_NONE";
 
 	// Overview - Variables
 	private static boolean mOverviewWallpaper = true;
@@ -316,8 +314,6 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_WORKSPACE_ICONSIZE, 0);
 		mWorkspaceEdgeMargin = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_WORKSPACE_EDGE, "");
-		mWorkspaceTopMargin = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString(KEY_WORKSPACE_TOP, "");
 
 		// Hotseat
 		mHotseatIconSize = PreferenceManager.getDefaultSharedPreferences(context)
@@ -361,10 +357,6 @@ public final class CyraPreferencesProvider{
 
 	public static String getWorkspaceEdgeMargin() {
 		return mWorkspaceEdgeMargin;
-	}
-
-	public static String getWorkspaceTopMargin() {
-		return mWorkspaceTopMargin;
 	}
 
 	// Overview 
@@ -556,7 +548,6 @@ public final class CyraPreferencesProvider{
 			|| key.equals(KEY_WORKSPACE_COLS)
 			|| key.equals(KEY_WORKSPACE_ICONSIZE)
 			|| key.equals(KEY_WORKSPACE_EDGE)
-			|| key.equals(KEY_WORKSPACE_TOP)
 			|| key.equals(KEY_HOTSEAT_ICONSIZE)
 			|| key.equals(KEY_HOTSEAT_ICONS)
 			|| key.equals(KEY_DRAWER_ICONSIZE);

@@ -2138,7 +2138,6 @@ public class Launcher extends Activity
 
 			// Workspace settings
 			editor.putString(CyraPreferencesProvider.KEY_WORKSPACE_EDGE, "MARGIN_TIGHT");
-			editor.putString(CyraPreferencesProvider.KEY_WORKSPACE_TOP, "MARGIN_NONE");
 			editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_ICONSIZE, 95);
 			editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_LABEL_COLOR, -1);
 			editor.putInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONSIZE, 95);

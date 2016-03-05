@@ -37,7 +37,6 @@
 
 	<!-- Preference categories --> 
     <string name="pref_category_workspace_gridsize">Gridsize</string>
-    <string name="pref_category_workspace_appearance">Appearance</string>
     <string name="pref_category_workspace_icons">Icons</string>
     <string name="pref_category_workspace_dock">Dock</string>
     <string name="pref_category_workspace_scrolling">Scrolling</string>
@@ -61,8 +60,6 @@
     <string name="pref_workspace_cols_summary">Current columns: %s</string>
 	<string name="pref_workspace_edge">Edge margin</string>
 	<string name="pref_workspace_edge_summary">Current margin: %s</string>
-	<string name="pref_workspace_top">Top margin</string>
-	<string name="pref_workspace_top_summary">Current margin: %s</string>
 	<string name="pref_workspace_label_color">Icon label color</string>
 	<string name="pref_workspace_label_color_summary">Set custom icon label color</string>
 	<string name="pref_workspace_wallpaper_scroll">Scroll wallpaper</string>
