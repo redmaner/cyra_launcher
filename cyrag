@@ -150,7 +150,7 @@ cat > $up/res/values/buildinfo_strings.xml << EOF
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="cyra_launcher_version">$VERSION_CODE</string>
+	<string name="cyra_launcher_version">$VERSION_NAME.$VERSION_CODE</string>
 	<string name="cyra_launcher_date">$BUILD_DATE</string>
 	<string name="cyra_launcher_tools">"Java $JAVA, 
 Gradle $GRADLE, 

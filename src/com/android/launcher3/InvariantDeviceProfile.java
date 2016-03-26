@@ -347,6 +347,10 @@ public class InvariantDeviceProfile {
 		if(mPrefHotseatIconSize > 0) {
 			portraitProfile.hotseatIconSizePx = portraitProfile.hotseatIconSizePxStatic * mPrefHotseatIconSize / 100;
 			landscapeProfile.hotseatIconSizePx = landscapeProfile.hotseatIconSizePxStatic * mPrefHotseatIconSize / 100;
+			portraitProfile.hotseatCellWidthPx = portraitProfile.widthPx / (int) numHotseatIcons;
+			landscapeProfile.hotseatCellWidthPx = landscapeProfile.heightPx / (int) numHotseatIcons;
+			portraitProfile.hotseatCellHeightPx = portraitProfile.hotseatIconSizePx + 50;
+			landscapeProfile.hotseatCellHeightPx = landscapeProfile.hotseatIconSizePx + 50;
 		}
 
 		if(mPrefAllAppsIconSize > 0) {
