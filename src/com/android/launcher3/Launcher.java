@@ -468,6 +468,7 @@ public class Launcher extends Activity
         mIsSafeModeEnabled = getPackageManager().isSafeMode();
         mModel = app.setLauncher(this);
         mIconCache = app.getIconCache();
+		mIconCache.flush();
 
         mDragController = new DragController(this);
         mInflater = getLayoutInflater();
