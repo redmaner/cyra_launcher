@@ -48,6 +48,16 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_ICON_PRESET = "pref_key_iconPreset";	
 	public static final String KEY_ICON_PACK = "pref_key_iconpack";
 
+	// Icons - Rainbow colors
+	public static final String KEY_RAINBOW_COLOR_ONE = "pref_key_rainbowColorOne";	
+	public static final String KEY_RAINBOW_COLOR_TWO = "pref_key_rainbowColorTwo";
+	public static final String KEY_RAINBOW_COLOR_THREE = "pref_key_rainbowColorThree";
+	public static final String KEY_RAINBOW_COLOR_FOUR = "pref_key_rainbowColorFour";
+	public static final String KEY_RAINBOW_COLOR_FIVE = "pref_key_rainbowColorFive";
+	public static final String KEY_RAINBOW_COLOR_SIX = "pref_key_rainbowColorSix";
+	public static final String KEY_RAINBOW_COLOR_SEVEN = "pref_key_rainbowColorSeven";
+	public static final String KEY_RAINBOW_COLOR_EIGHT = "pref_key_rainbowColorEight";
+
 	// App drawer - Preference keys
     public static final String KEY_DRAWER_STYLE = "pref_key_drawerStyle";
 	public static final String KEY_DRAWER_ICONSIZE = "pref_key_drawerIconSize";
@@ -102,6 +112,16 @@ public final class CyraPreferencesProvider{
 	private static boolean mIconMaskRandom = false;
 	private static String mIconPreset;
 	private static String mIconPack;
+
+	// Icons - rainbow colors - Variables
+	private static int mRainbowColorOne;
+	private static int mRainbowColorTwo;
+	private static int mRainbowColorThree;
+	private static int mRainbowColorFour;
+	private static int mRainbowColorFive;
+	private static int mRainbowColorSix;
+	private static int mRainbowColorSeven;
+	private static int mRainbowColorEight;
 
 	// App drawer - Variables
 	private static String mDrawerStyle = "DRAWER_ZERO";
@@ -166,6 +186,24 @@ public final class CyraPreferencesProvider{
                         .getString(KEY_ICON_PRESET, "");
 		mIconPack = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_ICON_PACK, "");
+
+ 		// Icons - rainbow colors
+		mRainbowColorOne = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_ONE, 0);
+		mRainbowColorTwo = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_TWO, 0);
+		mRainbowColorThree = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_THREE, 0);
+		mRainbowColorFour = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_FOUR, 0);
+		mRainbowColorFive = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_FIVE, 0);
+		mRainbowColorSix = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_SIX, 0);
+		mRainbowColorSeven = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_SEVEN, 0);
+		mRainbowColorEight = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_EIGHT, 0);
 
 		// App Drawer
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
@@ -252,6 +290,24 @@ public final class CyraPreferencesProvider{
                         .getString(KEY_ICON_PRESET, "");
 		mIconPack = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_ICON_PACK, "");
+
+ 		// Icons - rainbow colors
+		mRainbowColorOne = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_ONE, 0);
+		mRainbowColorTwo = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_TWO, 0);
+		mRainbowColorThree = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_THREE, 0);
+		mRainbowColorFour = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_FOUR, 0);
+		mRainbowColorFive = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_FIVE, 0);
+		mRainbowColorSix = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_SIX, 0);
+		mRainbowColorSeven = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_SEVEN, 0);
+		mRainbowColorEight = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getInt(KEY_RAINBOW_COLOR_EIGHT, 0);
 
 	}
 
@@ -413,6 +469,32 @@ public final class CyraPreferencesProvider{
 		return mIconPack;
 	}
 
+	// Rainbow colors
+	public static int getRainbowColorOne() {
+		return mRainbowColorOne;
+	}
+	public static int getRainbowColorTwo() {
+		return mRainbowColorTwo;
+	}
+	public static int getRainbowColorThree() {
+		return mRainbowColorThree;
+	}
+	public static int getRainbowColorFour() {
+		return mRainbowColorFour;
+	}
+	public static int getRainbowColorFive() {
+		return mRainbowColorFive;
+	}
+	public static int getRainbowColorSix() {
+		return mRainbowColorSix;
+	}
+	public static int getRainbowColorSeven() {
+		return mRainbowColorSeven;
+	}
+	public static int getRainbowColorEight() {
+		return mRainbowColorEight;
+	}
+
 	// App drawer
 	public static String getDrawerStyle() {
 		return mDrawerStyle;
@@ -478,6 +560,14 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_ICON_MASK_RANDOM)
  			|| key.equals(KEY_ICON_PRESET)
  			|| key.equals(KEY_ICON_PACK)
+ 			|| key.equals(KEY_RAINBOW_COLOR_ONE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_TWO)
+ 			|| key.equals(KEY_RAINBOW_COLOR_THREE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_FOUR)
+ 			|| key.equals(KEY_RAINBOW_COLOR_FIVE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_SIX)
+ 			|| key.equals(KEY_RAINBOW_COLOR_SEVEN)
+ 			|| key.equals(KEY_RAINBOW_COLOR_EIGHT)
 			|| key.equals(KEY_DRAWER_STYLE)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR)
  			|| key.equals(KEY_GESTURE_DOWN)
@@ -516,7 +606,15 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_ICON_MASK_COLOR)
  			|| key.equals(KEY_ICON_MASK_RANDOM)
  			|| key.equals(KEY_ICON_PRESET)
- 			|| key.equals(KEY_ICON_PACK);
+ 			|| key.equals(KEY_ICON_PACK)
+ 			|| key.equals(KEY_RAINBOW_COLOR_ONE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_TWO)
+ 			|| key.equals(KEY_RAINBOW_COLOR_THREE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_FOUR)
+ 			|| key.equals(KEY_RAINBOW_COLOR_FIVE)
+ 			|| key.equals(KEY_RAINBOW_COLOR_SIX)
+ 			|| key.equals(KEY_RAINBOW_COLOR_SEVEN)
+ 			|| key.equals(KEY_RAINBOW_COLOR_EIGHT);
 	}
 
 	public static boolean isCyraAllAppsPreference(String key) {

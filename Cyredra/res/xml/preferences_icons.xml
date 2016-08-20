@@ -17,55 +17,55 @@
             android:title="@string/pref_category_appearance"
             android:key="pref_key_icon_settings">
 
-			<eu.cyredra.launcher.SeekBarPreference
-            	android:key="pref_key_iconBrightness"
-            	android:title="@string/pref_icons_brightness"
-            	android:defaultValue="100" 
-				launcher:summary="@string/pref_icons_brightness_summary"
-				launcher:symbol=""
-				launcher:negative="0"
-				launcher:minimum="0"
-				launcher:maximum="200" />
+		<eu.cyredra.launcher.SeekBarPreference
+            android:key="pref_key_iconBrightness"
+            android:title="@string/pref_icons_brightness"
+            android:defaultValue="100" 
+			launcher:summary="@string/pref_icons_brightness_summary"
+			launcher:symbol=""
+			launcher:negative="0"
+			launcher:minimum="0"
+			launcher:maximum="200" />
 
-			<eu.cyredra.launcher.SeekBarPreference
-            	android:key="pref_key_iconSaturation"
-            	android:title="@string/pref_icons_saturation"
-            	android:defaultValue="100" 
-				launcher:summary="@string/pref_icons_saturation_summary"
-				launcher:symbol=""
-				launcher:negative="0"
-				launcher:minimum="0"
-				launcher:maximum="200" />
+		<eu.cyredra.launcher.SeekBarPreference
+            android:key="pref_key_iconSaturation"
+            android:title="@string/pref_icons_saturation"
+            android:defaultValue="100" 
+			launcher:summary="@string/pref_icons_saturation_summary"
+			launcher:symbol=""
+			launcher:negative="0"
+			launcher:minimum="0"
+			launcher:maximum="200" />
 
-			<eu.cyredra.launcher.SeekBarPreference
-				android:key="pref_key_iconContrast"
-				android:title="@string/pref_icons_contrast"
-				android:defaultValue="100"
-				launcher:summary="@string/pref_icons_contrast_summary"
-				launcher:symbol=""
-				launcher:negative="100"
-				launcher:minimum="0"
-				launcher:maximum="200" />
+		<eu.cyredra.launcher.SeekBarPreference
+			android:key="pref_key_iconContrast"
+			android:title="@string/pref_icons_contrast"
+			android:defaultValue="100"
+			launcher:summary="@string/pref_icons_contrast_summary"
+			launcher:symbol=""
+			launcher:negative="100"
+			launcher:minimum="0"
+			launcher:maximum="200" />
 
-			<eu.cyredra.launcher.SeekBarPreference
-            	android:key="pref_key_iconHue"
-            	android:title="@string/pref_icons_hue"
-            	android:defaultValue="180" 
-				launcher:summary="@string/pref_icons_hue_summary"
-				launcher:symbol=""
-				launcher:negative="180"
-				launcher:minimum="0"
-				launcher:maximum="360" />
+		<eu.cyredra.launcher.SeekBarPreference
+            android:key="pref_key_iconHue"
+            android:title="@string/pref_icons_hue"
+            android:defaultValue="180" 
+			launcher:summary="@string/pref_icons_hue_summary"
+			launcher:symbol=""
+			launcher:negative="180"
+			launcher:minimum="0"
+			launcher:maximum="360" />
 
-			<eu.cyredra.launcher.SeekBarPreference
-            	android:key="pref_key_iconAlpha"
-            	android:title="@string/pref_icons_alpha"
-            	android:defaultValue="100" 
-				launcher:summary="@string/pref_icons_alpha_summary"
-				launcher:symbol=""
-				launcher:negative="0"
-				launcher:minimum="0"
-				launcher:maximum="100" />
+		<eu.cyredra.launcher.SeekBarPreference
+            android:key="pref_key_iconAlpha"
+            android:title="@string/pref_icons_alpha"
+            android:defaultValue="100" 
+			launcher:summary="@string/pref_icons_alpha_summary"
+			launcher:symbol=""
+			launcher:negative="0"
+			launcher:minimum="0"
+			launcher:maximum="100" />
 
    		</PreferenceCategory>
 
@@ -73,28 +73,91 @@
             android:title="@string/pref_category_iconmask"
             android:key="pref_key_iconmask_settings">
 
-			<SwitchPreference
-				android:key="pref_key_iconMask"
-				android:title="@string/pref_icons_mask"
-				android:summary="@string/pref_icons_mask_summary"	
-				android:defaultValue="false"/>
+		<SwitchPreference
+			android:key="pref_key_iconMask"
+			android:title="@string/pref_icons_mask"
+			android:summary="@string/pref_icons_mask_summary"	
+			android:defaultValue="false"/>
+
+        <eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          	android:defaultValue="@color/material_color_accent"
+            android:key="pref_key_iconMaskColor"
+            android:summary="@string/pref_icons_mask_color_summary"
+           	android:title="@string/pref_icons_mask_color"
+			android:dependency="pref_key_iconMask"
+			alphaSlider="true"/>
+
+		<SwitchPreference
+			android:key="pref_key_iconMaskRandom"
+			android:title="@string/pref_icons_mask_random"
+			android:summary="@string/pref_icons_mask_random_summary"	
+			android:defaultValue="false"
+			android:dependency="pref_key_iconMask"/>
+
+		<PreferenceScreen
+			android:title="@string/pref_screen_rainbow_colors"
+			android:key="pref_screen_rainbow_colors"
+			android:dependency="pref_key_iconMask">
 
         	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
-          		android:defaultValue="@color/material_color_accent"
-            	android:key="pref_key_iconMaskColor"
-            	android:summary="@string/pref_icons_mask_color_summary"
-           	 	android:title="@string/pref_icons_mask_color"
+        		android:defaultValue="@color/rainbow_color_one"
+        		android:key="pref_key_rainbowColorOne"
+         		android:title="@string/pref_icons_rainbow_color_one"
 				android:dependency="pref_key_iconMask"
 				alphaSlider="true"/>
 
-			<SwitchPreference
-				android:key="pref_key_iconMaskRandom"
-				android:title="@string/pref_icons_mask_random"
-				android:summary="@string/pref_icons_mask_random_summary"	
-				android:defaultValue="false"
-				android:dependency="pref_key_iconMask"/>
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_two"
+            	android:key="pref_key_rainbowColorTwo"
+           	 	android:title="@string/pref_icons_rainbow_color_two"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
 
-   		</PreferenceCategory>
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_three"
+            	android:key="pref_key_rainbowColorThree"
+           		android:title="@string/pref_icons_rainbow_color_three"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_four"
+            	android:key="pref_key_rainbowColorFour"
+           		android:title="@string/pref_icons_rainbow_color_four"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_five"
+            	android:key="pref_key_rainbowColorFive"
+           		android:title="@string/pref_icons_rainbow_color_five"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_six"
+            	android:key="pref_key_rainbowColorSix"
+           		android:title="@string/pref_icons_rainbow_color_six"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_seven"
+            	android:key="pref_key_rainbowColorSeven"
+           		android:title="@string/pref_icons_rainbow_color_seven"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
+          		android:defaultValue="@color/rainbow_color_eight"
+            	android:key="pref_key_rainbowColorEight"
+           		android:title="@string/pref_icons_rainbow_color_eight"
+				android:dependency="pref_key_iconMask"
+				alphaSlider="true"/>
+
+		</PreferenceScreen>
+
+   	</PreferenceCategory>
 
         <PreferenceCategory 
             android:title="@string/pref_category_icon_presets"
@@ -108,6 +171,6 @@
             	android:entries="@array/pref_iconPresets_entries"
             	android:entryValues="@array/pref_iconPresets_values"/>
 
-   		</PreferenceCategory>
+   	</PreferenceCategory>
 
 </PreferenceScreen>

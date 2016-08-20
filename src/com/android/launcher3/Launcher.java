@@ -2163,6 +2163,22 @@ public class Launcher extends Activity
 			editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 180);
 			editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
 			editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, false);
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_ONE, 
+								ImageProcessor.makeColor(255, 0, 0));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_TWO, 
+								ImageProcessor.makeColor(255, 127, 0));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_THREE, 
+								ImageProcessor.makeColor(255, 255, 0));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FOUR, 
+								ImageProcessor.makeColor(0, 255, 0));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FIVE, 
+								ImageProcessor.makeColor(51, 204, 255));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SIX, 
+								ImageProcessor.makeColor(75, 0, 130));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SEVEN, 
+								ImageProcessor.makeColor(143, 0, 255));
+			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_EIGHT, 
+								ImageProcessor.makeColor(255, 255, 255));
 
 			// Gestures
 			editor.putString(CyraPreferencesProvider.KEY_GESTURE_DOWN, "GES_NOTIFICATIONS");
@@ -2286,6 +2302,22 @@ public class Launcher extends Activity
 				editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
 				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, true);
 				editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK_RANDOM, true);
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_ONE, 
+									ImageProcessor.makeColor(255, 0, 0));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_TWO, 
+									ImageProcessor.makeColor(255, 127, 0));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_THREE, 
+									ImageProcessor.makeColor(255, 255, 0));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FOUR, 
+									ImageProcessor.makeColor(0, 255, 0));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FIVE, 
+									ImageProcessor.makeColor(51, 204, 255));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SIX, 
+									ImageProcessor.makeColor(75, 0, 130));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SEVEN, 
+									ImageProcessor.makeColor(143, 0, 255));
+				editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_EIGHT, 
+									ImageProcessor.makeColor(255, 255, 255));
 				editor.putString(CyraPreferencesProvider.KEY_ICON_PRESET, "ICON");
 				editor.apply();
 				break;

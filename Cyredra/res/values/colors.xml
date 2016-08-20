@@ -25,4 +25,14 @@
     <color name="material_color_primary_dark">#ff00796b</color>
     <color name="material_color_accent">#ff009688</color>
 
+	<!-- Rainbow colors -->
+	<color name="rainbow_color_one">#ffff0000</color>
+	<color name="rainbow_color_two">#ffff7f00</color>
+	<color name="rainbow_color_three">#ffffff00</color>
+	<color name="rainbow_color_four">#ff00ff00</color>
+	<color name="rainbow_color_five">#ff0000ff</color>
+	<color name="rainbow_color_six">#ff4b0082</color>
+	<color name="rainbow_color_seven">#ff8f00ff</color>
+	<color name="rainbow_color_eight">#ffffffff</color>
+
 </resources>

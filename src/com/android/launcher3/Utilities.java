@@ -262,7 +262,7 @@ public final class Utilities {
             icon.draw(canvas);
             canvas.restore();
 
-			// Icon pack iconMask
+	    // Icon pack iconMask
             if (iconMask != null) {
                 iconMask.setBounds(icon.getBounds());
                 ((BitmapDrawable) iconMask).getPaint().setXfermode(
@@ -271,7 +271,7 @@ public final class Utilities {
                 canvas.setBitmap(null);
             }
 
-			// Icon pack iconBack
+	    // Icon pack iconBack
             if (iconBack != null) {
                 Bitmap finalBitmap = Bitmap.createBitmap(textureWidth, textureHeight,
                         Bitmap.Config.ARGB_8888);
@@ -285,21 +285,21 @@ public final class Utilities {
                 bitmap = finalBitmap;
             }
 
-			// Icon pack iconUpon
+	    // Icon pack iconUpon
             if (iconUpon != null) {
                 iconUpon.setBounds(icon.getBounds());
                 iconUpon.draw(canvas);
             }
             icon.setBounds(sOldBounds);
 
-			// ImageProcessor colormask
-			if (mIconMask) {
-				if (mIconMaskRandom) {
-					ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, ImageProcessor.randomizeColor());
-				} else {
-					ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, mIconMaskColor);
-				}
-			}
+	    // ImageProcessor colormask
+	    if (mIconMask) {
+		if (mIconMaskRandom) {
+			ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, ImageProcessor.randomizeColor());
+		} else {
+			ImageProcessor.applyColorMask(bitmap, Mode.MULTIPLY, mIconMaskColor);
+		}
+	    }
 
             canvas.setBitmap(null);
 

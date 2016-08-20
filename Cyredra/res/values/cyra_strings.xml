@@ -30,6 +30,7 @@
 	<string name="pref_screen_overview">Overview</string>
     <string name="pref_screen_drawer">App drawer</string>
 	<string name="pref_screen_icons">Icons</string>
+	<string name="pref_screen_rainbow_colors">Configure rainbow colors</string>
 	<string name="pref_screen_gestures">Gestures</string>
     <string name="pref_screen_general">General</string>
     <string name="pref_screen_advanced">Advanced</string>
@@ -105,10 +106,20 @@
 	<string name="pref_icons_mask_summary">Displays a color mask over the icons</string>
 	<string name="pref_icons_mask_color">Icon mask color</string>
 	<string name="pref_icons_mask_color_summary">Set icon mask color</string>
-	<string name="pref_icons_mask_random">Random colors</string>
-	<string name="pref_icons_mask_random_summary">Use random generated colors (rainbow)</string>
+	<string name="pref_icons_mask_random">Rainbow colors</string>
+	<string name="pref_icons_mask_random_summary">Use random generated colors</string>
 	<string name="pref_icons_preset">Presets</string>
 	<string name="pref_icons_preset_summary">These are pre selected icon settings which you can use as a base for your own icon settings</string>
+
+	<!-- Rainbow colors -->
+	<string name="pref_icons_rainbow_color_one">Rainbow color 1</string>
+	<string name="pref_icons_rainbow_color_two">Rainbow color 2</string>
+	<string name="pref_icons_rainbow_color_three">Rainbow color 3</string>
+	<string name="pref_icons_rainbow_color_four">Rainbow color 4</string>
+	<string name="pref_icons_rainbow_color_five">Rainbow color 5</string>
+	<string name="pref_icons_rainbow_color_six">Rainbow color 6</string>
+	<string name="pref_icons_rainbow_color_seven">Rainbow color 7</string>
+	<string name="pref_icons_rainbow_color_eight">Rainbow color 8</string>
 
 	<!--Icon pack-->
     <string name="dialog_pick_iconpack_title">Select icon pack</string>

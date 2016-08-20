@@ -36,7 +36,11 @@ import android.preference.PreferenceManager;
 
 import java.util.Random;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
+
 public final class ImageProcessor {
+
+	static int mRandomColorInt = 0;
 
 	public static Drawable enhanceIcon(Drawable image, int mIconBrightness, int mIconSaturation,
 										int mIconContrast, int mIconHue, int mIconAlpha) {
@@ -56,53 +60,42 @@ public final class ImageProcessor {
 
 	public static int randomizeColor() {
 
-		Random rand = new Random();
+		int mRandomColor;
+		mRandomColorInt = mRandomColorInt + 1;
+		if (mRandomColorInt > 8)
+			mRandomColorInt = 1;
 
-		int rc = rand.nextInt(6);
-		int r;
-		int g;
-		int b;
-
-		switch (rc) {
-			case 0: //Material Red: #f44336
-				r = 244;
-				g = 67;
-				b = 54;
+		switch (mRandomColorInt) {
+			case 1: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorOne();
 				break;
-			case 1: //Material Pink: #e91e63
-				r = 233;
-				g = 30;
-				b = 99;
+			case 2: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorTwo();
 				break;
-			case 2: //Material Blue: #2196f3
-				r = 33;
-				g = 150;
-				b = 243;
+			case 3: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorThree();
 				break;	
-			case 3: //Material Green: #8bc34a
-				r = 139;
-				g = 195;
-				b = 74;
+			case 4: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorFour();
 				break;
-			case 4: //Material Yellow: #ffeb3b
-				r = 255;
-				g = 235;
-				b = 59;
+			case 5: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorFive();
 				break;
-			case 5: //White
-				r = 255;
-				g = 255;
-				b = 255;
+			case 6: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorSix();
+				break;
+			case 7: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorSeven();
+				break;
+			case 8: 
+				mRandomColor = CyraPreferencesProvider.getRainbowColorEight();
 				break;
 			default:
-				r = 33;
-				g = 150;
-				b = 243;
+				mRandomColor = CyraPreferencesProvider.getRainbowColorOne();
 				break;					
 		}
 		
-		int randomColor = Color.rgb(r,g,b);
-		return randomColor;
+		return mRandomColor;
 	}
 
 	public static int makeColor(int r, int g, int b) {
@@ -181,6 +174,22 @@ public final class ImageProcessor {
  
        return cm;
     }
+
+    public static ColorMatrix applyTint(int color) {
+        float alpha = Color.alpha(color) / 255f;
+        float red = Color.red(color) * alpha;
+        float green = Color.green(color) * alpha;
+        float blue = Color.blue(color) * alpha;
+
+        float[] matrix = {
+                1, 0, 0, 0, red, //red
+                0, 1, 0, 0, green, //green
+                0, 0, 1, 0, blue, //blue
+                0, 0, 0, 1, 0 //alpha
+       };
+
+       return new ColorMatrix(matrix);
+    }   
 
     // Icon mask related functions
 	public static Bitmap applyXfermode(Bitmap bitmap, Mode mode) {
