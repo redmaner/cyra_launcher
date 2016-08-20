@@ -65,13 +65,14 @@
 			<eu.cyredra.launcher.SeekBarPreference
 				android:key="pref_key_hotseatIconSize"
 				android:title="@string/pref_icons_size_hotseat"
-				android:defaultValue="95"
+				android:defaultValue="90"
 				launcher:summary="@string/pref_icons_size_hotseat_summary"
 				launcher:symbol="%"
 				launcher:negative="0"
 				launcher:minimum="50"
 				launcher:maximum="150" />
 
+<!--
 			<eu.cyredra.launcher.SeekBarPreference
 				android:key="pref_key_hotseatIcons"
 				android:title="@string/pref_hotseat_icons"
@@ -80,6 +81,8 @@
 				launcher:negative="0"
 				launcher:minimum="3"
 				launcher:maximum="9" />
+
+-->
 
    		</PreferenceCategory>
 

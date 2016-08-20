@@ -45,9 +45,9 @@
         <!-- DO NOT CHANGE THE ID -->
         <include layout="@layout/hotseat"
             android:id="@+id/hotseat"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right" />
+            android:layout_gravity="center" />
 
         <include
             android:id="@+id/search_drop_target_bar"
