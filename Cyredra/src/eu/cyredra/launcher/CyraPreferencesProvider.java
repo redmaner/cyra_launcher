@@ -144,6 +144,76 @@ public final class CyraPreferencesProvider{
 	private static int mAnimAllAppsTransitionTime = 100;
 	private static int mAnimOverviewTransitionTime = 250;
 
+	public static void setCyraSettings (Context mContext) {
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		SharedPreferences.Editor editor = prefs.edit();
+
+		// Workspace settings
+		editor.putString(KEY_WORKSPACE_EDGE, "MARGIN_TIGHT");
+		editor.putInt(KEY_WORKSPACE_ICONSIZE, 95);
+		editor.putInt(KEY_WORKSPACE_LABEL_COLOR, -1);
+		editor.putInt(KEY_HOTSEAT_ICONSIZE, 95);
+		editor.putBoolean(KEY_WORKSPACE_WALLPAPER_SCROLL, false);
+		editor.putBoolean(KEY_WORKSPACE_INFINITE_SCROLL, false);
+
+		// Overview settings
+		editor.putBoolean(KEY_OVERVIEW_WALLPAPER, true);
+		editor.putBoolean(KEY_OVERVIEW_WIDGETS, true);
+		editor.putBoolean(KEY_OVERVIEW_APPS, false);
+		editor.putBoolean(KEY_OVERVIEW_SETTINGS, false);
+			
+		// App drawer
+		editor.putString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
+		editor.putInt(KEY_DRAWER_ICONSIZE, 95);
+		editor.putInt(KEY_DRAWER_LABEL_COLOR, -1);
+
+		// Icon settings
+		editor.putInt(KEY_ICON_BRIGHTNESS, 105);
+		editor.putInt(KEY_ICON_SATURATION, 115);
+		editor.putInt(KEY_ICON_CONTRAST, 110);
+		editor.putInt(KEY_ICON_HUE, 180);
+		editor.putInt(KEY_ICON_ALPHA, 100);
+		editor.putBoolean(KEY_ICON_MASK, false);
+
+		// Rainbow colors
+		editor.putInt(KEY_RAINBOW_COLOR_ONE, 
+							ImageProcessor.makeColor(255, 0, 0));
+		editor.putInt(KEY_RAINBOW_COLOR_TWO, 
+							ImageProcessor.makeColor(255, 127, 0));
+		editor.putInt(KEY_RAINBOW_COLOR_THREE, 
+							ImageProcessor.makeColor(255, 255, 0));
+		editor.putInt(KEY_RAINBOW_COLOR_FOUR, 
+							ImageProcessor.makeColor(0, 255, 0));
+		editor.putInt(KEY_RAINBOW_COLOR_FIVE, 
+							ImageProcessor.makeColor(51, 204, 255));
+		editor.putInt(KEY_RAINBOW_COLOR_SIX, 
+							ImageProcessor.makeColor(75, 0, 130));
+		editor.putInt(KEY_RAINBOW_COLOR_SEVEN, 
+							ImageProcessor.makeColor(143, 0, 255));
+		editor.putInt(KEY_RAINBOW_COLOR_EIGHT, 
+							ImageProcessor.makeColor(255, 255, 255));
+
+		// Gestures
+		editor.putString(KEY_GESTURE_DOWN, "GES_NOTIFICATIONS");
+		editor.putString(KEY_GESTURE_UP, "GES_LOCKSCREEN");
+		editor.putString(KEY_GESTURE_LONGPRESS, "GES_OVERVIEW");
+
+		// General
+		editor.putBoolean(KEY_ALLOW_ROTATION, false);
+		editor.putBoolean(INITIAL_SET, true);
+
+		// Animations
+		editor.putInt(ANIM_OVERLAY_REVEAL_TIME, 60);
+   		editor.putInt(ANIM_OVERLAY_TRANSITION_TIME, 60);
+   		editor.putInt(ANIM_ALLAPPS_TRANSITION_TIME, 60);
+       	editor.putInt(ANIM_OVERVIEW_TRANSITION_TIME, 60);
+
+		editor.apply();
+
+	}
+
 	// Load non deviceprofile preferences in memory at first run
 	public static void loadInitialCyraPreferences(Context context) {
 
@@ -380,6 +450,11 @@ public final class CyraPreferencesProvider{
 		// App drawer
 		mDrawerIconSize = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_DRAWER_ICONSIZE, 0);
+	}
+
+	public static boolean isInitialSet(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(INITIAL_SET, false);	
 	}
 
 	public static boolean isInitialLoaded() {

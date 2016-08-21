@@ -521,13 +521,6 @@ public class Launcher extends Activity
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(mSharedPreferencesObserver);
 
-		// Set default values
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_workspace, false);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_drawer, false);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_icons, false);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_gestures, false);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_general, false);
-
 		updateCyraSettings();
 
         deviceManager = (DevicePolicyManager)getSystemService(  
@@ -2111,10 +2104,17 @@ public class Launcher extends Activity
 
 	private void updateCyraSettings () {
 
-		setCyraSettings();
+		if (!CyraPreferencesProvider.isInitialSet(this)) {
+			CyraPreferencesProvider.setCyraSettings(this);
+			mIconCache.flush();
+			LauncherAppState.getInstance().getModel().forceReload();
+			this.recreate();
+		}
 
 		if (!CyraPreferencesProvider.isInitialLoaded()) {
 			CyraPreferencesProvider.loadInitialCyraPreferences(this);
+			mIconCache.flush();
+			LauncherAppState.getInstance().getModel().forceReload();
 			this.recreate();
 		}
 
@@ -2128,77 +2128,6 @@ public class Launcher extends Activity
 		mWorkspace.mGestureDown = CyraPreferencesProvider.getGestureDown();
 		mWorkspace.mGestureUp = CyraPreferencesProvider.getGestureUp();
 		mGestureLongpress = CyraPreferencesProvider.getGestureLongpress();
-	}
-
-	private void setCyraSettings () {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		if (!prefs.getBoolean(CyraPreferencesProvider.INITIAL_SET, false)) {
-
-			SharedPreferences.Editor editor = prefs.edit();
-
-			// Workspace settings
-			editor.putString(CyraPreferencesProvider.KEY_WORKSPACE_EDGE, "MARGIN_TIGHT");
-			editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_ICONSIZE, 95);
-			editor.putInt(CyraPreferencesProvider.KEY_WORKSPACE_LABEL_COLOR, -1);
-			editor.putInt(CyraPreferencesProvider.KEY_HOTSEAT_ICONSIZE, 95);
-			editor.putBoolean(CyraPreferencesProvider.KEY_WORKSPACE_WALLPAPER_SCROLL, false);
-			editor.putBoolean(CyraPreferencesProvider.KEY_WORKSPACE_INFINITE_SCROLL, false);
-
-			// Overview settings
-			editor.putBoolean(CyraPreferencesProvider.KEY_OVERVIEW_WALLPAPER, true);
-			editor.putBoolean(CyraPreferencesProvider.KEY_OVERVIEW_WIDGETS, true);
-			editor.putBoolean(CyraPreferencesProvider.KEY_OVERVIEW_APPS, false);
-			editor.putBoolean(CyraPreferencesProvider.KEY_OVERVIEW_SETTINGS, false);
-			
-			// App drawer
-			editor.putString(CyraPreferencesProvider.KEY_DRAWER_STYLE, "DRAWER_ZERO");
-			editor.putInt(CyraPreferencesProvider.KEY_DRAWER_ICONSIZE, 95);
-			editor.putInt(CyraPreferencesProvider.KEY_DRAWER_LABEL_COLOR, -1);
-
-			// Icon settings
-			editor.putInt(CyraPreferencesProvider.KEY_ICON_BRIGHTNESS, 105);
-			editor.putInt(CyraPreferencesProvider.KEY_ICON_SATURATION, 115);
-			editor.putInt(CyraPreferencesProvider.KEY_ICON_CONTRAST, 110);
-			editor.putInt(CyraPreferencesProvider.KEY_ICON_HUE, 180);
-			editor.putInt(CyraPreferencesProvider.KEY_ICON_ALPHA, 100);
-			editor.putBoolean(CyraPreferencesProvider.KEY_ICON_MASK, false);
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_ONE, 
-								ImageProcessor.makeColor(255, 0, 0));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_TWO, 
-								ImageProcessor.makeColor(255, 127, 0));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_THREE, 
-								ImageProcessor.makeColor(255, 255, 0));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FOUR, 
-								ImageProcessor.makeColor(0, 255, 0));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_FIVE, 
-								ImageProcessor.makeColor(51, 204, 255));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SIX, 
-								ImageProcessor.makeColor(75, 0, 130));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_SEVEN, 
-								ImageProcessor.makeColor(143, 0, 255));
-			editor.putInt(CyraPreferencesProvider.KEY_RAINBOW_COLOR_EIGHT, 
-								ImageProcessor.makeColor(255, 255, 255));
-
-			// Gestures
-			editor.putString(CyraPreferencesProvider.KEY_GESTURE_DOWN, "GES_NOTIFICATIONS");
-			editor.putString(CyraPreferencesProvider.KEY_GESTURE_UP, "GES_LOCKSCREEN");
-			editor.putString(CyraPreferencesProvider.KEY_GESTURE_LONGPRESS, "GES_OVERVIEW");
-
-			// General
-			editor.putBoolean(CyraPreferencesProvider.KEY_ALLOW_ROTATION, false);
-			editor.putBoolean(CyraPreferencesProvider.KEY_CYRA_ADMIN, false);
-			editor.putBoolean(CyraPreferencesProvider.INITIAL_SET, true);
-
-			// Animations
-			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 60);
-    		editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 60);
-    		editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 60);
-        	editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 60);
-
-			editor.apply();
-			this.recreate();
-		}			
 	}
 
 	private void getCyraOverviewTiles () {
