@@ -52,7 +52,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:$GRADLE_ANDROID_PLUGIN'
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.7'
     }
 }
 
@@ -63,7 +62,6 @@ allprojects {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.protobuf'
 
 android {
    sourceSets {
@@ -71,7 +69,6 @@ android {
             res.srcDirs = ['res', 'Cyredra/res', 'WallpaperPicker/res']
             main.java.srcDirs = ['src', 'Cyredra/src', 'WallpaperPicker/src']
             manifest.srcFile 'AndroidManifest.xml'
-            proto.srcDirs 'protos/'
         }
 	}
 
@@ -115,14 +112,6 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.android.support:recyclerview-v7:+'
-    compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-7'
-}
-
-protobuf {
-    // Configure the protoc executable
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.0.0'
-    }
 }
 EOF
 }

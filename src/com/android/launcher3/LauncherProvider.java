@@ -318,8 +318,6 @@ public class LauncherProvider extends ContentProvider {
     }
 
     private void notifyListeners() {
-        // always notify the backup agent
-        LauncherBackupAgentHelper.dataChanged(getContext());
         if (mListener != null) {
             mListener.onLauncherProviderChange();
         }
