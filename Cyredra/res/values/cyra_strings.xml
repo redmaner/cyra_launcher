@@ -79,6 +79,8 @@
     <!-- Preferences app drawer -->
     <string name="pref_drawer_style">App drawer style</string>
     <string name="pref_drawer_style_summary">Change the app drawer style\nCurrent style: %s</string>
+	<string name="pref_drawer_search">Search bar</string>
+	<string name="pref_drawer_search_summary">Show or hide search bar in appdrawer</string>
 	<string name="pref_drawer_label_color">Label color</string>
 	<string name="pref_drawer_label_color_summary">Set custom label color</string>
 

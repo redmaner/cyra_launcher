@@ -40,6 +40,8 @@ public class Hotseat extends FrameLayout
 
     private final boolean mHasVerticalHotseat;
 
+	private final boolean mAllAppsEnabled = true;
+
     public Hotseat(Context context) {
         this(context, null);
     }
@@ -111,34 +113,44 @@ public class Hotseat extends FrameLayout
     void resetLayout() {
         mContent.removeAllViewsInLayout();
 
-        // Add the Apps button
-        Context context = getContext();
+		if (mAllAppsEnabled) {
 
-        LayoutInflater inflater = LayoutInflater.from(context);
-        TextView allAppsButton = (TextView)
-                inflater.inflate(R.layout.all_apps_button, mContent, false);
-        Drawable d = context.getResources().getDrawable(R.drawable.all_apps_button_icon);
+        	// Add the Apps button
+        	Context context = getContext();
 
-        mLauncher.resizeIconDrawable(d);
-        allAppsButton.setCompoundDrawables(null, d, null, null);
+        	LayoutInflater inflater = LayoutInflater.from(context);
+        	TextView allAppsButton = (TextView)
+                	inflater.inflate(R.layout.all_apps_button, mContent, false);
 
-        allAppsButton.setContentDescription(context.getString(R.string.all_apps_button_label));
-        allAppsButton.setOnKeyListener(new HotseatIconKeyEventListener());
-        if (mLauncher != null) {
-            mLauncher.setAllAppsButton(allAppsButton);
-            allAppsButton.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());
-            allAppsButton.setOnClickListener(mLauncher);
-            allAppsButton.setOnLongClickListener(mLauncher);
-            allAppsButton.setOnFocusChangeListener(mLauncher.mFocusHandler);
-        }
+        	Drawable d = context.getResources().getDrawable(R.drawable.all_apps_button_icon);
 
-        // Note: We do this to ensure that the hotseat is always laid out in the orientation of
-        // the hotseat in order regardless of which orientation they were added
-        int x = getCellXFromOrder(mAllAppsButtonRank);
-        int y = getCellYFromOrder(mAllAppsButtonRank);
-        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(x,y,1,1);
-        lp.canReorder = false;
-        mContent.addViewToCellLayout(allAppsButton, -1, allAppsButton.getId(), lp, true);
+        	mLauncher.resizeIconDrawable(d);
+        	allAppsButton.setCompoundDrawables(null, d, null, null);
+
+        	allAppsButton.setContentDescription(context.getString(R.string.all_apps_button_label));
+        	allAppsButton.setOnKeyListener(new HotseatIconKeyEventListener());
+        	if (mLauncher != null) {
+            	mLauncher.setAllAppsButton(allAppsButton);
+            	allAppsButton.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());
+            	allAppsButton.setOnClickListener(mLauncher);
+            	allAppsButton.setOnLongClickListener(mLauncher);
+            	allAppsButton.setOnFocusChangeListener(mLauncher.mFocusHandler);
+
+       	 	// Note: We do this to ensure that the hotseat is always laid out in the orientation of
+        	// the hotseat in order regardless of which orientation they were added
+        	int x = getCellXFromOrder(mAllAppsButtonRank);
+        	int y = getCellYFromOrder(mAllAppsButtonRank);
+        	CellLayout.LayoutParams lp = new CellLayout.LayoutParams(x,y,1,1);
+        	lp.canReorder = false;
+        	mContent.addViewToCellLayout(allAppsButton, -1, allAppsButton.getId(), lp, true);
+
+        	} 
+		} else {
+			TextView allAppsButton = null;
+			if (mLauncher != null)
+				mLauncher.setAllAppsButton(allAppsButton);
+		}		
+
     }
 
     @Override

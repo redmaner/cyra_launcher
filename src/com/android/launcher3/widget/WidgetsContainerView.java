@@ -343,7 +343,7 @@ public class WidgetsContainerView extends BaseContainerView
 
         // TODO: Use quantum_panel_dark instead of quantum_panel_shape_dark.
         InsetDrawable background = new InsetDrawable(
-                getResources().getDrawable(R.drawable.quantum_panel_shape_dark), padding.left, 0,
+                getResources().getDrawable(R.drawable.quantum_panel_dark_bitmap), padding.left, 0,
                 padding.right, 0);
         Rect bgPadding = new Rect();
         background.getPadding(bgPadding);

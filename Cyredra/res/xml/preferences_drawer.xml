@@ -15,6 +15,12 @@
             	android:entryValues="@array/pref_appDrawerStyle_values"
             	android:defaultValue="DRAWER_ZERO"/>
 
+			<SwitchPreference
+				android:key="pref_key_drawerSearch"
+				android:title="@string/pref_drawer_search"
+				android:summary="@string/pref_drawer_search_summary"	
+				android:defaultValue="false"/>
+
    		</PreferenceCategory>
 
        <PreferenceCategory 

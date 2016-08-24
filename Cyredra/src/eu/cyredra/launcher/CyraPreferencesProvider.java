@@ -60,6 +60,7 @@ public final class CyraPreferencesProvider{
 
 	// App drawer - Preference keys
     public static final String KEY_DRAWER_STYLE = "pref_key_drawerStyle";
+	public static final String KEY_DRAWER_SEARCH = "pref_key_drawerSearch";
 	public static final String KEY_DRAWER_ICONSIZE = "pref_key_drawerIconSize";
     public static final String KEY_DRAWER_LABEL_COLOR = "pref_key_drawerLabelColor";
 
@@ -125,6 +126,7 @@ public final class CyraPreferencesProvider{
 
 	// App drawer - Variables
 	private static String mDrawerStyle = "DRAWER_ZERO";
+	private static boolean mDrawerSearch = false;
 	private static int mDrawerIconSize = 95;
 	private static int mDrawerLabelColor = -1;
 
@@ -166,6 +168,7 @@ public final class CyraPreferencesProvider{
 			
 		// App drawer
 		editor.putString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
+		editor.putBoolean(KEY_DRAWER_SEARCH, false);
 		editor.putInt(KEY_DRAWER_ICONSIZE, 95);
 		editor.putInt(KEY_DRAWER_LABEL_COLOR, -1);
 
@@ -278,6 +281,8 @@ public final class CyraPreferencesProvider{
 		// App Drawer
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
+		mDrawerSearch = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_DRAWER_SEARCH, false);
 		mDrawerLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_DRAWER_LABEL_COLOR, 0);
 
@@ -386,6 +391,8 @@ public final class CyraPreferencesProvider{
 		// App Drawer
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
                         .getString(KEY_DRAWER_STYLE, "DRAWER_ZERO");
+		mDrawerSearch = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(KEY_DRAWER_SEARCH, false);
 		mDrawerLabelColor = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_DRAWER_LABEL_COLOR, 0);
 
@@ -574,6 +581,9 @@ public final class CyraPreferencesProvider{
 	public static String getDrawerStyle() {
 		return mDrawerStyle;
 	}
+	public static boolean getDrawerSearch() {
+		return mDrawerSearch;
+	}
 	public static int getDrawerIconSize() {
 		return mDrawerIconSize;
 	}
@@ -644,6 +654,7 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_RAINBOW_COLOR_SEVEN)
  			|| key.equals(KEY_RAINBOW_COLOR_EIGHT)
 			|| key.equals(KEY_DRAWER_STYLE)
+			|| key.equals(KEY_DRAWER_SEARCH)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR)
  			|| key.equals(KEY_GESTURE_DOWN)
  			|| key.equals(KEY_GESTURE_UP)
@@ -694,6 +705,7 @@ public final class CyraPreferencesProvider{
 
 	public static boolean isCyraAllAppsPreference(String key) {
 		return key.equals(KEY_DRAWER_STYLE)
+			|| key.equals(KEY_DRAWER_SEARCH)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR);
 	}
 

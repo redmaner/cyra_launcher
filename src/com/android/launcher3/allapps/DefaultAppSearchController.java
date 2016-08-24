@@ -31,6 +31,7 @@ import com.android.launcher3.util.Thunk;
 
 import java.util.List;
 
+import eu.cyredra.launcher.CyraPreferencesProvider;
 import eu.cyredra.launcher.R;
 
 /**
@@ -44,6 +45,8 @@ final class DefaultAppSearchController extends AllAppsSearchBarController
     private static final int FADE_IN_DURATION = 175;
     private static final int FADE_OUT_DURATION = 100;
     private static final int SEARCH_TRANSLATION_X_DP = 18;
+
+	private boolean mAllAppsSearchBar = false;
 
     private final Context mContext;
     @Thunk final InputMethodManager mInputMethodManager;
@@ -103,6 +106,12 @@ final class DefaultAppSearchController extends AllAppsSearchBarController
                         return false;
                     }
                 });
+
+		mAllAppsSearchBar = CyraPreferencesProvider.getDrawerSearch();
+
+		if (!mAllAppsSearchBar) 
+			mSearchView.setVisibility(View.GONE);
+
         return mSearchView;
     }
 

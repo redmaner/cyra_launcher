@@ -375,12 +375,12 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
 		switch (mAppDrawerStyle) {
 			case "DRAWER_LIGHT":
 				background = new InsetDrawable(
-                	getResources().getDrawable(R.drawable.quantum_panel_shape), padding.left, 0,
+                	getResources().getDrawable(R.drawable.quantum_panel_bitmap), padding.left, 0,
                 	padding.right, 0);
 				break;
 			case "DRAWER_DARK":
 				background = new InsetDrawable(
-                	getResources().getDrawable(R.drawable.quantum_panel_shape_dark), padding.left, 0,
+                	getResources().getDrawable(R.drawable.quantum_panel_dark_bitmap), padding.left, 0,
                 	padding.right, 0);
 				break;
 			case "DRAWER_ZERO":

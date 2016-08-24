@@ -223,7 +223,8 @@ public class AppWidgetResizeFrame extends FrameLayout {
      *  Based on the current deltas, we determine if and how to resize the widget.
      */
     private void resizeWidgetIfNeeded(boolean onDismiss) {
-        int xThreshold = mCellLayout.getCellWidth() + mCellLayout.getWidthGap();
+
+		int xThreshold = mCellLayout.getCellWidth() + mCellLayout.getWidthGap();
         int yThreshold = mCellLayout.getCellHeight() + mCellLayout.getHeightGap();
 
         int deltaX = mDeltaX + mDeltaXAddOn;
