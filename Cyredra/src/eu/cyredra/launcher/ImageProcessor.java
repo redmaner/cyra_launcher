@@ -62,7 +62,7 @@ public final class ImageProcessor {
 
 		int mRandomColor;
 		mRandomColorInt = mRandomColorInt + 1;
-		if (mRandomColorInt > 8)
+		if (mRandomColorInt > 5)
 			mRandomColorInt = 1;
 
 		switch (mRandomColorInt) {
@@ -80,15 +80,6 @@ public final class ImageProcessor {
 				break;
 			case 5: 
 				mRandomColor = CyraPreferencesProvider.getRainbowColorFive();
-				break;
-			case 6: 
-				mRandomColor = CyraPreferencesProvider.getRainbowColorSix();
-				break;
-			case 7: 
-				mRandomColor = CyraPreferencesProvider.getRainbowColorSeven();
-				break;
-			case 8: 
-				mRandomColor = CyraPreferencesProvider.getRainbowColorEight();
 				break;
 			default:
 				mRandomColor = CyraPreferencesProvider.getRainbowColorOne();

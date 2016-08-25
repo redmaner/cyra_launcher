@@ -134,27 +134,6 @@
 				android:dependency="pref_key_iconMask"
 				alphaSlider="true"/>
 
-        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
-          		android:defaultValue="@color/rainbow_color_six"
-            	android:key="pref_key_rainbowColorSix"
-           		android:title="@string/pref_icons_rainbow_color_six"
-				android:dependency="pref_key_iconMask"
-				alphaSlider="true"/>
-
-        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
-          		android:defaultValue="@color/rainbow_color_seven"
-            	android:key="pref_key_rainbowColorSeven"
-           		android:title="@string/pref_icons_rainbow_color_seven"
-				android:dependency="pref_key_iconMask"
-				alphaSlider="true"/>
-
-        	<eu.cyredra.launcher.colorpicker.ColorPickerPreference
-          		android:defaultValue="@color/rainbow_color_eight"
-            	android:key="pref_key_rainbowColorEight"
-           		android:title="@string/pref_icons_rainbow_color_eight"
-				android:dependency="pref_key_iconMask"
-				alphaSlider="true"/>
-
 		</PreferenceScreen>
 
    	</PreferenceCategory>

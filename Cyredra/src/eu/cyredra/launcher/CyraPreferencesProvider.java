@@ -54,9 +54,6 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_RAINBOW_COLOR_THREE = "pref_key_rainbowColorThree";
 	public static final String KEY_RAINBOW_COLOR_FOUR = "pref_key_rainbowColorFour";
 	public static final String KEY_RAINBOW_COLOR_FIVE = "pref_key_rainbowColorFive";
-	public static final String KEY_RAINBOW_COLOR_SIX = "pref_key_rainbowColorSix";
-	public static final String KEY_RAINBOW_COLOR_SEVEN = "pref_key_rainbowColorSeven";
-	public static final String KEY_RAINBOW_COLOR_EIGHT = "pref_key_rainbowColorEight";
 
 	// App drawer - Preference keys
     public static final String KEY_DRAWER_STYLE = "pref_key_drawerStyle";
@@ -120,9 +117,6 @@ public final class CyraPreferencesProvider{
 	private static int mRainbowColorThree;
 	private static int mRainbowColorFour;
 	private static int mRainbowColorFive;
-	private static int mRainbowColorSix;
-	private static int mRainbowColorSeven;
-	private static int mRainbowColorEight;
 
 	// App drawer - Variables
 	private static String mDrawerStyle = "DRAWER_ZERO";
@@ -191,12 +185,6 @@ public final class CyraPreferencesProvider{
 							ImageProcessor.makeColor(0, 255, 0));
 		editor.putInt(KEY_RAINBOW_COLOR_FIVE, 
 							ImageProcessor.makeColor(51, 204, 255));
-		editor.putInt(KEY_RAINBOW_COLOR_SIX, 
-							ImageProcessor.makeColor(75, 0, 130));
-		editor.putInt(KEY_RAINBOW_COLOR_SEVEN, 
-							ImageProcessor.makeColor(143, 0, 255));
-		editor.putInt(KEY_RAINBOW_COLOR_EIGHT, 
-							ImageProcessor.makeColor(255, 255, 255));
 
 		// Gestures
 		editor.putString(KEY_GESTURE_DOWN, "GES_NOTIFICATIONS");
@@ -271,12 +259,6 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_RAINBOW_COLOR_FOUR, 0);
 		mRainbowColorFive = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_RAINBOW_COLOR_FIVE, 0);
-		mRainbowColorSix = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_SIX, 0);
-		mRainbowColorSeven = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_SEVEN, 0);
-		mRainbowColorEight = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_EIGHT, 0);
 
 		// App Drawer
 		mDrawerStyle = PreferenceManager.getDefaultSharedPreferences(context)
@@ -377,13 +359,6 @@ public final class CyraPreferencesProvider{
                         .getInt(KEY_RAINBOW_COLOR_FOUR, 0);
 		mRainbowColorFive = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_RAINBOW_COLOR_FIVE, 0);
-		mRainbowColorSix = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_SIX, 0);
-		mRainbowColorSeven = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_SEVEN, 0);
-		mRainbowColorEight = PreferenceManager.getDefaultSharedPreferences(context)
-                        .getInt(KEY_RAINBOW_COLOR_EIGHT, 0);
-
 	}
 
 	public static void loadCyraAllAppsPreferences(Context context) {
@@ -567,15 +542,6 @@ public final class CyraPreferencesProvider{
 	public static int getRainbowColorFive() {
 		return mRainbowColorFive;
 	}
-	public static int getRainbowColorSix() {
-		return mRainbowColorSix;
-	}
-	public static int getRainbowColorSeven() {
-		return mRainbowColorSeven;
-	}
-	public static int getRainbowColorEight() {
-		return mRainbowColorEight;
-	}
 
 	// App drawer
 	public static String getDrawerStyle() {
@@ -650,9 +616,6 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_RAINBOW_COLOR_THREE)
  			|| key.equals(KEY_RAINBOW_COLOR_FOUR)
  			|| key.equals(KEY_RAINBOW_COLOR_FIVE)
- 			|| key.equals(KEY_RAINBOW_COLOR_SIX)
- 			|| key.equals(KEY_RAINBOW_COLOR_SEVEN)
- 			|| key.equals(KEY_RAINBOW_COLOR_EIGHT)
 			|| key.equals(KEY_DRAWER_STYLE)
 			|| key.equals(KEY_DRAWER_SEARCH)
 			|| key.equals(KEY_DRAWER_LABEL_COLOR)
@@ -697,10 +660,7 @@ public final class CyraPreferencesProvider{
  			|| key.equals(KEY_RAINBOW_COLOR_TWO)
  			|| key.equals(KEY_RAINBOW_COLOR_THREE)
  			|| key.equals(KEY_RAINBOW_COLOR_FOUR)
- 			|| key.equals(KEY_RAINBOW_COLOR_FIVE)
- 			|| key.equals(KEY_RAINBOW_COLOR_SIX)
- 			|| key.equals(KEY_RAINBOW_COLOR_SEVEN)
- 			|| key.equals(KEY_RAINBOW_COLOR_EIGHT);
+ 			|| key.equals(KEY_RAINBOW_COLOR_FIVE);
 	}
 
 	public static boolean isCyraAllAppsPreference(String key) {

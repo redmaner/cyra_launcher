@@ -52,8 +52,8 @@
     <array name="pref_iconPresets_entries">
         <item>Normal icons</item>
         <item>Colorful icons (recommended)</item>
+		<item>Grayscale icons</item>
         <item>Clear color mask</item>
-		<item>Vintage icons</item>
         <item>Clear color mask (rainbow)</item>
     </array>
 
@@ -61,8 +61,8 @@
     <array name="pref_iconPresets_values">
         <item>ICON_PRESET_NONE</item>
         <item>ICON_PRESET_LIFE</item>
+        <item>ICON_PRESET_GRAYSCALE</item>
         <item>ICON_PRESET_MASK</item>
-        <item>ICON_PRESET_VINTAGE</item>
         <item>ICON_PRESET_RAINBOW</item>
     </array>
 

@@ -119,9 +119,6 @@
 	<string name="pref_icons_rainbow_color_three">Rainbow color 3</string>
 	<string name="pref_icons_rainbow_color_four">Rainbow color 4</string>
 	<string name="pref_icons_rainbow_color_five">Rainbow color 5</string>
-	<string name="pref_icons_rainbow_color_six">Rainbow color 6</string>
-	<string name="pref_icons_rainbow_color_seven">Rainbow color 7</string>
-	<string name="pref_icons_rainbow_color_eight">Rainbow color 8</string>
 
 	<!--Icon pack-->
     <string name="dialog_pick_iconpack_title">Select icon pack</string>
