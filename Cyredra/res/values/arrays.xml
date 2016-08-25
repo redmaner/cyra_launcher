@@ -90,15 +90,19 @@
 
     <!-- Animation profile entries -->
     <array name="pref_animationProfile_entries">
+        <item>Very slow</item>
         <item>Lazy</item>
-        <item>Normal (android)</item>
+        <item>Normal</item>
         <item>Cyra</item>
+        <item>Very fast</item>
     </array>
 
     <!-- Animation profile values -->
     <array name="pref_animationProfile_values">
+        <item>ANIMATION_SLOW</item>
         <item>ANIMATION_LAZY</item>
         <item>ANIMATION_NORMAL</item>
         <item>ANIMATION_CYRA</item>
+        <item>ANIMATION_FAST</item>
     </array>
 </resources>

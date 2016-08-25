@@ -2146,11 +2146,18 @@ public class Launcher extends Activity
 		mAnimationProfile = CyraPreferencesProvider.getAnimationProfile();
 
 		switch (mAnimationProfile) {
+			case "ANIMATION_FAST":
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 10);
+    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 10);
+    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 10);
+        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 10);
+		    	editor.apply();
+				break;
 			case "ANIMATION_CYRA":
-				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 60);
-    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 60);
-    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 60);
-        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 60);
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 45);
+    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 45);
+    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 45);
+        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 45);
 		    	editor.apply();
 				break;
 			case "ANIMATION_NORMAL":
@@ -2161,10 +2168,17 @@ public class Launcher extends Activity
 		    	editor.apply();
 				break;
 			case "ANIMATION_LAZY":
-				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 150);
-    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 150);
-    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 150);
-        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 150);
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 130);
+    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 130);
+    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 130);
+        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 130);
+		    	editor.apply();
+				break;
+			case "ANIMATION_SLOW":
+				editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_REVEAL_TIME, 180);
+    			editor.putInt(CyraPreferencesProvider.ANIM_OVERLAY_TRANSITION_TIME, 180);
+    			editor.putInt(CyraPreferencesProvider.ANIM_ALLAPPS_TRANSITION_TIME, 180);
+        		editor.putInt(CyraPreferencesProvider.ANIM_OVERVIEW_TRANSITION_TIME, 180);
 		    	editor.apply();
 				break;
 			default:
