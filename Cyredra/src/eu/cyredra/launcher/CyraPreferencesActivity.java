@@ -35,6 +35,8 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 		instance = this;
 		CyraPreferencesActivity.context = this;
+
+        LauncherAppState.setApplicationContext(getApplicationContext());
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 

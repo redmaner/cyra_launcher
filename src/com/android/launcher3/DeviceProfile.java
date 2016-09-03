@@ -19,6 +19,7 @@ package com.android.launcher3;
 import android.appwidget.AppWidgetHostView;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
@@ -34,6 +35,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import eu.cyredra.launcher.CyraPreferencesProvider;
+import eu.cyredra.launcher.DpiChanger;
 import eu.cyredra.launcher.R;
 
 public class DeviceProfile {
@@ -109,10 +111,14 @@ public class DeviceProfile {
         this.inv = inv;
         this.isLandscape = isLandscape;
 
-		
-
-        Resources res = context.getResources();
+		Resources res = context.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
+
+		CyraPreferencesProvider.loadCyraGeneralPreferences(context);
+		String mCyraDpi = CyraPreferencesProvider.getCyraDpi();
+		
+		if (!mCyraDpi.equals("DPI_DEFAULT"))
+			DpiChanger.ChangeDpi(context, res, dm);
 
         // Constants from resources
         isTablet = res.getBoolean(R.bool.is_tablet);

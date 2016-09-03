@@ -33,7 +33,7 @@
 	<string name="pref_screen_rainbow_colors">Configure rainbow colors</string>
 	<string name="pref_screen_gestures">Gestures</string>
     <string name="pref_screen_general">General</string>
-    <string name="pref_screen_advanced">Advanced</string>
+    <string name="pref_screen_advanced">Expert settings</string>
     <string name="pref_screen_build_info">Cyra Launcher</string>
 
 	<!-- Preference categories --> 
@@ -53,6 +53,7 @@
 	<string name="pref_category_about">About launcher</string>
 	<string name="pref_category_general">General</string>
     <string name="pref_category_animation_customize">Customize animations</string>
+    <string name="pref_category_dpi">Density</string>
 
     <!-- Preferences workspace -->
     <string name="pref_workspace_rows">Rows</string>
@@ -151,12 +152,20 @@
     <string name="cyra_admin_disabled">Cyra launcher: admin privileges withdrawn</string>		
     <string name="cyra_admin_disable_requested">When disabling devicemanger privileges Cyra launcher is not allowed to lock the screen</string>	
 
+	<!-- expert settings -->
+	<string name="expert_settings_title">WARNING!</string>
+	<string name="expert_settings_summary">The settings below can alter the behaviour of this launcher drastically, proceed with caution!</string>
+
 	<!-- Animations -->
 	<string name="anim_overlay_reveal_time">Overlay reveal time</string>
 	<string name="anim_overlay_reveal_time_summary">Overlay reveal time cannot be higher then overlay transition time\nCurrent animation speed: %s</string>
 	<string name="anim_overlay_transition_time">Overlay transition time</string>
 	<string name="anim_allapps_transition_time">App drawer transition time</string>
 	<string name="anim_overview_transition_time">Overview transition time</string>
+
+	<!-- Density -->
+	<string name="pref_dpi_title">Change density (dpi) of launcher</string>
+	<string name="pref_dpi_summary">"This only applies to cyra launcher, not to any other application\nCurrent density: %s"</string>
 
 	<!-- Overview buttons -->
 	<string name="cyra_apps_button_text">Applications</string>

@@ -126,6 +126,7 @@ public class InvariantDeviceProfile {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
+
         display.getMetrics(dm);
 
         Point smallestSize = new Point();

@@ -27,7 +27,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.app.admin.DevicePolicyManager;
 import android.appwidget.AppWidgetHostView;
@@ -64,6 +66,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Process;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.UserHandle;
@@ -410,6 +413,7 @@ public class Launcher extends Activity
 	private String mIconPreset;
 	private String mGestureLongpress = "GES_OVERVIEW";
 	private boolean mCyraAdmin;
+	private boolean mCyraDpiChanged = false;
 
 	// Cyra Gestures
 	protected static final String GESTURE_NONE = "GES_NONE";
@@ -427,6 +431,8 @@ public class Launcher extends Activity
 	private boolean mOverviewTileSettings;
 
 	static final int RESULT_ENABLE = 1;
+
+	public static Launcher instance = null;
 
     DevicePolicyManager deviceManager;  
     ComponentName mCyraAdminName;
@@ -453,6 +459,7 @@ public class Launcher extends Activity
         }
 
         super.onCreate(savedInstanceState);
+		instance = this;
 
         LauncherAppState.setApplicationContext(getApplicationContext());
         LauncherAppState app = LauncherAppState.getInstance();
@@ -2092,6 +2099,9 @@ public class Launcher extends Activity
         					} catch (Exception e) {}
     					}
 					}
+					if (key.equals(CyraPreferencesProvider.KEY_CYRA_DPI)) {
+						restartLauncher();
+    				}
 				}
 				if (CyraPreferencesProvider.isCyraAnimationPreference(key)) {
 					CyraPreferencesProvider.loadCyraAnimationPreferences(Launcher.this);
@@ -2128,6 +2138,23 @@ public class Launcher extends Activity
 		mWorkspace.mGestureDown = CyraPreferencesProvider.getGestureDown();
 		mWorkspace.mGestureUp = CyraPreferencesProvider.getGestureUp();
 		mGestureLongpress = CyraPreferencesProvider.getGestureLongpress();
+
+	}
+
+	private void restartLauncher () {
+		Launcher.this.finish();
+		LauncherAppState.getInstance().getModel().forceReload();
+		if (CyraPreferencesActivity.instance != null) {
+			try {  
+           		CyraPreferencesActivity.instance.finish(); 
+        	} catch (Exception e) {}
+    	}
+		Intent mStartActivity = new Intent(Launcher.this, Launcher.class);
+		int mPendingIntentId = 123456;
+		PendingIntent mPendingIntent = PendingIntent.getActivity(Launcher.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager)Launcher.this.getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		System.exit(0);
 	}
 
 	private void getCyraOverviewTiles () {
@@ -4918,6 +4945,12 @@ public class Launcher extends Activity
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
         }
     }
+
+	@Override
+	public void finish() {
+    	super.finish();
+    	instance = null;
+	}
 }
 
 interface DebugIntents {

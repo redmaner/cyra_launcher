@@ -49,6 +49,7 @@
         android:protectionLevel="signatureOrSystem" />
 
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+	<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />

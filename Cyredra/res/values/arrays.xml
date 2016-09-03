@@ -105,4 +105,35 @@
         <item>ANIMATION_CYRA</item>
         <item>ANIMATION_FAST</item>
     </array>
+
+	<!-- Dpi values -->
+	<array name="pref_dpi_values">
+		<item>DPI_DEFAULT</item>
+		<item>DPI_LOW</item>
+		<item>DPI_MEDIUM</item>
+		<item>DPI_HIGH</item>
+		<item>DPI_280</item>
+		<item>DPI_XHIGH</item>
+		<item>DPI_360</item>
+		<item>DPI_400</item>
+		<item>DPI_420</item>
+		<item>DPI_XXHIGH</item>
+		<item>DPI_560</item>
+		<item>DPI_XXXHIGH</item>
+	</array>
+
+	<array name="pref_dpi_entries">
+		<item>Default</item>
+		<item>120dpi (ldpi)</item>
+		<item>160dpi (mdpi)</item>
+		<item>240dpi (hdpi)</item>
+		<item>280dpi</item>
+		<item>320dpi (xhdpi)</item>
+		<item>360dpi</item>
+		<item>400dpi</item>
+		<item>420dpi</item>
+		<item>480dpi (xxhdpi)</item>
+		<item>560dpi</item>
+		<item>640dpi (xxxhdpi)</item>
+	</array>
 </resources>

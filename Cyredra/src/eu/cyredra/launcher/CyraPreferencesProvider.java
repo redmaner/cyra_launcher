@@ -70,6 +70,7 @@ public final class CyraPreferencesProvider{
 	public static final String KEY_ANIMATION_PROFILE = "pref_key_animationProfile";
 	public static final String KEY_ALLOW_ROTATION = "pref_allowRotation";
 	public static final String KEY_CYRA_ADMIN = "pref_key_cyraAdmin";
+	public static final String KEY_CYRA_DPI = "pref_key_dpi";
 
 	// Animations - Preference keys
 	public static final String ANIM_OVERLAY_REVEAL_TIME = "pref_anim_overlayRevealTime";
@@ -133,6 +134,7 @@ public final class CyraPreferencesProvider{
 	private static String mAnimationProfile = "ANIMATION_CYRA";
 	private static boolean mAllowRotation = false;
 	private static boolean mCyraAdmin = false;
+	private static String mCyraDpi = "DPI_DEFAULT";
 
 	// Animations - Variables
 	private static int mAnimOverlayRevealTime = 220;
@@ -194,6 +196,7 @@ public final class CyraPreferencesProvider{
 		// General
 		editor.putBoolean(KEY_ALLOW_ROTATION, false);
 		editor.putBoolean(INITIAL_SET, true);
+		editor.putString(KEY_CYRA_DPI, "DPI_DEFAULT");
 
 		// Animations
 		editor.putInt(ANIM_OVERLAY_REVEAL_TIME, 60);
@@ -283,6 +286,10 @@ public final class CyraPreferencesProvider{
                         .getBoolean(KEY_ALLOW_ROTATION, false);
 		mCyraAdmin = PreferenceManager.getDefaultSharedPreferences(context)
                         .getBoolean(KEY_CYRA_ADMIN, false);
+
+		// Dpi
+		mCyraDpi = PreferenceManager.getDefaultSharedPreferences(context)
+						.getString(KEY_CYRA_DPI, "DPI_DEFAULT");
 
 		// Animations
 		mAnimOverlayRevealTime = PreferenceManager.getDefaultSharedPreferences(context)
@@ -395,6 +402,10 @@ public final class CyraPreferencesProvider{
 		mCyraAdmin = PreferenceManager.getDefaultSharedPreferences(context)
                         .getBoolean(KEY_CYRA_ADMIN, false);
 
+		// Dpi
+		mCyraDpi = PreferenceManager.getDefaultSharedPreferences(context)
+						.getString(KEY_CYRA_DPI, "DPI_DEFAULT");
+
 	}
 
 	public static void loadCyraAnimationPreferences(Context context) {
@@ -432,6 +443,7 @@ public final class CyraPreferencesProvider{
 		// App drawer
 		mDrawerIconSize = PreferenceManager.getDefaultSharedPreferences(context)
                         .getInt(KEY_DRAWER_ICONSIZE, 0);
+
 	}
 
 	public static boolean isInitialSet(Context context) {
@@ -578,6 +590,9 @@ public final class CyraPreferencesProvider{
 	public static boolean getCyraAdmin() {
 		return mCyraAdmin;
 	}
+	public static String getCyraDpi() {
+		return mCyraDpi;
+	}
 
 	// Animations 
 	public static int getAnimOverlayRevealTime() {
@@ -625,6 +640,7 @@ public final class CyraPreferencesProvider{
 			|| key.equals(KEY_ANIMATION_PROFILE)
 			|| key.equals(KEY_ALLOW_ROTATION)
 			|| key.equals(KEY_CYRA_ADMIN)
+			|| key.equals(KEY_CYRA_DPI)
 			|| key.equals(ANIM_OVERLAY_REVEAL_TIME)
 			|| key.equals(ANIM_OVERLAY_TRANSITION_TIME)
 			|| key.equals(ANIM_ALLAPPS_TRANSITION_TIME)
@@ -678,7 +694,8 @@ public final class CyraPreferencesProvider{
 	public static boolean isCyraGeneralPreference(String key) {
 		return key.equals(KEY_ALLOW_ROTATION)
 			|| key.equals(KEY_ANIMATION_PROFILE)
-			|| key.equals(KEY_CYRA_ADMIN);
+			|| key.equals(KEY_CYRA_ADMIN)
+			|| key.equals(KEY_CYRA_DPI);
 	}
 
 	public static boolean isCyraAnimationPreference(String key) {
