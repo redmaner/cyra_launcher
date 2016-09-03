@@ -89,6 +89,10 @@
             			android:entryValues="@array/pref_dpi_values"
             			android:defaultValue="DPI_DEFAULT" />
 
+        			<Preference
+            			android:key="pref_key_dpiApply"
+            			android:title="@string/pref_dpi_apply_title" />
+
     			</PreferenceCategory>
 
 			</PreferenceScreen>

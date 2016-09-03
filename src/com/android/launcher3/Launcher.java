@@ -66,7 +66,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Process;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.UserHandle;
@@ -414,6 +413,7 @@ public class Launcher extends Activity
 	private String mGestureLongpress = "GES_OVERVIEW";
 	private boolean mCyraAdmin;
 	private boolean mCyraDpiChanged = false;
+	private static Context cContext;
 
 	// Cyra Gestures
 	protected static final String GESTURE_NONE = "GES_NONE";
@@ -431,8 +431,6 @@ public class Launcher extends Activity
 	private boolean mOverviewTileSettings;
 
 	static final int RESULT_ENABLE = 1;
-
-	public static Launcher instance = null;
 
     DevicePolicyManager deviceManager;  
     ComponentName mCyraAdminName;
@@ -459,7 +457,7 @@ public class Launcher extends Activity
         }
 
         super.onCreate(savedInstanceState);
-		instance = this;
+		Launcher.cContext = this;
 
         LauncherAppState.setApplicationContext(getApplicationContext());
         LauncherAppState app = LauncherAppState.getInstance();
@@ -2099,9 +2097,6 @@ public class Launcher extends Activity
         					} catch (Exception e) {}
     					}
 					}
-					if (key.equals(CyraPreferencesProvider.KEY_CYRA_DPI)) {
-						restartLauncher();
-    				}
 				}
 				if (CyraPreferencesProvider.isCyraAnimationPreference(key)) {
 					CyraPreferencesProvider.loadCyraAnimationPreferences(Launcher.this);
@@ -2141,19 +2136,17 @@ public class Launcher extends Activity
 
 	}
 
-	private void restartLauncher () {
-		Launcher.this.finish();
-		LauncherAppState.getInstance().getModel().forceReload();
+	public static void restartLauncher () {
 		if (CyraPreferencesActivity.instance != null) {
 			try {  
            		CyraPreferencesActivity.instance.finish(); 
         	} catch (Exception e) {}
     	}
-		Intent mStartActivity = new Intent(Launcher.this, Launcher.class);
+		Intent mStartActivity = new Intent(cContext, Launcher.class);
 		int mPendingIntentId = 123456;
-		PendingIntent mPendingIntent = PendingIntent.getActivity(Launcher.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-		AlarmManager mgr = (AlarmManager)Launcher.this.getSystemService(Context.ALARM_SERVICE);
-		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		PendingIntent mPendingIntent = PendingIntent.getActivity(cContext, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager)cContext.getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis(), mPendingIntent);
 		System.exit(0);
 	}
 
@@ -4945,12 +4938,6 @@ public class Launcher extends Activity
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
         }
     }
-
-	@Override
-	public void finish() {
-    	super.finish();
-    	instance = null;
-	}
 }
 
 interface DebugIntents {

@@ -17,6 +17,7 @@ import android.widget.ListAdapter;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.IconPackHelper;
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 
 import java.util.List;
@@ -123,6 +124,14 @@ public final class CyraPreferencesActivity extends PreferenceActivity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.preferences_general);
+
+			Preference mDpiApply = (Preference) findPreference("pref_key_dpiApply");
+			mDpiApply.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            	public boolean onPreferenceClick(Preference preference) {
+                	Launcher.restartLauncher();
+					return false;
+             	}
+         	});
 		}
 	}
 
