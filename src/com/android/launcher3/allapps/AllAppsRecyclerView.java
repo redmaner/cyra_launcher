@@ -29,7 +29,6 @@ import android.view.View;
 import com.android.launcher3.BaseRecyclerView;
 import com.android.launcher3.BaseRecyclerViewFastScrollBar;
 import com.android.launcher3.DeviceProfile;
-import com.android.launcher3.Stats;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.Thunk;
 
@@ -40,8 +39,7 @@ import eu.cyredra.launcher.R;
 /**
  * A RecyclerView with custom fast scroll support for the all apps view.
  */
-public class AllAppsRecyclerView extends BaseRecyclerView
-        implements Stats.LaunchSourceProvider {
+public class AllAppsRecyclerView extends BaseRecyclerView {
 
     private static final int FAST_SCROLL_MODE_JUMP_TO_FIRST_ICON = 0;
     private static final int FAST_SCROLL_MODE_FREE_SCROLL = 1;
@@ -163,18 +161,6 @@ public class AllAppsRecyclerView extends BaseRecyclerView
 
         // Bind event handlers
         addOnItemTouchListener(this);
-    }
-
-    @Override
-    public void fillInLaunchSourceData(Bundle sourceData) {
-        sourceData.putString(Stats.SOURCE_EXTRA_CONTAINER, Stats.CONTAINER_ALL_APPS);
-        if (mApps.hasFilter()) {
-            sourceData.putString(Stats.SOURCE_EXTRA_SUB_CONTAINER,
-                    Stats.SUB_CONTAINER_ALL_APPS_SEARCH);
-        } else {
-            sourceData.putString(Stats.SOURCE_EXTRA_SUB_CONTAINER,
-                    Stats.SUB_CONTAINER_ALL_APPS_A_Z);
-        }
     }
 
     public void onSearchResultsChanged() {

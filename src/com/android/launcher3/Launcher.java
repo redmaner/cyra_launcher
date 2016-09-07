@@ -387,7 +387,6 @@ public class Launcher extends Activity
         int appWidgetId;
     }
 
-    private Stats mStats;
     FocusIndicatorView mFocusHandler;
     private boolean mRotationEnabled = false;
 
@@ -477,8 +476,6 @@ public class Launcher extends Activity
         mDragController = new DragController(this);
         mInflater = getLayoutInflater();
         mStateTransitionAnimation = new LauncherStateTransitionAnimation(this);
-
-        mStats = new Stats(this);
 
         mAppWidgetManager = AppWidgetManagerCompat.getInstance(this);
 
@@ -677,10 +674,6 @@ public class Launcher extends Activity
         } else if (mWorkspace.hasCustomContent() && !hasCustomContentToLeft()) {
             mWorkspace.removeCustomContentPage();
         }
-    }
-
-    public Stats getStats() {
-        return mStats;
     }
 
     public LayoutInflater getInflater() {
@@ -2914,7 +2907,6 @@ public class Launcher extends Activity
         }
 
         boolean success = startActivitySafely(v, intent, tag);
-        mStats.recordLaunch(v, intent, shortcut);
 
         if (success && v instanceof BubbleTextView) {
             mWaitingForResume = (BubbleTextView) v;

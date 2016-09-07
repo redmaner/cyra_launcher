@@ -71,8 +71,7 @@ import eu.cyredra.launcher.R;
  */
 public class Folder extends LinearLayout implements DragSource, View.OnClickListener,
         View.OnLongClickListener, DropTarget, FolderListener, TextView.OnEditorActionListener,
-        View.OnFocusChangeListener, DragListener, UninstallSource, AccessibilityDragSource,
-        Stats.LaunchSourceProvider {
+        View.OnFocusChangeListener, DragListener, UninstallSource, AccessibilityDragSource {
     private static final String TAG = "Launcher.Folder";
 
     /**
@@ -1338,14 +1337,6 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         getHitRect(outRect);
         outRect.left -= mScrollAreaOffset;
         outRect.right += mScrollAreaOffset;
-    }
-
-    @Override
-    public void fillInLaunchSourceData(Bundle sourceData) {
-        // Fill in from the folder icon's launch source provider first
-        Stats.LaunchSourceUtils.populateSourceDataFromAncestorProvider(mFolderIcon, sourceData);
-        sourceData.putString(Stats.SOURCE_EXTRA_SUB_CONTAINER, Stats.SUB_CONTAINER_FOLDER);
-        sourceData.putInt(Stats.SOURCE_EXTRA_SUB_CONTAINER_PAGE, mContent.getCurrentPage());
     }
 
     private class OnScrollHintListener implements OnAlarmListener {

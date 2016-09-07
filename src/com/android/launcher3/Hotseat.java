@@ -29,8 +29,7 @@ import android.widget.TextView;
 
 import eu.cyredra.launcher.R;
 
-public class Hotseat extends FrameLayout
-        implements Stats.LaunchSourceProvider{
+public class Hotseat extends FrameLayout {
 
     private CellLayout mContent;
 
@@ -161,10 +160,5 @@ public class Hotseat extends FrameLayout
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void fillInLaunchSourceData(Bundle sourceData) {
-        sourceData.putString(Stats.SOURCE_EXTRA_CONTAINER, Stats.CONTAINER_HOTSEAT);
     }
 }
