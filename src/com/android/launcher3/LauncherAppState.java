@@ -85,10 +85,6 @@ public class LauncherAppState {
 
         Log.v(Launcher.TAG, "LauncherAppState inited");
 
-        if (sContext.getResources().getBoolean(R.bool.debug_memory_enabled)) {
-            MemoryTracker.startTrackingMe(sContext, "L");
-        }
-
         mInvariantDeviceProfile = new InvariantDeviceProfile(sContext);
 		CyraPreferencesProvider.loadCyraDeviceProfile(sContext);
 		mInvariantDeviceProfile.updateFromPreferences(sContext);

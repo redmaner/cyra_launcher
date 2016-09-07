@@ -254,7 +254,6 @@ public class Launcher extends Activity
     private View mPageIndicators;
     @Thunk DragLayer mDragLayer;
     private DragController mDragController;
-    private View mWeightWatcher;
 
     private AppWidgetManagerCompat mAppWidgetManager;
     private LauncherAppWidgetHost mAppWidgetHost;
@@ -1507,21 +1506,6 @@ public class Launcher extends Activity
         dragController.addDropTarget(mWorkspace);
         if (mSearchDropTargetBar != null) {
             mSearchDropTargetBar.setup(this, dragController);
-        }
-
-        if (getResources().getBoolean(R.bool.debug_memory_enabled)) {
-            Log.v(TAG, "adding WeightWatcher");
-            mWeightWatcher = new WeightWatcher(this);
-            mWeightWatcher.setAlpha(0.5f);
-            ((FrameLayout) mLauncherView).addView(mWeightWatcher,
-                    new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT,
-                            FrameLayout.LayoutParams.WRAP_CONTENT,
-                            Gravity.BOTTOM)
-            );
-
-            boolean show = shouldShowWeightWatcher();
-            mWeightWatcher.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -2888,19 +2872,6 @@ public class Launcher extends Activity
 
         final Intent intent = shortcut.intent;
 
-        // Check for special shortcuts
-        if (intent.getComponent() != null) {
-            final String shortcutClass = intent.getComponent().getClassName();
-
-            if (shortcutClass.equals(MemoryDumpActivity.class.getName())) {
-                MemoryDumpActivity.startDump(this);
-                return;
-            } else if (shortcutClass.equals(ToggleWeightWatcher.class.getName())) {
-                toggleShowWeightWatcher();
-                return;
-            }
-        }
-
         // Check for abandoned promise
         if ((v instanceof BubbleTextView)
                 && shortcut.isPromise()
@@ -3903,30 +3874,6 @@ public class Launcher extends Activity
         int count = orderedScreenIds.size();
         for (int i = 0; i < count; i++) {
             mWorkspace.insertNewWorkspaceScreenBeforeEmptyScreen(orderedScreenIds.get(i));
-        }
-    }
-
-    private boolean shouldShowWeightWatcher() {
-        String spKey = LauncherAppState.getSharedPreferencesKey();
-        SharedPreferences sp = getSharedPreferences(spKey, Context.MODE_PRIVATE);
-        boolean show = sp.getBoolean(SHOW_WEIGHT_WATCHER, SHOW_WEIGHT_WATCHER_DEFAULT);
-
-        return show;
-    }
-
-    private void toggleShowWeightWatcher() {
-        String spKey = LauncherAppState.getSharedPreferencesKey();
-        SharedPreferences sp = getSharedPreferences(spKey, Context.MODE_PRIVATE);
-        boolean show = sp.getBoolean(SHOW_WEIGHT_WATCHER, true);
-
-        show = !show;
-
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(SHOW_WEIGHT_WATCHER, show);
-        editor.commit();
-
-        if (mWeightWatcher != null) {
-            mWeightWatcher.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 

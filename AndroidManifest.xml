@@ -91,39 +91,29 @@
             </intent-filter>
         </activity>
 
-        <!-- ENABLE_FOR_TESTING
-
         <activity
-            android:name="com.android.launcher3.testing.LauncherExtension"
-            android:launchMode="singleTask"
-            android:clearTaskOnLaunch="true"
-            android:stateNotNeeded="true"
-            android:theme="@style/Theme"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="nosensor"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name="eu.cyredra.launcher.CyraPreferencesActivity"
+            android:theme="@style/Theme.Settings"
+        	android:label="@string/pref_application_name"
+            android:autoRemoveFromRecents="true">>
+  			<intent-filter>
+    			<action android:name="eu.cyredra.launcher.SETTINGS" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.MONKEY"/>
-            </intent-filter>
+  			</intent-filter>
         </activity>
 
-        -->
+		<receiver 
+			android:name="com.android.launcher3.CyraAdmin"
+        	android:permission="android.permission.BIND_DEVICE_ADMIN">
+    		<meta-data android:name="android.app.device_admin"
+            	android:resource="@xml/policies" />
+    		<intent-filter>
+        		<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+    		</intent-filter>
+		</receiver>
 
-        <activity
-            android:name="com.android.launcher3.ToggleWeightWatcher"
-            android:label="@string/toggle_weight_watcher"
-            android:enabled="@bool/debug_memory_enabled"
-            android:icon="@mipmap/ic_launcher_home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+		<!-- WallpaperPicker -->
         <activity
             android:name="com.android.launcher3.WallpaperPickerActivity"
             android:theme="@style/Theme.WallpaperPicker"
@@ -150,49 +140,6 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="eu.cyredra.launcher.CyraPreferencesActivity"
-            android:theme="@style/Theme.Settings"
-        	android:label="@string/pref_application_name"
-            android:autoRemoveFromRecents="true">>
-  			<intent-filter>
-    			<action android:name="eu.cyredra.launcher.SETTINGS" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-  			</intent-filter>
-        </activity>
-
-        <!-- Debugging tools -->
-        <activity
-            android:name="com.android.launcher3.MemoryDumpActivity"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:label="@string/debug_memory_activity"
-            android:enabled="@bool/debug_memory_enabled"
-            android:excludeFromRecents="true"
-            android:icon="@mipmap/ic_launcher_home"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <service android:name="com.android.launcher3.MemoryTracker"
-            android:enabled="@bool/debug_memory_enabled"
-            >
-        </service>
-
-		<receiver 
-			android:name="com.android.launcher3.CyraAdmin"
-        	android:permission="android.permission.BIND_DEVICE_ADMIN">
-    		<meta-data android:name="android.app.device_admin"
-            	android:resource="@xml/policies" />
-    		<intent-filter>
-        		<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-    		</intent-filter>
-		</receiver>
 
         <receiver
             android:name="com.android.launcher3.WallpaperChangedReceiver">
