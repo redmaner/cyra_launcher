@@ -228,14 +228,8 @@ public class LauncherModel extends BroadcastReceiver
         ProviderInfo redirectProvider =
                 context.getPackageManager().resolveContentProvider(redirectAuthority, 0);
 
-        Log.d(TAG, "Old launcher provider: " + oldProvider);
-        mOldContentProviderExists = (providerInfo != null) && (redirectProvider != null);
-
-        if (mOldContentProviderExists) {
-            Log.d(TAG, "Old launcher provider exists.");
-        } else {
-            Log.d(TAG, "Old launcher provider does not exist.");
-        }
+        //mOldContentProviderExists = (providerInfo != null) && (redirectProvider != null);
+		mOldContentProviderExists = false;
 
         mApp = app;
         mBgAllAppsList = new AllAppsList(iconCache, appFilter);
