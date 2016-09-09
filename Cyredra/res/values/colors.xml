@@ -21,8 +21,8 @@
     <color name="quantum_panel_text_color_dark">#FFFFFFFF</color>
 
     <!-- Material -->
-    <color name="material_color_primary">#ff009688</color>
-    <color name="material_color_primary_dark">#ff00796b</color>
+    <color name="material_color_primary">#ff313131</color>
+    <color name="material_color_primary_dark">#ff212121</color>
     <color name="material_color_accent">#ff009688</color>
 
 	<!-- Rainbow colors -->
