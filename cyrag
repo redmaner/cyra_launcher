@@ -57,7 +57,10 @@ buildscript {
 
 allprojects {
     repositories {
-        $GRADLE_REPO()
+        jcenter()
+		maven {
+			url 'https://maven.google.com'
+		}
     }
 }
 
@@ -110,8 +113,11 @@ android {
 }
 
 dependencies {
-	compile files('lib/android-support-v4.jar')
-	compile files('lib/android-support-v7-recyclerview.jar')
+	compile 'com.android.support:support-v4:27.0.0'
+	compile 'com.android.support:recyclerview-v7:27.0.0'
+
+
+
 }
 EOF
 }
