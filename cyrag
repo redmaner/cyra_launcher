@@ -110,8 +110,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:+'
-    compile 'com.android.support:recyclerview-v7:+'
+	compile files('lib/android-support-v4.jar')
+	compile files('lib/android-support-v7-recyclerview.jar')
 }
 EOF
 }
